@@ -1,965 +1,787 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Super Goode Map App v6</title>
-<link rel="preconnect" href="https://unpkg.com">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-  :root {
-    --bg: #0b0f17;
-    --panel: #121826;
-    --panel-2: #182033;
-    --panel-3: #0f1522;
-    --line: #283145;
-    --text: #eef2f8;
-    --muted: #9aa6bd;
-    --accent: #9e4cff;
-    --accent-2: #c77dff;
-    --gold: #f3c94c;
-    --silver: #9aa6bd;
-    --shadow: 0 12px 30px rgba(0,0,0,.28);
-    --danger: #ff7c7c;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  body { overscroll-behavior: none; }
-  a { color: inherit; }
-  button, input, select {
-    font: inherit;
-  }
-  .app {
-    height: 100dvh;
-    display: grid;
-    grid-template-columns: 380px minmax(0, 1fr);
-    background:
-      radial-gradient(circle at 0% 0%, rgba(158,76,255,.16), transparent 24%),
-      radial-gradient(circle at 100% 100%, rgba(66,211,255,.08), transparent 22%),
-      var(--bg);
-  }
-  .sidebar {
-    min-height: 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(180deg, rgba(18,24,38,.96), rgba(10,14,23,.98));
-    border-right: 1px solid var(--line);
-    box-shadow: var(--shadow);
-    position: relative;
-    z-index: 2;
-  }
-  .header {
-    padding: 20px 18px 14px;
-    border-bottom: 1px solid var(--line);
-    background: linear-gradient(180deg, rgba(255,255,255,.03), transparent);
-  }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 10px;
-    letter-spacing: .03em;
-    text-transform: uppercase;
-  }
-  .eyebrow-dot {
-    width: 8px; height: 8px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 0 0 4px rgba(158,76,255,.12);
-  }
-  h1 {
-    margin: 0;
-    font-size: 2rem;
-    line-height: 1.02;
-    letter-spacing: -.03em;
-  }
-  .sub {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: .97rem;
-    line-height: 1.4;
-  }
-  .controls {
-    padding: 14px 18px;
-    display: grid;
-    gap: 10px;
-    border-bottom: 1px solid var(--line);
-  }
-  input, select, button {
-    width: 100%;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    background: var(--panel-2);
-    color: var(--text);
-    padding: 12px 13px;
-    outline: none;
-  }
-  input::placeholder { color: #73809c; }
-  input:focus, select:focus {
-    border-color: #586482;
-    box-shadow: 0 0 0 3px rgba(158,76,255,.12);
-  }
-  button {
-    cursor: pointer;
-    touch-action: manipulation;
-    font-weight: 700;
-    transition: transform .12s ease, opacity .12s ease, border-color .12s ease;
-  }
-  button:hover { transform: translateY(-1px); }
-  button:disabled { opacity: .55; cursor: wait; transform: none; }
-  .btn-primary {
-    border: none;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-    color: white;
-  }
-  .btn-secondary {
-    background: var(--panel);
-  }
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .chips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .chip {
-    width: auto;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: var(--panel);
-    font-size: 13px;
-  }
-  .chip.active {
-    background: linear-gradient(135deg, rgba(158,76,255,.24), rgba(199,125,255,.24));
-    border-color: rgba(199,125,255,.5);
-  }
-  .stats {
-    padding: 0 18px 14px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    border-bottom: 1px solid var(--line);
-  }
-  .stat {
-    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 12px;
-  }
-  .stat .k {
-    color: var(--muted);
-    font-size: .77rem;
-    margin-bottom: 5px;
-  }
-  .stat .v {
-    font-size: 1.18rem;
-    font-weight: 800;
-  }
-  .toolbar {
-    padding: 12px 18px 0;
-    color: var(--muted);
-    font-size: .86rem;
-  }
-  .list {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: auto;
-    padding: 14px 18px 24px;
-    scrollbar-width: thin;
-  }
-  .list::-webkit-scrollbar { width: 10px; }
-  .list::-webkit-scrollbar-thumb { background: #2d3952; border-radius: 999px; }
-  .card {
-    background: linear-gradient(180deg, rgba(24,32,51,.88), rgba(18,24,38,.98));
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 14px;
-    margin-bottom: 12px;
-    box-shadow: 0 10px 26px rgba(0,0,0,.18);
-  }
-  .card:hover { border-color: #465472; }
-  .row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .name {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.2;
-    font-weight: 800;
-  }
-  .score {
-    min-width: 56px;
-    text-align: center;
-    border-radius: 999px;
-    padding: 8px 10px;
-    font-weight: 900;
-    color: #111;
-    box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
-  }
-  .tier9 { background: var(--gold); }
-  .tier8 { background: #b56cff; color: white; }
-  .tier7 { background: #8594ad; color: white; }
-  .meta {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: .86rem;
-    line-height: 1.45;
-  }
-  .actions {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .actions button, .actions a {
-    width: auto;
-    padding: 8px 12px;
-    font-size: 13px;
-    text-decoration: none;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--panel-3);
-    color: var(--text);
-  }
-  .map-wrap {
-    min-width: 0;
-    min-height: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  #map {
-    width: 100%;
-    height: 100dvh;
-    background: #0c1220;
-  }
-  .overlay {
-    position: absolute;
-    z-index: 650;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    pointer-events: none;
-  }
-  .overlay > * { pointer-events: auto; }
-  .legend, .map-tools {
-    background: rgba(15,21,34,.88);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-  }
-  .legend {
-    right: 14px; top: 14px;
-    padding: 12px 14px;
-    position: absolute;
-  }
-  .legend h3 {
-    margin: 0 0 8px;
-    font-size: .95rem;
-  }
-  .legend .item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: .86rem;
-    color: var(--muted);
-    margin: 4px 0;
-  }
-  .dot {
-    width: 11px; height: 11px; border-radius: 999px; display: inline-block;
-  }
-  .map-tools {
-    left: 14px; top: 14px;
-    padding: 10px;
-    position: absolute;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    max-width: calc(100% - 110px);
-  }
-  .map-tools button {
-    width: auto;
-    padding: 9px 12px;
-    border-radius: 12px;
-    background: rgba(18,24,38,.92);
-  }
-  .empty {
-    color: var(--muted);
-    text-align: center;
-    padding: 28px 14px;
-  }
-  .footer-note {
-    padding: 0 18px 16px;
-    color: var(--muted);
-    font-size: .77rem;
-  }
-  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-    background: #131a28;
-    color: var(--text);
-  }
-  .leaflet-container a {
-    color: #d8b0ff;
-  }
-  .toast {
-    position: absolute;
-    left: 50%;
-    bottom: 16px;
-    transform: translateX(-50%);
-    z-index: 700;
-    background: rgba(15,21,34,.92);
-    border: 1px solid var(--line);
-    color: var(--text);
-    padding: 10px 14px;
-    border-radius: 999px;
-    box-shadow: var(--shadow);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s ease;
-    font-size: .9rem;
-  }
-  .toast.show { opacity: 1; }
-  @media (max-width: 980px) {
-    html, body {
-      height: auto;
-      min-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Super Goode Map App v7</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://a.basemaps.cartocdn.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <style>
+    :root {
+      --bg:#07101f;
+      --panel:#0b1529;
+      --panel2:#111d35;
+      --line:rgba(145,165,255,.14);
+      --text:#f3f6ff;
+      --muted:#aab4cc;
+      --accent:#b866ff;
+      --accent2:#7d8cff;
+      --gold:#f2c94c;
+      --shadow:0 14px 40px rgba(0,0,0,.28);
+      --radius:18px;
+      --headerH: 0px;
     }
-    body {
-      overscroll-behavior-y: auto;
-    }
+    * { box-sizing:border-box; }
+    html, body { margin:0; background:linear-gradient(180deg,#07101f,#0c1220 50%,#07101f); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    body { min-height:100dvh; }
+    a { color:#7ea7ff; text-decoration:none; }
     .app {
-      display: block;
-      height: auto;
-      min-height: 100svh;
+      min-height:100dvh;
+      display:flex;
+      flex-direction:column;
     }
     .map-wrap {
-      position: relative;
-      height: 42svh;
-      min-height: 300px;
-      max-height: 460px;
-      overflow: hidden;
+      order:1;
+      position:relative;
+      height:38dvh;
+      min-height:280px;
+      max-height:380px;
+      border-bottom:1px solid var(--line);
+      background:#a7d3d9;
+      overflow:hidden;
     }
-    .sidebar {
-      min-height: unset;
-      border-right: none;
-      border-top: 1px solid var(--line);
-      box-shadow: none;
+    #map { width:100%; height:100%; }
+    .panel {
+      order:2;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)),
+        linear-gradient(180deg, rgba(110,76,255,.05), rgba(0,0,0,0));
+      padding:14px;
+      overflow:visible;
     }
-    .header { padding-top: 16px; }
-    .controls,
-    .stats,
-    .toolbar,
-    .footer-note {
-      padding-left: 14px;
-      padding-right: 14px;
+    .kicker {
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#c89dff;
+      opacity:.92;
+      margin:0 0 6px;
     }
-    .controls { gap: 9px; }
-    .grid-2 {
-      grid-template-columns: 1fr 1fr;
+    h1 {
+      font-size:clamp(34px, 6vw, 26px);
+      line-height:1.02;
+      margin:0;
+      letter-spacing:-.03em;
+    }
+    .subtitle {
+      color:var(--muted);
+      line-height:1.35;
+      margin:8px 0 12px;
+      font-size:13px;
+      max-width:42rem;
+    }
+    .controls {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .search, select {
+      width:100%;
+      height:44px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(17,29,53,.92);
+      color:var(--text);
+      padding:0 14px;
+      font-size:15px;
+      outline:none;
+    }
+    .row2 {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
     }
     .chips {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-bottom: 2px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      display:flex;
+      gap:8px;
+      overflow:auto hidden;
+      padding-bottom:2px;
+      scrollbar-width:none;
     }
-    .chips::-webkit-scrollbar { display: none; }
+    .chips::-webkit-scrollbar { display:none; }
     .chip {
-      flex: 0 0 auto;
-      min-width: 58px;
+      border:1px solid var(--line);
+      background:#101a31;
+      color:#e7ebf7;
+      border-radius:999px;
+      padding:9px 13px;
+      font-weight:700;
+      font-size:13px;
+      white-space:nowrap;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active {
+      background:linear-gradient(135deg,var(--accent2),var(--accent));
+      border-color:transparent;
+      color:white;
+    }
+    .statusbar {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin:10px 0 12px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .pill {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background:#10192f;
+      border-radius:999px;
+      padding:7px 10px;
+    }
+    .dot {
+      width:8px; height:8px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 0 4px rgba(184,102,255,.12);
+      flex:0 0 auto;
     }
     .stats {
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-bottom:12px;
     }
     .stat {
-      padding: 10px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#10192f,#0d1629);
+      border-radius:16px;
+      padding:10px 12px;
+      min-width:0;
     }
+    .stat .label { color:var(--muted); font-size:11px; margin-bottom:3px; }
+    .stat .value { font-weight:800; font-size:27px; line-height:1; }
     .list {
-      flex: initial;
-      min-height: unset;
-      max-height: none;
-      overflow: visible;
-      padding: 14px 14px 28px;
+      display:grid;
+      gap:10px;
     }
     .card {
-      margin-bottom: 10px;
-      border-radius: 16px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#0e1730,#0a1326);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow);
     }
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .card-top {
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:6px;
     }
-    .actions button,
-    .actions a {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
+    .name {
+      font-weight:800;
+      font-size:16px;
+      line-height:1.18;
+      letter-spacing:-.02em;
     }
-    #map {
-      width: 100%;
-      height: 100%;
+    .meta {
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.35;
+      min-height:16px;
     }
-    .map-tools {
-      left: 10px;
-      right: 10px;
-      top: 10px;
-      max-width: none;
-      padding: 8px;
-      gap: 6px;
+    .score {
+      flex:0 0 auto;
+      min-width:54px;
+      text-align:center;
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:900;
+      line-height:1;
+      color:#0a0f1a;
+      background:#bcc6dd;
     }
-    .map-tools button {
-      flex: 1 1 calc(50% - 6px);
-      min-width: 0;
-      padding: 10px 8px;
-      font-size: 13px;
+    .score.gold { background:var(--gold); }
+    .score.purple { background:#b678ff; color:white; }
+    .score.gray { background:#a8b1c3; }
+    .card-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
     }
-    .legend {
-      right: 10px;
-      top: auto;
-      bottom: 10px;
-      padding: 10px 12px;
+    button, .btn {
+      appearance:none;
+      border:1px solid var(--line);
+      background:#121d35;
+      color:var(--text);
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
     }
-    .leaflet-control-zoom {
-      margin-top: 10px !important;
-      margin-left: 10px !important;
+    .btn.primary, button.primary {
+      border:none;
+      background:linear-gradient(135deg,var(--accent2),var(--accent));
+      color:white;
     }
-  }
-
-  @media (max-width: 640px) {
-    h1 {
-      font-size: 1.75rem;
+    .btn.subtle, button.subtle { color:#d6dff6; background:#0f1830; }
+    .btn[disabled], button[disabled] {
+      opacity:.45;
+      cursor:default;
+      pointer-events:none;
     }
-    .sub {
-      font-size: .92rem;
+    .map-legend {
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:500;
+      border:1px solid rgba(0,0,0,.08);
+      background:rgba(7,14,28,.88);
+      color:white;
+      backdrop-filter: blur(8px);
+      border-radius:16px;
+      padding:10px 12px;
+      font-size:12px;
+      box-shadow:var(--shadow);
     }
-    .map-wrap {
-      height: 36svh;
-      min-height: 250px;
-      max-height: 380px;
+    .legend-title { font-weight:800; margin-bottom:6px; }
+    .legend-row { display:flex; align-items:center; gap:8px; margin-top:4px; color:#d6ddf0; }
+    .swatch { width:10px; height:10px; border-radius:50%; }
+    .footer-note {
+      color:var(--muted);
+      font-size:12px;
+      margin-top:12px;
+      line-height:1.4;
     }
-    .grid-2 {
-      grid-template-columns: 1fr;
+    .empty {
+      border:1px dashed var(--line);
+      color:var(--muted);
+      border-radius:16px;
+      padding:18px;
+      text-align:center;
     }
-    .controls button,
-    .controls input,
-    .controls select {
-      min-height: 46px;
+    .leaflet-popup-content-wrapper { border-radius:18px; }
+    .popup-title { font-size:18px; font-weight:800; line-height:1.2; margin:0 0 6px; }
+    .popup-sub { font-size:13px; color:#586077; margin-bottom:8px; }
+    .popup-links a, .popup-links span {
+      display:block;
+      font-size:15px;
+      margin-top:2px;
     }
-    .stats {
-      grid-template-columns: 1fr 1fr;
+    .popup-links span { color:#99a0b4; }
+    @media (max-width: 899px) {
+      .stats { grid-template-columns:1fr 1fr; }
+      .stat .value { font-size:23px; }
     }
-    .actions {
-      grid-template-columns: 1fr;
+    @media (min-width: 900px) {
+      html, body { overflow:hidden; }
+      .app {
+        height:100dvh;
+        display:grid;
+        grid-template-columns:360px 1fr;
+        grid-template-rows:100dvh;
+      }
+      .panel {
+        order:1;
+        overflow:auto;
+        padding:18px 14px 18px 14px;
+        border-right:1px solid var(--line);
+      }
+      .map-wrap {
+        order:2;
+        height:100dvh;
+        min-height:0;
+        max-height:none;
+      }
+      .sticky-head {
+        position:sticky;
+        top:0;
+        z-index:20;
+        padding-bottom:10px;
+        background:linear-gradient(180deg, rgba(7,16,31,1) 78%, rgba(7,16,31,0));
+      }
+      .stats { grid-template-columns:1fr 1fr; }
+      .stat .value { font-size:18px; }
     }
-    .map-tools {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .map-tools button {
-      flex: initial;
-    }
-    .legend {
-      font-size: 12px;
-      max-width: calc(100% - 20px);
-    }
-  }
-</style>
+  </style>
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="header">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Super Goode companion map</div>
-      <h1>Super Goode Map App v6</h1>
-      <div class="sub">Mobile-first layout with the map kept at the top on phones, fixed scrolling, easier restaurant tapping, better location lookup, map tools, and CSV export.</div>
-    </div>
-
-    <div class="controls">
-      <input id="search" type="text" placeholder="Search restaurants..." />
-      <div class="grid-2">
-        <select id="scoreFilter">
-          <option value="all">All scores</option>
-          <option value="9">9.0 and up</option>
-          <option value="8">8.0 to 8.9</option>
-          <option value="7">7.0 to 7.9</option>
-          <option value="mapped">Mapped only</option>
-          <option value="unmapped">Unmapped only</option>
-        </select>
-        <select id="sortBy">
-          <option value="score-desc">Highest score</option>
-          <option value="located-first">Located first</option>
-          <option value="name-asc">Name A–Z</option>
-          <option value="name-desc">Name Z–A</option>
-          <option value="score-asc">Lowest score</option>
-        </select>
+  <div class="app">
+    <section class="map-wrap">
+      <div id="map" aria-label="Map of restaurants"></div>
+      <div class="map-legend">
+        <div class="legend-title">Score tiers</div>
+        <div class="legend-row"><span class="swatch" style="background:#f2c94c"></span>9.0 and up</div>
+        <div class="legend-row"><span class="swatch" style="background:#b678ff"></span>8.0 to 8.9</div>
+        <div class="legend-row"><span class="swatch" style="background:#a8b1c3"></span>7.0 to 7.9</div>
       </div>
-      <div class="chips" id="quickFilters">
-        <button class="chip active" data-filter="all">All</button>
-        <button class="chip" data-filter="9">9+</button>
-        <button class="chip" data-filter="8">8s</button>
-        <button class="chip" data-filter="7">7s</button>
-        <button class="chip" data-filter="mapped">Mapped</button>
+    </section>
+
+    <aside class="panel">
+      <div class="sticky-head">
+        <div class="kicker">Super Goode companion map</div>
+        <h1>Super Goode Map App v7</h1>
+        <div class="subtitle">Auto-locates places in the background, uses tighter cards, fixes the Google Maps link, and includes a placeholder spot for review video links.</div>
+
+        <div class="controls">
+          <input id="searchInput" class="search" type="search" placeholder="Search restaurants..." />
+          <div class="row2">
+            <select id="scoreFilter">
+              <option value="all">All scores</option>
+              <option value="9">9.0 and up</option>
+              <option value="8">8.0 and up</option>
+              <option value="7">7.0 and up</option>
+            </select>
+            <select id="sortFilter">
+              <option value="scoreDesc">Highest score</option>
+              <option value="scoreAsc">Lowest score</option>
+              <option value="nameAsc">A to Z</option>
+              <option value="mappedFirst">Mapped first</option>
+            </select>
+          </div>
+          <div class="chips" id="quickChips">
+            <button class="chip active" data-chip="all">All</button>
+            <button class="chip" data-chip="9plus">9+</button>
+            <button class="chip" data-chip="8plus">8s</button>
+            <button class="chip" data-chip="7s">7s</button>
+            <button class="chip" data-chip="mapped">Mapped</button>
+          </div>
+        </div>
+
+        <div class="statusbar">
+          <span class="pill"><span class="dot"></span><span id="autoStatus">Starting auto-location…</span></span>
+          <button id="fitMappedBtn" class="subtle">Fit mapped pins</button>
+          <button id="clearSavedBtn" class="subtle">Clear saved</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="label">Showing</div><div class="value" id="statShowing">0</div></div>
+          <div class="stat"><div class="label">Mapped</div><div class="value" id="statMapped">0</div></div>
+          <div class="stat"><div class="label">Average</div><div class="value" id="statAvg">0.0</div></div>
+          <div class="stat"><div class="label">Top score</div><div class="value" id="statTop">0.0</div></div>
+        </div>
       </div>
-      <div class="grid-2">
-        <button id="geocodeVisible" class="btn-primary">Geocode visible</button>
-        <button id="clearCache" class="btn-secondary">Clear saved</button>
-      </div>
-      <div class="grid-2">
-        <button id="geocodeTop" class="btn-secondary">Map top 25</button>
-        <button id="exportCsv" class="btn-secondary">Export CSV</button>
-      </div>
-    </div>
 
-    <div class="stats">
-      <div class="stat"><div class="k">Showing</div><div class="v" id="placesCount">0</div></div>
-      <div class="stat"><div class="k">Mapped</div><div class="v" id="mappedCount">0</div></div>
-      <div class="stat"><div class="k">Average</div><div class="v" id="avgScore">0.0</div></div>
-      <div class="stat"><div class="k">Top score</div><div class="v" id="topScore">0.0</div></div>
-    </div>
+      <div id="list" class="list"></div>
+      <div class="footer-note">Review video buttons are placeholders for now. Once you have Phil’s real video links, you can paste them into the <code>reviewUrl</code> field for each place.</div>
+    </aside>
+  </div>
 
-    <div class="toolbar" id="status">Tip: use “Geocode visible” for the current list, or “Map top 25” to try the highest-rated places first.</div>
-    <div class="list" id="list"></div>
-    <div class="footer-note">Location matching is best-effort. Queries automatically try Chicago-area hints first and save successful matches in your browser.</div>
-  </aside>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const STORAGE_KEY = 'supergoode-v7-locations';
+    const DATA = [{"name": "QP Greek Food with a kick", "score": 9.1, "reviewUrl": ""}, {"name": "Falafil Hut", "score": 8.9, "reviewUrl": ""}, {"name": "The Assembly Bar", "score": 7.8, "reviewUrl": ""}, {"name": "Pizza Pushers", "score": 8.1, "reviewUrl": ""}, {"name": "Franks for the Memories", "score": 8.6, "reviewUrl": ""}, {"name": "JJ Fish & Chicken", "score": 8.9, "reviewUrl": ""}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.2, "reviewUrl": ""}, {"name": "Cubano Bros", "score": 8.4, "reviewUrl": ""}, {"name": "Takito Holic", "score": 7.9, "reviewUrl": ""}, {"name": "Rammy's Sub Contractors", "score": 8.2, "reviewUrl": ""}, {"name": "Chicago Bagel Authority", "score": 9.2, "reviewUrl": ""}, {"name": "Fry The Coop", "score": 8.1, "reviewUrl": ""}, {"name": "Ochoa’s Mexican Grill", "score": 7.8, "reviewUrl": ""}, {"name": "Pizza Boy Chicago", "score": 8.3, "reviewUrl": ""}, {"name": "Cafe Tola", "score": 8.7, "reviewUrl": ""}, {"name": "Panes Bread Cafe", "score": 8.0, "reviewUrl": ""}, {"name": "Rand Red Hots", "score": 7.9, "reviewUrl": ""}, {"name": "Shwings", "score": 8.7, "reviewUrl": ""}, {"name": "Smack Dab Chicago", "score": 9.2, "reviewUrl": ""}, {"name": "Holt's", "score": 8.4, "reviewUrl": ""}, {"name": "Porkito", "score": 8.3, "reviewUrl": ""}, {"name": "Village Tavern & Grill", "score": 7.7, "reviewUrl": ""}, {"name": "Dario's", "score": 8.2, "reviewUrl": ""}, {"name": "Dak Dak Korean Wings", "score": 8.0, "reviewUrl": ""}, {"name": "Monti's", "score": 9.2, "reviewUrl": ""}, {"name": "Dawg Park", "score": 8.0, "reviewUrl": ""}, {"name": "The Sandlot", "score": 8.2, "reviewUrl": ""}, {"name": "Evette's", "score": 8.4, "reviewUrl": ""}, {"name": "Tony's Italian Deli", "score": 7.8, "reviewUrl": ""}, {"name": "Urban Counter", "score": 8.2, "reviewUrl": ""}, {"name": "Jim's Original", "score": 8.1, "reviewUrl": ""}, {"name": "QuesaBirria Jalisco Tacos", "score": 9.1, "reviewUrl": ""}, {"name": "Gators Wing Shack", "score": 8.4, "reviewUrl": ""}, {"name": "El Asadero", "score": 8.1, "reviewUrl": ""}, {"name": "Pita BBQ", "score": 7.8, "reviewUrl": ""}, {"name": "Chicago Culinary Kitchen", "score": 8.5, "reviewUrl": ""}, {"name": "Cracked", "score": 7.6, "reviewUrl": ""}, {"name": "B.B.Q Chicken", "score": 7.8, "reviewUrl": ""}, {"name": "Ricobene's", "score": 8.1, "reviewUrl": ""}, {"name": "Thlaco Taco", "score": 8.1, "reviewUrl": ""}, {"name": "En Hakkore 2.0", "score": 8.2, "reviewUrl": ""}, {"name": "Pupuseria Cheros", "score": 7.6, "reviewUrl": ""}, {"name": "Boba Burger", "score": 8.6, "reviewUrl": ""}, {"name": "Big Ange's Eatery", "score": 8.7, "reviewUrl": ""}, {"name": "Aloha Wagon", "score": 8.0, "reviewUrl": ""}, {"name": "Johnnie's Beef", "score": 9.3, "reviewUrl": ""}, {"name": "Marco Roma", "score": 7.8, "reviewUrl": ""}, {"name": "Felicia's Deli", "score": 8.4, "reviewUrl": ""}, {"name": "Taco Boom", "score": 7.7, "reviewUrl": ""}, {"name": "Pizza Bella", "score": 8.2, "reviewUrl": ""}, {"name": "Student Burger", "score": 7.5, "reviewUrl": ""}, {"name": "Chi Tea", "score": 8.3, "reviewUrl": ""}, {"name": "Nonna's", "score": 8.6, "reviewUrl": ""}, {"name": "Fry Chicken n Fries", "score": 8.1, "reviewUrl": ""}, {"name": "Schmaltz Deli", "score": 8.2, "reviewUrl": ""}, {"name": "Byrds Hot Chicken", "score": 7.9, "reviewUrl": ""}, {"name": "Savory Crust", "score": 8.8, "reviewUrl": ""}, {"name": "Scatchell's Beef", "score": 9.1, "reviewUrl": ""}, {"name": "La Birria Loca", "score": 8.5, "reviewUrl": ""}, {"name": "Culinary Gangster", "score": 8.3, "reviewUrl": ""}, {"name": "Nu Crepes", "score": 9.0, "reviewUrl": ""}, {"name": "One Taco Dos Tequila's", "score": 8.4, "reviewUrl": ""}, {"name": "Apolis Greek Street Food", "score": 8.6, "reviewUrl": ""}, {"name": "Pinoy Grill", "score": 8.2, "reviewUrl": ""}, {"name": "Maz Mez Grill", "score": 7.7, "reviewUrl": ""}, {"name": "Chicago Pickle Eatery", "score": 7.9, "reviewUrl": ""}, {"name": "Priscilla's Ultimate Soul Food", "score": 8.2, "reviewUrl": ""}, {"name": "Pizza Pavia", "score": 8.4, "reviewUrl": ""}, {"name": "Jay's Beef", "score": 8.1, "reviewUrl": ""}, {"name": "Capri Deli", "score": 8.5, "reviewUrl": ""}, {"name": "Vasco's Peri Peri", "score": 7.7, "reviewUrl": ""}, {"name": "Mima's Taste of Cuba", "score": 8.5, "reviewUrl": ""}, {"name": "The Canteen Restaurant", "score": 7.6, "reviewUrl": ""}, {"name": "Nottoli Italian Foods", "score": 8.2, "reviewUrl": ""}, {"name": "The Philly Special", "score": 8.3, "reviewUrl": ""}, {"name": "Fatt Mustard", "score": 7.8, "reviewUrl": ""}, {"name": "Hello Shawarma", "score": 9.0, "reviewUrl": ""}, {"name": "Hot Pockets Bar", "score": 7.7, "reviewUrl": ""}, {"name": "Elena's Deli", "score": 8.7, "reviewUrl": ""}, {"name": "Hagen's Fish Market", "score": 7.8, "reviewUrl": ""}, {"name": "Spiro's Deli", "score": 7.9, "reviewUrl": ""}, {"name": "Chicago Style Taco Shop", "score": 8.2, "reviewUrl": ""}, {"name": "Zenwich", "score": 8.4, "reviewUrl": ""}, {"name": "The Slice Shop", "score": 8.1, "reviewUrl": ""}, {"name": "Algonquin Sandwich Shop", "score": 7.7, "reviewUrl": ""}, {"name": "Tata's Pierogi", "score": 8.0, "reviewUrl": ""}, {"name": "Une Année Brewery", "score": 8.4, "reviewUrl": ""}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.3, "reviewUrl": ""}, {"name": "Sake Sushi", "score": 7.3, "reviewUrl": ""}, {"name": "Holy Wings", "score": 8.6, "reviewUrl": ""}, {"name": "Enzo's Pizza", "score": 8.2, "reviewUrl": ""}, {"name": "Budacki's Drive In", "score": 8.6, "reviewUrl": ""}, {"name": "The Local Kitchen", "score": 8.1, "reviewUrl": ""}, {"name": "Pie Boss", "score": 8.9, "reviewUrl": ""}, {"name": "Bill's Place", "score": 8.2, "reviewUrl": ""}, {"name": "Wilma's Famous BBQ", "score": 8.1, "reviewUrl": ""}, {"name": "Rosie's Sidekick Sandwich Shop", "score": 8.2, "reviewUrl": ""}, {"name": "Primo Pizza", "score": 7.8, "reviewUrl": ""}, {"name": "Sukho Thai Cuisine", "score": 8.2, "reviewUrl": ""}, {"name": "Rep's Place", "score": 7.6, "reviewUrl": ""}, {"name": "Mojo's East Coast Eats", "score": 7.9, "reviewUrl": ""}, {"name": "Garifuna Flava", "score": 8.5, "reviewUrl": ""}, {"name": "Berliner Kebap", "score": 8.1, "reviewUrl": ""}, {"name": "Pholicious", "score": 7.9, "reviewUrl": ""}, {"name": "Doore Chicken", "score": 8.7, "reviewUrl": ""}, {"name": "Gringo and Blondie", "score": 8.1, "reviewUrl": ""}, {"name": "Mr. Kabab", "score": 8.3, "reviewUrl": ""}, {"name": "The Dogfather", "score": 7.6, "reviewUrl": ""}, {"name": "Joy Teriyaki", "score": 8.0, "reviewUrl": ""}, {"name": "Veloce Pizze", "score": 7.7, "reviewUrl": ""}, {"name": "Rep's Burgers", "score": 8.2, "reviewUrl": ""}, {"name": "JT's Genuine Sandwich Shop", "score": 7.8, "reviewUrl": ""}, {"name": "Bacowka", "score": 8.5, "reviewUrl": ""}, {"name": "County Farm Bagels", "score": 7.6, "reviewUrl": ""}, {"name": "Buffalo Joe's", "score": 8.0, "reviewUrl": ""}, {"name": "All Ways Catering & Deli", "score": 8.1, "reviewUrl": ""}, {"name": "Tacos Jerez", "score": 7.2, "reviewUrl": ""}, {"name": "Mughal The Biryani House", "score": 8.0, "reviewUrl": ""}, {"name": "GT's Fast Food", "score": 8.4, "reviewUrl": ""}, {"name": "Joe Donut", "score": 8.7, "reviewUrl": ""}, {"name": "Epic Deli", "score": 8.8, "reviewUrl": ""}, {"name": "Punky's Pizza", "score": 7.7, "reviewUrl": ""}, {"name": "The Lucky Monk", "score": 8.5, "reviewUrl": ""}, {"name": "Uncle Jerry's Pizza Company", "score": 8.2, "reviewUrl": ""}, {"name": "The Budlong", "score": 8.0, "reviewUrl": ""}, {"name": "Frannie's Beef", "score": 8.5, "reviewUrl": ""}, {"name": "Marciana's Kitchen", "score": 8.6, "reviewUrl": ""}, {"name": "Deane's Deli", "score": 7.8, "reviewUrl": ""}, {"name": "Volo Quality Meats", "score": 8.8, "reviewUrl": ""}, {"name": "Jook Sing", "score": 9.1, "reviewUrl": ""}, {"name": "Kaufman's Deli", "score": 8.5, "reviewUrl": ""}, {"name": "Sabor De MI Tierra", "score": 8.8, "reviewUrl": ""}, {"name": "Tony and Tina's Deli", "score": 8.4, "reviewUrl": ""}, {"name": "La Poblanita", "score": 8.0, "reviewUrl": ""}, {"name": "Sarkis Cafe", "score": 7.8, "reviewUrl": ""}, {"name": "Doner 97", "score": 8.3, "reviewUrl": ""}, {"name": "Time Out West Sports Pub", "score": 8.3, "reviewUrl": ""}, {"name": "Shawarma Inn", "score": 7.4, "reviewUrl": ""}, {"name": "Noodle Deli", "score": 8.9, "reviewUrl": ""}, {"name": "Coaches Corner", "score": 7.4, "reviewUrl": ""}, {"name": "Ella's Italian Pub", "score": 8.6, "reviewUrl": ""}, {"name": "El Rincon De Fabio", "score": 9.0, "reviewUrl": ""}, {"name": "Charcoal Flame", "score": 8.2, "reviewUrl": ""}, {"name": "Hot Chi", "score": 7.4, "reviewUrl": ""}, {"name": "Top Arepa", "score": 8.3, "reviewUrl": ""}, {"name": "Monkey King Jian Bing", "score": 7.7, "reviewUrl": ""}, {"name": "Tempesta Market", "score": 8.4, "reviewUrl": ""}, {"name": "Fry N' Wings", "score": 8.6, "reviewUrl": ""}, {"name": "Delishka Sandwiches", "score": 8.3, "reviewUrl": ""}, {"name": "Taqueria Sebastian", "score": 7.6, "reviewUrl": ""}, {"name": "Armo Grill", "score": 8.0, "reviewUrl": ""}, {"name": "Five Square Pizza", "score": 8.6, "reviewUrl": ""}, {"name": "Italia Imports", "score": 7.9, "reviewUrl": ""}, {"name": "Phat Phat", "score": 8.0, "reviewUrl": ""}, {"name": "Southern Belle's", "score": 8.3, "reviewUrl": ""}, {"name": "Tiger Chicken", "score": 7.6, "reviewUrl": ""}, {"name": "Mother Cluckers Chicken", "score": 7.9, "reviewUrl": ""}, {"name": "Forza Meats", "score": 8.4, "reviewUrl": ""}, {"name": "The Burger Local", "score": 8.1, "reviewUrl": ""}, {"name": "Tasty Polish Food", "score": 7.8, "reviewUrl": ""}, {"name": "Barnaby's of Northbrook", "score": 8.1, "reviewUrl": ""}, {"name": "Miskatonic Brewery", "score": 8.0, "reviewUrl": ""}, {"name": "Asti Deli", "score": 8.2, "reviewUrl": ""}, {"name": "Flippin Flavors", "score": 9.0, "reviewUrl": ""}, {"name": "Crazy Tortas", "score": 8.2, "reviewUrl": ""}, {"name": "Ukranian Dishes", "score": 7.7, "reviewUrl": ""}, {"name": "Sando Street", "score": 8.2, "reviewUrl": ""}, {"name": "Wild Wings and Slots", "score": 8.0, "reviewUrl": ""}, {"name": "Al and Joe's", "score": 8.9, "reviewUrl": ""}, {"name": "The Southern Kitchen", "score": 7.7, "reviewUrl": ""}, {"name": "Taqueria Invicto", "score": 8.2, "reviewUrl": ""}, {"name": "Sfera Sicilian Street Food", "score": 7.9, "reviewUrl": ""}, {"name": "Atlas Chicken Shack", "score": 7.7, "reviewUrl": ""}, {"name": "Dorrie's Kitchen", "score": 8.7, "reviewUrl": ""}, {"name": "Steingolds", "score": 8.0, "reviewUrl": ""}, {"name": "Finuccio & Sons", "score": 8.4, "reviewUrl": ""}, {"name": "SmashIT Burger", "score": 7.9, "reviewUrl": ""}, {"name": "Peppo's Subs", "score": 8.2, "reviewUrl": ""}, {"name": "Naansense", "score": 8.5, "reviewUrl": ""}, {"name": "More Than Pasta", "score": 8.0, "reviewUrl": ""}, {"name": "Tribecca's Sandwiches", "score": 8.8, "reviewUrl": ""}, {"name": "K-Coop", "score": 8.1, "reviewUrl": ""}, {"name": "Rubino Italian Imports", "score": 7.8, "reviewUrl": ""}, {"name": "Spice Fire & Grill", "score": 8.4, "reviewUrl": ""}, {"name": "El Taurino", "score": 8.0, "reviewUrl": ""}, {"name": "Soulwich", "score": 8.3, "reviewUrl": ""}, {"name": "Sassy Biscuits", "score": 7.9, "reviewUrl": ""}, {"name": "Franco's Cucina", "score": 8.2, "reviewUrl": ""}, {"name": "Starship Subs", "score": 8.4, "reviewUrl": ""}, {"name": "601 Bar and Grill", "score": 7.8, "reviewUrl": ""}, {"name": "Hong Ning", "score": 8.4, "reviewUrl": ""}, {"name": "Mother's Ruin", "score": 8.3, "reviewUrl": ""}, {"name": "Jerky Jerk", "score": 7.9, "reviewUrl": ""}, {"name": "Neighborhood Inn", "score": 7.5, "reviewUrl": ""}, {"name": "Lotus Banh Mi", "score": 9.0, "reviewUrl": ""}, {"name": "Daniel's Charcuterie", "score": 8.4, "reviewUrl": ""}, {"name": "SD Pizzaria", "score": 7.5, "reviewUrl": ""}, {"name": "Arctic Wolf Ale House", "score": 9.1, "reviewUrl": ""}, {"name": "Blue Box Café", "score": 8.5, "reviewUrl": ""}, {"name": "Taco Verde", "score": 9.2, "reviewUrl": ""}];
 
-  <main class="map-wrap">
-    <div id="map"></div>
-    <div class="map-tools">
-      <button id="fitMapped">Fit mapped pins</button>
-      <button id="toggleTop10">Top 10 only</button>
-      <button id="resetView">Reset view</button>
-    </div>
-    <div class="legend">
-      <h3>Score tiers</h3>
-      <div class="item"><span class="dot" style="background:#f3c94c"></span>9.0 and up</div>
-      <div class="item"><span class="dot" style="background:#b56cff"></span>8.0 to 8.9</div>
-      <div class="item"><span class="dot" style="background:#8594ad"></span>7.0 to 7.9</div>
-    </div>
-    <div class="toast" id="toast"></div>
-  </main>
-</div>
+    const state = {
+      items: DATA.map((d, idx) => ({ id: idx + 1, ...d, lat: null, lng: null, address: '', mapped: false, locating: false, failed: false })),
+      map: null,
+      markers: new Map(),
+      quickChip: 'all',
+      locatingQueue: [],
+      queueIndex: 0,
+      locateTimer: null,
+      autoStarted: false,
+    };
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const BASE_DATA = [{"name": "Johnnie's Beef", "score": 9.3}, {"name": "Chicago Bagel Authority", "score": 9.2}, {"name": "Monti's", "score": 9.2}, {"name": "Smack Dab Chicago", "score": 9.2}, {"name": "Taco Verde", "score": 9.2}, {"name": "Arctic Wolf Ale House", "score": 9.1}, {"name": "Jook Sing", "score": 9.1}, {"name": "QP Greek Food with a kick", "score": 9.1}, {"name": "QuesaBirria Jalisco Tacos", "score": 9.1}, {"name": "Scatchell's Beef", "score": 9.1}, {"name": "El Rincon De Fabio", "score": 9.0}, {"name": "Flippin Flavors", "score": 9.0}, {"name": "Hello Shawarma", "score": 9.0}, {"name": "Lotus Banh Mi", "score": 9.0}, {"name": "Nu Crepes", "score": 9.0}, {"name": "Al and Joe's", "score": 8.9}, {"name": "Falafil Hut", "score": 8.9}, {"name": "JJ Fish & Chicken", "score": 8.9}, {"name": "Noodle Deli", "score": 8.9}, {"name": "Pie Boss", "score": 8.9}, {"name": "Epic Deli", "score": 8.8}, {"name": "Sabor De MI Tierra", "score": 8.8}, {"name": "Savory Crust", "score": 8.8}, {"name": "Tribecca's Sandwiches", "score": 8.8}, {"name": "Volo Quality Meats", "score": 8.8}, {"name": "Big Ange's Eatery", "score": 8.7}, {"name": "Cafe Tola", "score": 8.7}, {"name": "Doore Chicken", "score": 8.7}, {"name": "Dorrie's Kitchen", "score": 8.7}, {"name": "Elena's Deli", "score": 8.7}, {"name": "Joe Donut", "score": 8.7}, {"name": "Shwings", "score": 8.7}, {"name": "Apolis Greek Street Food", "score": 8.6}, {"name": "Boba Burger", "score": 8.6}, {"name": "Budacki's Drive In", "score": 8.6}, {"name": "Ella's Italian Pub", "score": 8.6}, {"name": "Five Square Pizza", "score": 8.6}, {"name": "Franks for the Memories", "score": 8.6}, {"name": "Fry N' Wings", "score": 8.6}, {"name": "Holy Wings", "score": 8.6}, {"name": "Marciana's Kitchen", "score": 8.6}, {"name": "Nonna's", "score": 8.6}, {"name": "Bacowka", "score": 8.5}, {"name": "Blue Box Café", "score": 8.5}, {"name": "Capri Deli", "score": 8.5}, {"name": "Chicago Culinary Kitchen", "score": 8.5}, {"name": "Frannie's Beef", "score": 8.5}, {"name": "Garifuna Flava", "score": 8.5}, {"name": "Kaufman's Deli", "score": 8.5}, {"name": "La Birria Loca", "score": 8.5}, {"name": "Mima's Taste of Cuba", "score": 8.5}, {"name": "Naansense", "score": 8.5}, {"name": "The Lucky Monk", "score": 8.5}, {"name": "Cubano Bros", "score": 8.4}, {"name": "Daniel's Charcuterie", "score": 8.4}, {"name": "Evette's", "score": 8.4}, {"name": "Felicia's Deli", "score": 8.4}, {"name": "Finuccio & Sons", "score": 8.4}, {"name": "Forza Meats", "score": 8.4}, {"name": "GT's Fast Food", "score": 8.4}, {"name": "Gators Wing Shack", "score": 8.4}, {"name": "Holt's", "score": 8.4}, {"name": "Hong Ning", "score": 8.4}, {"name": "One Taco Dos Tequila's", "score": 8.4}, {"name": "Pizza Pavia", "score": 8.4}, {"name": "Spice Fire & Grill", "score": 8.4}, {"name": "Starship Subs", "score": 8.4}, {"name": "Tempesta Market", "score": 8.4}, {"name": "Tony and Tina's Deli", "score": 8.4}, {"name": "Une Année Brewery", "score": 8.4}, {"name": "Zenwich", "score": 8.4}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.3}, {"name": "Chi Tea", "score": 8.3}, {"name": "Culinary Gangster", "score": 8.3}, {"name": "Delishka Sandwiches", "score": 8.3}, {"name": "Doner 97", "score": 8.3}, {"name": "Mother's Ruin", "score": 8.3}, {"name": "Mr. Kabab", "score": 8.3}, {"name": "Pizza Boy Chicago", "score": 8.3}, {"name": "Porkito", "score": 8.3}, {"name": "Soulwich", "score": 8.3}, {"name": "Southern Belle's", "score": 8.3}, {"name": "The Philly Special", "score": 8.3}, {"name": "Time Out West Sports Pub", "score": 8.3}, {"name": "Top Arepa", "score": 8.3}, {"name": "Asti Deli", "score": 8.2}, {"name": "Bill's Place", "score": 8.2}, {"name": "Charcoal Flame", "score": 8.2}, {"name": "Chicago Style Taco Shop", "score": 8.2}, {"name": "Crazy Tortas", "score": 8.2}, {"name": "Dario's", "score": 8.2}, {"name": "En Hakkore 2.0", "score": 8.2}, {"name": "Enzo's Pizza", "score": 8.2}, {"name": "Franco's Cucina", "score": 8.2}, {"name": "Nottoli Italian Foods", "score": 8.2}, {"name": "Peppo's Subs", "score": 8.2}, {"name": "Pinoy Grill", "score": 8.2}, {"name": "Pizza Bella", "score": 8.2}, {"name": "Priscilla's Ultimate Soul Food", "score": 8.2}, {"name": "Rammy's Sub Contractors", "score": 8.2}, {"name": "Rep's Burgers", "score": 8.2}, {"name": "Rosie's Sidekick Sandwich Shop", "score": 8.2}, {"name": "Sando Street", "score": 8.2}, {"name": "Schmaltz Deli", "score": 8.2}, {"name": "Sukho Thai Cuisine", "score": 8.2}, {"name": "Taqueria Invicto", "score": 8.2}, {"name": "The Sandlot", "score": 8.2}, {"name": "Uncle Jerry's Pizza Company", "score": 8.2}, {"name": "Urban Counter", "score": 8.2}, {"name": "All Ways Catering & Deli", "score": 8.1}, {"name": "Barnaby's of Northbrook", "score": 8.1}, {"name": "Berliner Kebap", "score": 8.1}, {"name": "El Asadero", "score": 8.1}, {"name": "Fry Chicken n Fries", "score": 8.1}, {"name": "Fry The Coop", "score": 8.1}, {"name": "Gringo and Blondie", "score": 8.1}, {"name": "Jay's Beef", "score": 8.1}, {"name": "Jim's Original", "score": 8.1}, {"name": "K-Coop", "score": 8.1}, {"name": "Pizza Pushers", "score": 8.1}, {"name": "Ricobene's", "score": 8.1}, {"name": "The Burger Local", "score": 8.1}, {"name": "The Local Kitchen", "score": 8.1}, {"name": "The Slice Shop", "score": 8.1}, {"name": "Thlaco Taco", "score": 8.1}, {"name": "Wilma's Famous BBQ", "score": 8.1}, {"name": "Aloha Wagon", "score": 8.0}, {"name": "Armo Grill", "score": 8.0}, {"name": "Buffalo Joe's", "score": 8.0}, {"name": "Dak Dak Korean Wings", "score": 8.0}, {"name": "Dawg Park", "score": 8.0}, {"name": "El Taurino", "score": 8.0}, {"name": "Joy Teriyaki", "score": 8.0}, {"name": "La Poblanita", "score": 8.0}, {"name": "Miskatonic Brewery", "score": 8.0}, {"name": "More Than Pasta", "score": 8.0}, {"name": "Mughal The Biryani House", "score": 8.0}, {"name": "Panes Bread Cafe", "score": 8.0}, {"name": "Phat Phat", "score": 8.0}, {"name": "Steingolds", "score": 8.0}, {"name": "Tata's Pierogi", "score": 8.0}, {"name": "The Budlong", "score": 8.0}, {"name": "Wild Wings and Slots", "score": 8.0}, {"name": "Byrds Hot Chicken", "score": 7.9}, {"name": "Chicago Pickle Eatery", "score": 7.9}, {"name": "Italia Imports", "score": 7.9}, {"name": "Jerky Jerk", "score": 7.9}, {"name": "Mojo's East Coast Eats", "score": 7.9}, {"name": "Mother Cluckers Chicken", "score": 7.9}, {"name": "Pholicious", "score": 7.9}, {"name": "Rand Red Hots", "score": 7.9}, {"name": "Sassy Biscuits", "score": 7.9}, {"name": "Sfera Sicilian Street Food", "score": 7.9}, {"name": "SmashIT Burger", "score": 7.9}, {"name": "Spiro's Deli", "score": 7.9}, {"name": "Takito Holic", "score": 7.9}, {"name": "601 Bar and Grill", "score": 7.8}, {"name": "B.B.Q Chicken", "score": 7.8}, {"name": "Deane's Deli", "score": 7.8}, {"name": "Fatt Mustard", "score": 7.8}, {"name": "Hagen's Fish Market", "score": 7.8}, {"name": "JT's Genuine Sandwich Shop", "score": 7.8}, {"name": "Marco Roma", "score": 7.8}, {"name": "Ochoa’s Mexican Grill", "score": 7.8}, {"name": "Pita BBQ", "score": 7.8}, {"name": "Primo Pizza", "score": 7.8}, {"name": "Rubino Italian Imports", "score": 7.8}, {"name": "Sarkis Cafe", "score": 7.8}, {"name": "Tasty Polish Food", "score": 7.8}, {"name": "The Assembly Bar", "score": 7.8}, {"name": "Tony's Italian Deli", "score": 7.8}, {"name": "Algonquin Sandwich Shop", "score": 7.7}, {"name": "Atlas Chicken Shack", "score": 7.7}, {"name": "Hot Pockets Bar", "score": 7.7}, {"name": "Maz Mez Grill", "score": 7.7}, {"name": "Monkey King Jian Bing", "score": 7.7}, {"name": "Punky's Pizza", "score": 7.7}, {"name": "Taco Boom", "score": 7.7}, {"name": "The Southern Kitchen", "score": 7.7}, {"name": "Ukranian Dishes", "score": 7.7}, {"name": "Vasco's Peri Peri", "score": 7.7}, {"name": "Veloce Pizze", "score": 7.7}, {"name": "Village Tavern & Grill", "score": 7.7}, {"name": "County Farm Bagels", "score": 7.6}, {"name": "Cracked", "score": 7.6}, {"name": "Pupuseria Cheros", "score": 7.6}, {"name": "Rep's Place", "score": 7.6}, {"name": "Taqueria Sebastian", "score": 7.6}, {"name": "The Canteen Restaurant", "score": 7.6}, {"name": "The Dogfather", "score": 7.6}, {"name": "Tiger Chicken", "score": 7.6}, {"name": "Neighborhood Inn", "score": 7.5}, {"name": "SD Pizzaria", "score": 7.5}, {"name": "Student Burger", "score": 7.5}, {"name": "Coaches Corner", "score": 7.4}, {"name": "Hot Chi", "score": 7.4}, {"name": "Shawarma Inn", "score": 7.4}, {"name": "Sake Sushi", "score": 7.3}, {"name": "Tacos Jerez", "score": 7.2}];
-const CACHE_KEY = "supergoode-map-geocache-v5";
-const VIEW_KEY = "supergoode-map-view-v5";
-const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}");
+    const els = {
+      list: document.getElementById('list'),
+      searchInput: document.getElementById('searchInput'),
+      scoreFilter: document.getElementById('scoreFilter'),
+      sortFilter: document.getElementById('sortFilter'),
+      statShowing: document.getElementById('statShowing'),
+      statMapped: document.getElementById('statMapped'),
+      statAvg: document.getElementById('statAvg'),
+      statTop: document.getElementById('statTop'),
+      autoStatus: document.getElementById('autoStatus'),
+      fitMappedBtn: document.getElementById('fitMappedBtn'),
+      clearSavedBtn: document.getElementById('clearSavedBtn'),
+      quickChips: document.getElementById('quickChips')
+    };
 
-const state = {
-  search: "",
-  scoreFilter: "all",
-  sortBy: "score-desc",
-  top10Only: false,
-  geocoding: false,
-  items: BASE_DATA.map((item, idx) => ({
-    id: idx + 1,
-    ...item,
-    location: cache[item.name] || null
-  }))
-};
-
-const defaultView = { center: [41.8781, -87.6298], zoom: 10 };
-const savedView = (() => {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(VIEW_KEY) || "null");
-    if (parsed && Array.isArray(parsed.center) && typeof parsed.zoom === "number") return parsed;
-  } catch (e) {}
-  return defaultView;
-})();
-
-const map = L.map("map", {
-  zoomControl: true,
-  preferCanvas: true
-}).setView(savedView.center, savedView.zoom);
-
-L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: "&copy; OpenStreetMap contributors"
-}).addTo(map);
-
-map.on("moveend", () => {
-  const c = map.getCenter();
-  localStorage.setItem(VIEW_KEY, JSON.stringify({ center: [c.lat, c.lng], zoom: map.getZoom() }));
-});
-
-let markersLayer = L.layerGroup().addTo(map);
-
-const els = {
-  search: document.getElementById("search"),
-  scoreFilter: document.getElementById("scoreFilter"),
-  sortBy: document.getElementById("sortBy"),
-  list: document.getElementById("list"),
-  status: document.getElementById("status"),
-  placesCount: document.getElementById("placesCount"),
-  avgScore: document.getElementById("avgScore"),
-  mappedCount: document.getElementById("mappedCount"),
-  topScore: document.getElementById("topScore"),
-  geocodeVisible: document.getElementById("geocodeVisible"),
-  clearCache: document.getElementById("clearCache"),
-  geocodeTop: document.getElementById("geocodeTop"),
-  exportCsv: document.getElementById("exportCsv"),
-  fitMapped: document.getElementById("fitMapped"),
-  toggleTop10: document.getElementById("toggleTop10"),
-  resetView: document.getElementById("resetView"),
-  toast: document.getElementById("toast"),
-  quickFilters: document.getElementById("quickFilters")
-};
-
-function saveCache() {
-  const fresh = {};
-  state.items.forEach(item => {
-    if (item.location) fresh[item.name] = item.location;
-  });
-  localStorage.setItem(CACHE_KEY, JSON.stringify(fresh));
-}
-
-function showToast(text) {
-  els.toast.textContent = text;
-  els.toast.classList.add("show");
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => els.toast.classList.remove("show"), 2200);
-}
-
-function scoreTier(score) {
-  if (score >= 9) return 9;
-  if (score >= 8) return 8;
-  return 7;
-}
-
-function markerColor(score) {
-  return score >= 9 ? "#f3c94c" : score >= 8 ? "#b56cff" : "#8594ad";
-}
-
-function markerIcon(score) {
-  const color = markerColor(score);
-  return L.divIcon({
-    className: "",
-    html: `<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid rgba(17,24,38,.97);box-shadow:0 2px 10px rgba(0,0,0,.35)"></div>`,
-    iconSize: [18,18],
-    iconAnchor: [9,9]
-  });
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]);
-}
-
-function googleSearchUrl(name) {
-  return `https://www.google.com/maps/search/${encodeURIComponent(name + ", Chicago, IL")}`;
-}
-
-function locationLabel(item) {
-  if (!item.location) return "Not mapped yet";
-  const parts = [item.location.display_name || ""].filter(Boolean);
-  return parts[0];
-}
-
-function getFilteredItems() {
-  let items = [...state.items];
-  const q = state.search.trim().toLowerCase();
-  if (q) {
-    items = items.filter(item => item.name.toLowerCase().includes(q));
-  }
-
-  switch (state.scoreFilter) {
-    case "9": items = items.filter(i => i.score >= 9); break;
-    case "8": items = items.filter(i => i.score >= 8 && i.score < 9); break;
-    case "7": items = items.filter(i => i.score >= 7 && i.score < 8); break;
-    case "mapped": items = items.filter(i => i.location); break;
-    case "unmapped": items = items.filter(i => !i.location); break;
-  }
-
-  items.sort((a, b) => {
-    switch (state.sortBy) {
-      case "located-first": return Number(Boolean(b.location)) - Number(Boolean(a.location)) || b.score - a.score || a.name.localeCompare(b.name);
-      case "name-asc": return a.name.localeCompare(b.name);
-      case "name-desc": return b.name.localeCompare(a.name);
-      case "score-asc": return a.score - b.score || a.name.localeCompare(b.name);
-      default: return b.score - a.score || a.name.localeCompare(b.name);
+    function scoreClass(score) {
+      if (score >= 9) return 'gold';
+      if (score >= 8) return 'purple';
+      return 'gray';
     }
-  });
 
-  if (state.top10Only) items = items.slice(0, 10);
-  return items;
-}
+    function markerColor(score) {
+      if (score >= 9) return '#f2c94c';
+      if (score >= 8) return '#b678ff';
+      return '#8f9bb3';
+    }
 
-function updateStats(filteredItems) {
-  const mapped = state.items.filter(i => i.location).length;
-  const avg = state.items.reduce((sum, item) => sum + item.score, 0) / state.items.length;
-  const top = Math.max(...state.items.map(i => i.score));
-  els.placesCount.textContent = filteredItems.length;
-  els.mappedCount.textContent = mapped;
-  els.avgScore.textContent = avg.toFixed(1);
-  els.topScore.textContent = top.toFixed(1);
-}
+    function makeIcon(score) {
+      const color = markerColor(score);
+      return L.divIcon({
+        className: '',
+        html: `<div style="width:16px;height:16px;border-radius:50%;background:${color};border:3px solid rgba(8,12,20,.85);box-shadow:0 4px 14px rgba(0,0,0,.35)"></div>`,
+        iconSize: [16,16],
+        iconAnchor: [8,8],
+        popupAnchor: [0,-6],
+      });
+    }
 
-function renderList(items) {
-  if (!items.length) {
-    els.list.innerHTML = '<div class="empty">No places match your filters.</div>';
-    return;
-  }
-  els.list.innerHTML = items.map(item => {
-    const tier = scoreTier(item.score);
-    return `
-      <div class="card">
-        <div class="row">
-          <h3 class="name">${escapeHtml(item.name)}</h3>
-          <div class="score tier${tier}">${item.score.toFixed(1)}</div>
-        </div>
-        <div class="meta">${escapeHtml(locationLabel(item))}</div>
-        <div class="actions">
-          <button onclick="focusPlace(${item.id})">Show on map</button>
-          <button onclick="findPlace(${item.id})">Find location</button>
-          <a href="${googleSearchUrl("${item.name}")}" target="_blank" rel="noopener noreferrer">Google Maps</a>
-          ${item.location ? `<a href="https://www.openstreetmap.org/?mlat=${item.location.lat}&mlon=${item.location.lon}#map=16/${item.location.lat}/${item.location.lon}" target="_blank" rel="noopener noreferrer">OSM</a>` : ""}
-        </div>
-      </div>
-    `;
-  }).join("");
-}
+    function normalizeName(name) {
+      return name
+        .replace(/\s+/g, ' ')
+        .replace(/[’']/g, "'")
+        .trim();
+    }
 
-function renderMarkers(items) {
-  markersLayer.clearLayers();
-  items.filter(item => item.location).forEach(item => {
-    const marker = L.marker([item.location.lat, item.location.lon], { icon: markerIcon(item.score) });
-    marker.bindPopup(`
-      <div style="min-width:220px">
-        <div style="font-weight:800;font-size:1rem;margin-bottom:6px">${escapeHtml(item.name)}</div>
-        <div style="color:#d4b06b;font-weight:700;margin-bottom:6px">Score: ${item.score.toFixed(1)}</div>
-        <div style="color:#b6bfd0;font-size:.85rem;line-height:1.4;margin-bottom:10px">${escapeHtml(locationLabel(item))}</div>
-        <a href="${googleSearchUrl("${item.name}")}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
-      </div>
-    `);
-    marker.addTo(markersLayer);
-  });
-}
+    function queryVariants(item) {
+      const name = normalizeName(item.name);
+      return [
+        `${name}, Chicago, IL`,
+        `${name} restaurant, Chicago, IL`,
+        `${name}, Illinois`,
+        `${name}`
+      ];
+    }
 
-function render() {
-  const filtered = getFilteredItems();
-  updateStats(filtered);
-  renderList(filtered);
-  renderMarkers(filtered);
-  const suffix = state.top10Only ? " · Top 10 mode on" : "";
-  els.status.textContent = `${filtered.length} shown · ${state.items.filter(i => i.location).length} mapped.${suffix}`;
-}
+    function mapsSearchUrl(item) {
+      return `https://www.google.com/maps/search/${encodeURIComponent(normalizeName(item.name) + ', Chicago, IL')}`;
+    }
 
-async function geocodeItem(item) {
-  if (item.location) return item.location;
-  const queries = [
-    `${item.name}, Chicago, IL`,
-    `${item.name}, Chicagoland, IL`,
-    `${item.name}, Illinois`,
-    item.name
-  ];
+    function popupHtml(item) {
+      const reviewHtml = item.reviewUrl
+        ? `<a href="${item.reviewUrl}" target="_blank" rel="noopener noreferrer">Review Video</a>`
+        : `<span>Review Video</span>`;
+      const dirHtml = `<a href="${mapsSearchUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
+      const address = item.address ? escapeHtml(item.address) : 'Location not locked yet';
+      return `
+        <div class="popup-title">${escapeHtml(item.name)} (${item.score.toFixed(1)})</div>
+        <div class="popup-sub">${address}</div>
+        <div class="popup-links">${reviewHtml}${dirHtml}</div>
+      `;
+    }
 
-  for (const q of queries) {
-    const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q=${encodeURIComponent(q)}`;
-    try {
-      const res = await fetch(url, {
-        headers: {
-          "Accept": "application/json"
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function loadSavedLocations() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        for (const item of state.items) {
+          const s = saved[item.name];
+          if (s && Number.isFinite(s.lat) && Number.isFinite(s.lng)) {
+            item.lat = s.lat;
+            item.lng = s.lng;
+            item.address = s.address || '';
+            item.mapped = true;
+          }
+        }
+      } catch (err) {
+        console.warn('Could not load saved locations', err);
+      }
+    }
+
+    function persistItem(item) {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      saved[item.name] = { lat:item.lat, lng:item.lng, address:item.address || '' };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    }
+
+    function clearSaved() {
+      localStorage.removeItem(STORAGE_KEY);
+      state.items.forEach(item => {
+        item.lat = null;
+        item.lng = null;
+        item.address = '';
+        item.mapped = false;
+        item.failed = false;
+        item.locating = false;
+      });
+      for (const marker of state.markers.values()) {
+        state.map.removeLayer(marker);
+      }
+      state.markers.clear();
+      startAutoLocation(true);
+      render();
+    }
+
+    async function geocodeItem(item) {
+      if (item.mapped || item.locating) return false;
+      item.locating = true;
+      item.failed = false;
+      renderStatus();
+
+      for (const q of queryVariants(item)) {
+        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q=${encodeURIComponent(q)}`;
+        try {
+          const res = await fetch(url, {
+            headers: {
+              'Accept': 'application/json',
+              'Accept-Language': 'en-US,en;q=0.9'
+            }
+          });
+          if (!res.ok) continue;
+          const data = await res.json();
+          if (Array.isArray(data) && data.length) {
+            const hit = data[0];
+            item.lat = Number(hit.lat);
+            item.lng = Number(hit.lon);
+            item.address = hit.display_name || '';
+            item.mapped = Number.isFinite(item.lat) && Number.isFinite(item.lng);
+            item.locating = false;
+            if (item.mapped) {
+              persistItem(item);
+              upsertMarker(item);
+              render();
+              return true;
+            }
+          }
+        } catch (err) {
+          console.warn('Geocode failed for', item.name, err);
+        }
+        await sleep(400);
+      }
+
+      item.locating = false;
+      item.failed = true;
+      render();
+      return false;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function buildQueue() {
+      const filtered = getFilteredItems();
+      const remaining = filtered.filter(item => !item.mapped);
+      const rest = state.items.filter(item => !item.mapped && !remaining.includes(item));
+      return [...remaining, ...rest];
+    }
+
+    function startAutoLocation(force = false) {
+      if (state.autoStarted && !force) return;
+      state.autoStarted = true;
+      state.locatingQueue = buildQueue();
+      state.queueIndex = 0;
+      runLocateQueue();
+    }
+
+    async function runLocateQueue() {
+      if (state.locateTimer) return;
+      state.locateTimer = true;
+      while (state.queueIndex < state.locatingQueue.length) {
+        const item = state.locatingQueue[state.queueIndex++];
+        if (!item || item.mapped) continue;
+        await geocodeItem(item);
+        renderStatus();
+        await sleep(1200);
+      }
+      state.locateTimer = null;
+      renderStatus();
+    }
+
+    function refreshQueue() {
+      if (!state.autoStarted) return;
+      state.locatingQueue = buildQueue();
+      state.queueIndex = 0;
+      state.locateTimer = null;
+      runLocateQueue();
+    }
+
+    function upsertMarker(item) {
+      if (!item.mapped) return;
+      const existing = state.markers.get(item.id);
+      if (existing) {
+        existing.setLatLng([item.lat, item.lng]);
+        existing.setPopupContent(popupHtml(item));
+        return;
+      }
+      const marker = L.marker([item.lat, item.lng], { icon: makeIcon(item.score) })
+        .addTo(state.map)
+        .bindPopup(popupHtml(item));
+      state.markers.set(item.id, marker);
+    }
+
+    function syncMarkersToFilter() {
+      const visibleIds = new Set(getFilteredItems().filter(x => x.mapped).map(x => x.id));
+      for (const item of state.items) {
+        const marker = state.markers.get(item.id);
+        if (!marker) continue;
+        if (visibleIds.has(item.id)) {
+          if (!state.map.hasLayer(marker)) marker.addTo(state.map);
+        } else {
+          if (state.map.hasLayer(marker)) state.map.removeLayer(marker);
+        }
+      }
+    }
+
+    function getFilteredItems() {
+      const q = els.searchInput.value.trim().toLowerCase();
+      const scoreFilter = els.scoreFilter.value;
+      const sort = els.sortFilter.value;
+
+      let arr = state.items.filter(item => {
+        if (q && !item.name.toLowerCase().includes(q)) return false;
+        if (scoreFilter !== 'all' && item.score < Number(scoreFilter)) return false;
+        if (state.quickChip === '9plus' && item.score < 9) return false;
+        if (state.quickChip === '8plus' && (item.score < 8 || item.score >= 9)) return false;
+        if (state.quickChip === '7s' && item.score >= 8) return false;
+        if (state.quickChip === 'mapped' && !item.mapped) return false;
+        return true;
+      });
+
+      arr.sort((a,b) => {
+        if (sort === 'scoreAsc') return a.score - b.score || a.name.localeCompare(b.name);
+        if (sort === 'nameAsc') return a.name.localeCompare(b.name);
+        if (sort === 'mappedFirst') return Number(b.mapped) - Number(a.mapped) || b.score - a.score;
+        return b.score - a.score || a.name.localeCompare(b.name);
+      });
+      return arr;
+    }
+
+    function renderStats(filtered) {
+      const mappedCount = state.items.filter(i => i.mapped).length;
+      const avg = filtered.length ? filtered.reduce((s,i) => s + i.score, 0) / filtered.length : 0;
+      const top = filtered.length ? Math.max(...filtered.map(i => i.score)) : 0;
+      els.statShowing.textContent = filtered.length;
+      els.statMapped.textContent = mappedCount;
+      els.statAvg.textContent = avg.toFixed(1);
+      els.statTop.textContent = top.toFixed(1);
+    }
+
+    function renderStatus() {
+      const mapped = state.items.filter(i => i.mapped).length;
+      const remaining = state.items.length - mapped;
+      const active = state.items.find(i => i.locating);
+      if (active) {
+        els.autoStatus.textContent = `Locating: ${active.name} · ${mapped} mapped`;
+      } else if (remaining > 0) {
+        els.autoStatus.textContent = `Auto-locating in background · ${mapped} mapped`;
+      } else {
+        els.autoStatus.textContent = `All places processed · ${mapped} mapped`;
+      }
+    }
+
+    function render() {
+      const filtered = getFilteredItems();
+      renderStats(filtered);
+      renderStatus();
+      syncMarkersToFilter();
+
+      if (!filtered.length) {
+        els.list.innerHTML = `<div class="empty">No restaurants match this view.</div>`;
+        return;
+      }
+
+      els.list.innerHTML = filtered.map(item => `
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <div class="name">${escapeHtml(item.name)}</div>
+              <div class="meta">${
+                item.mapped ? escapeHtml(shortAddress(item.address)) :
+                item.locating ? 'Locating now…' :
+                item.failed ? 'Could not match yet' :
+                'Queued for auto-location'
+              }</div>
+            </div>
+            <div class="score ${scoreClass(item.score)}">${item.score.toFixed(1)}</div>
+          </div>
+          <div class="card-actions">
+            <button class="primary" data-action="show" data-id="${item.id}" ${item.mapped ? '' : 'disabled'}>Show on map</button>
+            <button class="subtle" data-action="retry" data-id="${item.id}" ${item.locating ? 'disabled' : ''}>Find location</button>
+            <a class="btn subtle" href="${mapsSearchUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>
+            <button class="subtle" data-action="video" data-id="${item.id}" ${item.reviewUrl ? '' : 'disabled'}>Review video</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function shortAddress(address) {
+      if (!address) return '';
+      const parts = address.split(',');
+      return parts.slice(0, 3).join(',').trim();
+    }
+
+    function setActiveChip(chip) {
+      state.quickChip = chip;
+      [...els.quickChips.querySelectorAll('.chip')].forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.chip === chip);
+      });
+      render();
+      refreshQueue();
+    }
+
+    function fitMappedPins() {
+      const markers = [...state.markers.values()].filter(m => state.map.hasLayer(m));
+      if (!markers.length) return;
+      const group = L.featureGroup(markers);
+      state.map.fitBounds(group.getBounds().pad(0.18), { animate:true });
+    }
+
+    function bindEvents() {
+      els.searchInput.addEventListener('input', () => { render(); refreshQueue(); });
+      els.scoreFilter.addEventListener('change', () => { render(); refreshQueue(); });
+      els.sortFilter.addEventListener('change', render);
+      els.fitMappedBtn.addEventListener('click', fitMappedPins);
+      els.clearSavedBtn.addEventListener('click', clearSaved);
+      els.quickChips.addEventListener('click', (e) => {
+        const btn = e.target.closest('.chip');
+        if (!btn) return;
+        setActiveChip(btn.dataset.chip);
+      });
+
+      els.list.addEventListener('click', async (e) => {
+        const target = e.target.closest('[data-action]');
+        if (!target) return;
+        const id = Number(target.dataset.id);
+        const item = state.items.find(x => x.id === id);
+        if (!item) return;
+
+        const action = target.dataset.action;
+        if (action === 'show' && item.mapped) {
+          state.map.flyTo([item.lat, item.lng], 15, { duration:0.7 });
+          const marker = state.markers.get(item.id);
+          if (marker) marker.openPopup();
+        }
+        if (action === 'retry') {
+          await geocodeItem(item);
+          render();
+        }
+        if (action === 'video' && item.reviewUrl) {
+          window.open(item.reviewUrl, '_blank', 'noopener,noreferrer');
         }
       });
-      const data = await res.json();
-      if (Array.isArray(data) && data.length) {
-        const hit = data[0];
-        item.location = {
-          lat: Number(hit.lat),
-          lon: Number(hit.lon),
-          display_name: hit.display_name
-        };
-        saveCache();
-        return item.location;
-      }
-    } catch (err) {
-      console.error("Geocode failed for", item.name, err);
-    }
-    await new Promise(r => setTimeout(r, 850));
-  }
-  return null;
-}
 
-async function geocodeBatch(items) {
-  const targets = items.filter(item => !item.location);
-  if (!targets.length) {
-    showToast("Nothing new to map.");
-    return;
-  }
-  state.geocoding = true;
-  setButtonsDisabled(true);
-  let found = 0;
-  for (let i = 0; i < targets.length; i++) {
-    const item = targets[i];
-    els.status.textContent = `Finding ${item.name} (${i + 1}/${targets.length})…`;
-    const location = await geocodeItem(item);
-    if (location) found++;
+      window.addEventListener('resize', () => {
+        setTimeout(() => state.map.invalidateSize(), 100);
+      });
+    }
+
+    function initMap() {
+      state.map = L.map('map', {
+        zoomControl:true,
+        preferCanvas:true
+      }).setView([41.8781, -87.6298], 9);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20
+      }).addTo(state.map);
+
+      state.items.filter(i => i.mapped).forEach(upsertMarker);
+      setTimeout(() => state.map.invalidateSize(), 120);
+    }
+
+    loadSavedLocations();
+    initMap();
+    bindEvents();
     render();
-  }
-  state.geocoding = false;
-  setButtonsDisabled(false);
-  els.status.textContent = `Finished. Found ${found} new location${found === 1 ? "" : "s"}.`;
-  showToast(`Mapped ${found} new place${found === 1 ? "" : "s"}`);
-}
-
-function setButtonsDisabled(disabled) {
-  [els.geocodeVisible, els.clearCache, els.geocodeTop, els.exportCsv, els.fitMapped, els.toggleTop10, els.resetView].forEach(el => {
-    if (el) el.disabled = disabled;
-  });
-}
-
-window.focusPlace = function(id) {
-  const item = state.items.find(i => i.id === id);
-  if (!item) return;
-  if (!item.location) {
-    showToast("No saved location yet for this place.");
-    return;
-  }
-  map.setView([item.location.lat, item.location.lon], 15);
-  markersLayer.eachLayer(layer => {
-    if (layer.getLatLng && layer.getLatLng().lat === item.location.lat && layer.getLatLng().lng === item.location.lon) {
-      layer.openPopup();
-    }
-  });
-};
-
-window.findPlace = async function(id) {
-  const item = state.items.find(i => i.id === id);
-  if (!item) return;
-  if (item.location) {
-    focusPlace(id);
-    return;
-  }
-  els.status.textContent = `Finding ${item.name}…`;
-  const before = !!item.location;
-  await geocodeItem(item);
-  render();
-  if (item.location && !before) {
-    focusPlace(id);
-    showToast(`Mapped ${item.name}`);
-    els.status.textContent = `Mapped ${item.name}.`;
-  } else {
-    els.status.textContent = `No match found for ${item.name}.`;
-    showToast("No match found");
-  }
-};
-
-function exportCsv() {
-  const rows = [
-    ["name","score","mapped","lat","lng","location"],
-    ...state.items.map(item => [
-      item.name,
-      item.score.toFixed(1),
-      item.location ? "yes" : "no",
-      item.location ? item.location.lat : "",
-      item.location ? item.location.lon : "",
-      item.location ? item.location.display_name : ""
-    ])
-  ];
-  const csv = rows.map(row => row.map(value => {
-    const text = String(value ?? "");
-    return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
-  }).join(",")).join("\n");
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "supergoode_map_v4_export.csv";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  showToast("CSV exported");
-}
-
-function fitMapped() {
-  const mapped = state.items.filter(i => i.location);
-  if (!mapped.length) {
-    showToast("No mapped pins yet.");
-    return;
-  }
-  const bounds = L.latLngBounds(mapped.map(item => [item.location.lat, item.location.lon]));
-  map.fitBounds(bounds.pad(0.18));
-}
-
-els.search.addEventListener("input", e => {
-  state.search = e.target.value;
-  render();
-});
-els.scoreFilter.addEventListener("change", e => {
-  state.scoreFilter = e.target.value;
-  syncQuickFilter();
-  render();
-});
-els.sortBy.addEventListener("change", e => {
-  state.sortBy = e.target.value;
-  render();
-});
-els.quickFilters.addEventListener("click", e => {
-  const btn = e.target.closest(".chip");
-  if (!btn) return;
-  state.scoreFilter = btn.dataset.filter;
-  els.scoreFilter.value = state.scoreFilter;
-  syncQuickFilter();
-  render();
-});
-function syncQuickFilter() {
-  [...els.quickFilters.querySelectorAll(".chip")].forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.filter === state.scoreFilter);
-  });
-}
-
-els.geocodeVisible.addEventListener("click", async () => {
-  const items = getFilteredItems().slice(0, 20);
-  await geocodeBatch(items);
-});
-els.geocodeTop.addEventListener("click", async () => {
-  const items = [...state.items].sort((a,b) => b.score - a.score || a.name.localeCompare(b.name)).slice(0, 25);
-  await geocodeBatch(items);
-});
-els.clearCache.addEventListener("click", () => {
-  if (!confirm("Clear all saved mapped locations for this app?")) return;
-  state.items.forEach(item => item.location = null);
-  localStorage.removeItem(CACHE_KEY);
-  render();
-  showToast("Saved locations cleared");
-});
-els.exportCsv.addEventListener("click", exportCsv);
-els.fitMapped.addEventListener("click", fitMapped);
-els.toggleTop10.addEventListener("click", () => {
-  state.top10Only = !state.top10Only;
-  els.toggleTop10.textContent = state.top10Only ? "Show all" : "Top 10 only";
-  render();
-});
-els.resetView.addEventListener("click", () => {
-  map.setView(defaultView.center, defaultView.zoom);
-});
-
-render();
-syncQuickFilter();
-</script>
+    startAutoLocation();
+  </script>
 </body>
 </html>
