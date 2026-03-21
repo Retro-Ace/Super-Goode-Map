@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Super Goode Map App v4</title>
+<title>Super Goode Map App v5</title>
 <link rel="preconnect" href="https://unpkg.com">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
@@ -109,6 +109,7 @@
   }
   button {
     cursor: pointer;
+    touch-action: manipulation;
     font-weight: 700;
     transition: transform .12s ease, opacity .12s ease, border-color .12s ease;
   }
@@ -332,22 +333,158 @@
   }
   .toast.show { opacity: 1; }
   @media (max-width: 980px) {
-    html, body { overflow: hidden; }
-    .app {
-      grid-template-columns: 1fr;
-      grid-template-rows: 52dvh minmax(0, 1fr);
-      height: 100dvh;
+    html, body {
+      height: auto;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .map-wrap { order: 1; }
+    body {
+      overscroll-behavior-y: auto;
+    }
+    .app {
+      display: block;
+      height: auto;
+      min-height: 100svh;
+    }
+    .map-wrap {
+      position: relative;
+      height: 42svh;
+      min-height: 300px;
+      max-height: 460px;
+      overflow: hidden;
+    }
     .sidebar {
-      order: 2;
+      min-height: unset;
       border-right: none;
       border-top: 1px solid var(--line);
+      box-shadow: none;
     }
-    #map { height: 52dvh; }
-    .legend { top: auto; bottom: 14px; right: 14px; }
-    .map-tools { max-width: calc(100% - 28px); }
-    .header { padding-top: 14px; }
+    .header { padding-top: 16px; }
+    .controls,
+    .stats,
+    .toolbar,
+    .footer-note {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+    .controls { gap: 9px; }
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto;
+      min-width: 58px;
+    }
+    .stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .stat {
+      padding: 10px;
+    }
+    .list {
+      flex: initial;
+      min-height: unset;
+      max-height: none;
+      overflow: visible;
+      padding: 14px 14px 28px;
+    }
+    .card {
+      margin-bottom: 10px;
+      border-radius: 16px;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .actions button,
+    .actions a {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    .map-tools {
+      left: 10px;
+      right: 10px;
+      top: 10px;
+      max-width: none;
+      padding: 8px;
+      gap: 6px;
+    }
+    .map-tools button {
+      flex: 1 1 calc(50% - 6px);
+      min-width: 0;
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+    .legend {
+      right: 10px;
+      top: auto;
+      bottom: 10px;
+      padding: 10px 12px;
+    }
+    .leaflet-control-zoom {
+      margin-top: 10px !important;
+      margin-left: 10px !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 1.75rem;
+    }
+    .sub {
+      font-size: .92rem;
+    }
+    .map-wrap {
+      height: 36svh;
+      min-height: 250px;
+      max-height: 380px;
+    }
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .controls button,
+    .controls input,
+    .controls select {
+      min-height: 46px;
+    }
+    .stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .actions {
+      grid-template-columns: 1fr;
+    }
+    .map-tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .map-tools button {
+      flex: initial;
+    }
+    .legend {
+      font-size: 12px;
+      max-width: calc(100% - 20px);
+    }
   }
 </style>
 </head>
@@ -356,8 +493,8 @@
   <aside class="sidebar">
     <div class="header">
       <div class="eyebrow"><span class="eyebrow-dot"></span>Super Goode companion map</div>
-      <h1>Super Goode Map App v4</h1>
-      <div class="sub">Cleaner layout, no full-page scroll, better location lookup, map tools, and CSV export for saved matches.</div>
+      <h1>Super Goode Map App v5</h1>
+      <div class="sub">Phone-friendly layout with proper mobile scrolling, easier restaurant tapping, better location lookup, map tools, and CSV export.</div>
     </div>
 
     <div class="controls">
@@ -428,8 +565,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const BASE_DATA = [{"name": "Johnnie's Beef", "score": 9.3}, {"name": "Chicago Bagel Authority", "score": 9.2}, {"name": "Monti's", "score": 9.2}, {"name": "Smack Dab Chicago", "score": 9.2}, {"name": "Taco Verde", "score": 9.2}, {"name": "Arctic Wolf Ale House", "score": 9.1}, {"name": "Jook Sing", "score": 9.1}, {"name": "QP Greek Food with a kick", "score": 9.1}, {"name": "QuesaBirria Jalisco Tacos", "score": 9.1}, {"name": "Scatchell's Beef", "score": 9.1}, {"name": "El Rincon De Fabio", "score": 9.0}, {"name": "Flippin Flavors", "score": 9.0}, {"name": "Hello Shawarma", "score": 9.0}, {"name": "Lotus Banh Mi", "score": 9.0}, {"name": "Nu Crepes", "score": 9.0}, {"name": "Al and Joe's", "score": 8.9}, {"name": "Falafil Hut", "score": 8.9}, {"name": "JJ Fish & Chicken", "score": 8.9}, {"name": "Noodle Deli", "score": 8.9}, {"name": "Pie Boss", "score": 8.9}, {"name": "Epic Deli", "score": 8.8}, {"name": "Sabor De MI Tierra", "score": 8.8}, {"name": "Savory Crust", "score": 8.8}, {"name": "Tribecca's Sandwiches", "score": 8.8}, {"name": "Volo Quality Meats", "score": 8.8}, {"name": "Big Ange's Eatery", "score": 8.7}, {"name": "Cafe Tola", "score": 8.7}, {"name": "Doore Chicken", "score": 8.7}, {"name": "Dorrie's Kitchen", "score": 8.7}, {"name": "Elena's Deli", "score": 8.7}, {"name": "Joe Donut", "score": 8.7}, {"name": "Shwings", "score": 8.7}, {"name": "Apolis Greek Street Food", "score": 8.6}, {"name": "Boba Burger", "score": 8.6}, {"name": "Budacki's Drive In", "score": 8.6}, {"name": "Ella's Italian Pub", "score": 8.6}, {"name": "Five Square Pizza", "score": 8.6}, {"name": "Franks for the Memories", "score": 8.6}, {"name": "Fry N' Wings", "score": 8.6}, {"name": "Holy Wings", "score": 8.6}, {"name": "Marciana's Kitchen", "score": 8.6}, {"name": "Nonna's", "score": 8.6}, {"name": "Bacowka", "score": 8.5}, {"name": "Blue Box Café", "score": 8.5}, {"name": "Capri Deli", "score": 8.5}, {"name": "Chicago Culinary Kitchen", "score": 8.5}, {"name": "Frannie's Beef", "score": 8.5}, {"name": "Garifuna Flava", "score": 8.5}, {"name": "Kaufman's Deli", "score": 8.5}, {"name": "La Birria Loca", "score": 8.5}, {"name": "Mima's Taste of Cuba", "score": 8.5}, {"name": "Naansense", "score": 8.5}, {"name": "The Lucky Monk", "score": 8.5}, {"name": "Cubano Bros", "score": 8.4}, {"name": "Daniel's Charcuterie", "score": 8.4}, {"name": "Evette's", "score": 8.4}, {"name": "Felicia's Deli", "score": 8.4}, {"name": "Finuccio & Sons", "score": 8.4}, {"name": "Forza Meats", "score": 8.4}, {"name": "GT's Fast Food", "score": 8.4}, {"name": "Gators Wing Shack", "score": 8.4}, {"name": "Holt's", "score": 8.4}, {"name": "Hong Ning", "score": 8.4}, {"name": "One Taco Dos Tequila's", "score": 8.4}, {"name": "Pizza Pavia", "score": 8.4}, {"name": "Spice Fire & Grill", "score": 8.4}, {"name": "Starship Subs", "score": 8.4}, {"name": "Tempesta Market", "score": 8.4}, {"name": "Tony and Tina's Deli", "score": 8.4}, {"name": "Une Année Brewery", "score": 8.4}, {"name": "Zenwich", "score": 8.4}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.3}, {"name": "Chi Tea", "score": 8.3}, {"name": "Culinary Gangster", "score": 8.3}, {"name": "Delishka Sandwiches", "score": 8.3}, {"name": "Doner 97", "score": 8.3}, {"name": "Mother's Ruin", "score": 8.3}, {"name": "Mr. Kabab", "score": 8.3}, {"name": "Pizza Boy Chicago", "score": 8.3}, {"name": "Porkito", "score": 8.3}, {"name": "Soulwich", "score": 8.3}, {"name": "Southern Belle's", "score": 8.3}, {"name": "The Philly Special", "score": 8.3}, {"name": "Time Out West Sports Pub", "score": 8.3}, {"name": "Top Arepa", "score": 8.3}, {"name": "Asti Deli", "score": 8.2}, {"name": "Bill's Place", "score": 8.2}, {"name": "Charcoal Flame", "score": 8.2}, {"name": "Chicago Style Taco Shop", "score": 8.2}, {"name": "Crazy Tortas", "score": 8.2}, {"name": "Dario's", "score": 8.2}, {"name": "En Hakkore 2.0", "score": 8.2}, {"name": "Enzo's Pizza", "score": 8.2}, {"name": "Franco's Cucina", "score": 8.2}, {"name": "Nottoli Italian Foods", "score": 8.2}, {"name": "Peppo's Subs", "score": 8.2}, {"name": "Pinoy Grill", "score": 8.2}, {"name": "Pizza Bella", "score": 8.2}, {"name": "Priscilla's Ultimate Soul Food", "score": 8.2}, {"name": "Rammy's Sub Contractors", "score": 8.2}, {"name": "Rep's Burgers", "score": 8.2}, {"name": "Rosie's Sidekick Sandwich Shop", "score": 8.2}, {"name": "Sando Street", "score": 8.2}, {"name": "Schmaltz Deli", "score": 8.2}, {"name": "Sukho Thai Cuisine", "score": 8.2}, {"name": "Taqueria Invicto", "score": 8.2}, {"name": "The Sandlot", "score": 8.2}, {"name": "Uncle Jerry's Pizza Company", "score": 8.2}, {"name": "Urban Counter", "score": 8.2}, {"name": "All Ways Catering & Deli", "score": 8.1}, {"name": "Barnaby's of Northbrook", "score": 8.1}, {"name": "Berliner Kebap", "score": 8.1}, {"name": "El Asadero", "score": 8.1}, {"name": "Fry Chicken n Fries", "score": 8.1}, {"name": "Fry The Coop", "score": 8.1}, {"name": "Gringo and Blondie", "score": 8.1}, {"name": "Jay's Beef", "score": 8.1}, {"name": "Jim's Original", "score": 8.1}, {"name": "K-Coop", "score": 8.1}, {"name": "Pizza Pushers", "score": 8.1}, {"name": "Ricobene's", "score": 8.1}, {"name": "The Burger Local", "score": 8.1}, {"name": "The Local Kitchen", "score": 8.1}, {"name": "The Slice Shop", "score": 8.1}, {"name": "Thlaco Taco", "score": 8.1}, {"name": "Wilma's Famous BBQ", "score": 8.1}, {"name": "Aloha Wagon", "score": 8.0}, {"name": "Armo Grill", "score": 8.0}, {"name": "Buffalo Joe's", "score": 8.0}, {"name": "Dak Dak Korean Wings", "score": 8.0}, {"name": "Dawg Park", "score": 8.0}, {"name": "El Taurino", "score": 8.0}, {"name": "Joy Teriyaki", "score": 8.0}, {"name": "La Poblanita", "score": 8.0}, {"name": "Miskatonic Brewery", "score": 8.0}, {"name": "More Than Pasta", "score": 8.0}, {"name": "Mughal The Biryani House", "score": 8.0}, {"name": "Panes Bread Cafe", "score": 8.0}, {"name": "Phat Phat", "score": 8.0}, {"name": "Steingolds", "score": 8.0}, {"name": "Tata's Pierogi", "score": 8.0}, {"name": "The Budlong", "score": 8.0}, {"name": "Wild Wings and Slots", "score": 8.0}, {"name": "Byrds Hot Chicken", "score": 7.9}, {"name": "Chicago Pickle Eatery", "score": 7.9}, {"name": "Italia Imports", "score": 7.9}, {"name": "Jerky Jerk", "score": 7.9}, {"name": "Mojo's East Coast Eats", "score": 7.9}, {"name": "Mother Cluckers Chicken", "score": 7.9}, {"name": "Pholicious", "score": 7.9}, {"name": "Rand Red Hots", "score": 7.9}, {"name": "Sassy Biscuits", "score": 7.9}, {"name": "Sfera Sicilian Street Food", "score": 7.9}, {"name": "SmashIT Burger", "score": 7.9}, {"name": "Spiro's Deli", "score": 7.9}, {"name": "Takito Holic", "score": 7.9}, {"name": "601 Bar and Grill", "score": 7.8}, {"name": "B.B.Q Chicken", "score": 7.8}, {"name": "Deane's Deli", "score": 7.8}, {"name": "Fatt Mustard", "score": 7.8}, {"name": "Hagen's Fish Market", "score": 7.8}, {"name": "JT's Genuine Sandwich Shop", "score": 7.8}, {"name": "Marco Roma", "score": 7.8}, {"name": "Ochoa’s Mexican Grill", "score": 7.8}, {"name": "Pita BBQ", "score": 7.8}, {"name": "Primo Pizza", "score": 7.8}, {"name": "Rubino Italian Imports", "score": 7.8}, {"name": "Sarkis Cafe", "score": 7.8}, {"name": "Tasty Polish Food", "score": 7.8}, {"name": "The Assembly Bar", "score": 7.8}, {"name": "Tony's Italian Deli", "score": 7.8}, {"name": "Algonquin Sandwich Shop", "score": 7.7}, {"name": "Atlas Chicken Shack", "score": 7.7}, {"name": "Hot Pockets Bar", "score": 7.7}, {"name": "Maz Mez Grill", "score": 7.7}, {"name": "Monkey King Jian Bing", "score": 7.7}, {"name": "Punky's Pizza", "score": 7.7}, {"name": "Taco Boom", "score": 7.7}, {"name": "The Southern Kitchen", "score": 7.7}, {"name": "Ukranian Dishes", "score": 7.7}, {"name": "Vasco's Peri Peri", "score": 7.7}, {"name": "Veloce Pizze", "score": 7.7}, {"name": "Village Tavern & Grill", "score": 7.7}, {"name": "County Farm Bagels", "score": 7.6}, {"name": "Cracked", "score": 7.6}, {"name": "Pupuseria Cheros", "score": 7.6}, {"name": "Rep's Place", "score": 7.6}, {"name": "Taqueria Sebastian", "score": 7.6}, {"name": "The Canteen Restaurant", "score": 7.6}, {"name": "The Dogfather", "score": 7.6}, {"name": "Tiger Chicken", "score": 7.6}, {"name": "Neighborhood Inn", "score": 7.5}, {"name": "SD Pizzaria", "score": 7.5}, {"name": "Student Burger", "score": 7.5}, {"name": "Coaches Corner", "score": 7.4}, {"name": "Hot Chi", "score": 7.4}, {"name": "Shawarma Inn", "score": 7.4}, {"name": "Sake Sushi", "score": 7.3}, {"name": "Tacos Jerez", "score": 7.2}];
-const CACHE_KEY = "supergoode-map-geocache-v4";
-const VIEW_KEY = "supergoode-map-view-v4";
+const CACHE_KEY = "supergoode-map-geocache-v5";
+const VIEW_KEY = "supergoode-map-view-v5";
 const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}");
 
 const state = {
