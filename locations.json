@@ -3283,35 +3283,5 @@
     "sourceType": "structured-data",
     "confidence": "high",
     "notes": "Review URL was missing from both the structured payload and popup HTML."
-  },
-  {
-    "name": "Test Pizza Place",
-    "score": 9.9,
-    "subtitle": "",
-    "address": "",
-    "city": "Chicago",
-    "state": "IL",
-    "lat": null,
-    "lng": null,
-    "directionsUrl": "",
-    "reviewUrl": "",
-    "sourceType": "sheet",
-    "confidence": "medium",
-    "notes": ""
-  },
-  {
-    "name": "TEST BURGER",
-    "score": 10,
-    "subtitle": "",
-    "address": "",
-    "city": "Chicago",
-    "state": "IL",
-    "lat": null,
-    "lng": null,
-    "directionsUrl": "",
-    "reviewUrl": "https://youtube.com/test",
-    "sourceType": "sheet",
-    "confidence": "medium",
-    "notes": ""
   }
 ]
