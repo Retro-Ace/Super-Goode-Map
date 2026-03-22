@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Super Goode Map</title>
+  <link rel="icon" href="https://static.wixstatic.com/media/5ca2b9_94514466d76d421d9c21b29de7b2e2c9~mv2.png/v1/fill/w_41,h_40,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/5ca2b9_94514466d76d421d9c21b29de7b2e2c9~mv2.png" />
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://a.basemaps.cartocdn.com">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <style>
     :root {
-      --bg:#07101f;
+      --bg:#f5f4fa;
       --panel:#0b1529;
       --panel2:#111d35;
       --line:rgba(145,165,255,.14);
@@ -18,13 +19,17 @@
       --muted:#aab4cc;
       --accent:#b866ff;
       --accent2:#7d8cff;
+      --brand:#8b5cf6;
+      --brand2:#c084fc;
       --gold:#f2c94c;
+      --ink:#22232a;
+      --paper:#fbfbfd;
       --shadow:0 14px 40px rgba(0,0,0,.28);
       --radius:18px;
       --headerH: 0px;
     }
     * { box-sizing:border-box; }
-    html, body { margin:0; background:linear-gradient(180deg,#07101f,#0c1220 50%,#07101f); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    html, body { margin:0; background:radial-gradient(circle at top left, #ffffff 0, #f6f3fb 28%, #ebedf5 100%); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
     body { min-height:100dvh; }
     a { color:#7ea7ff; text-decoration:none; }
     .app {
@@ -51,13 +56,47 @@
       padding:14px;
       overflow:visible;
     }
-    .kicker {
+    .brand-card {
+      display:flex;
+      align-items:center;
+      gap:14px;
+      border-radius:24px;
+      padding:16px 16px 15px;
+      background:linear-gradient(180deg, rgba(255,255,255,.97), rgba(248,247,252,.92));
+      color:var(--ink);
+      border:1px solid rgba(40,44,67,.08);
+      box-shadow:0 16px 32px rgba(17,24,39,.08);
+      margin-bottom:12px;
+    }
+    .brand-avatar {
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      flex:0 0 auto;
+      box-shadow:0 10px 22px rgba(139,92,246,.18);
+    }
+    .brand-copy { min-width:0; }
+    .brand-kicker {
       font-size:11px;
-      letter-spacing:.12em;
+      letter-spacing:.18em;
       text-transform:uppercase;
-      color:#c89dff;
-      opacity:.92;
-      margin:0 0 6px;
+      color:var(--brand);
+      font-weight:800;
+      margin:0 0 4px;
+    }
+    .brand-title {
+      font-size:clamp(26px, 4vw, 31px);
+      line-height:1;
+      margin:0;
+      letter-spacing:-.05em;
+      color:var(--ink);
+      font-weight:900;
+    }
+    .brand-sub {
+      color:#5d6478;
+      line-height:1.35;
+      margin-top:6px;
+      font-size:13px;
     }
     h1 {
       font-size:clamp(34px, 6vw, 26px);
@@ -155,9 +194,20 @@
       border-radius:16px;
       padding:10px 12px;
       min-width:0;
+      position:relative;
+      overflow:hidden;
     }
     .stat .label { color:var(--muted); font-size:11px; margin-bottom:3px; }
     .stat .value { font-weight:800; font-size:27px; line-height:1; }
+    .stat::after {
+      content:'';
+      position:absolute;
+      inset:auto -20px -20px auto;
+      width:64px;
+      height:64px;
+      background:radial-gradient(circle, rgba(184,102,255,.2), rgba(184,102,255,0) 68%);
+      pointer-events:none;
+    }
     .list {
       display:grid;
       gap:10px;
@@ -168,6 +218,18 @@
       border-radius:18px;
       padding:12px;
       box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before {
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:3px;
+      background:linear-gradient(90deg,var(--brand),var(--accent2));
+      opacity:.85;
     }
     .card-top {
       display:flex;
@@ -225,7 +287,13 @@
       background:linear-gradient(135deg,var(--accent2),var(--accent));
       color:white;
     }
-    .btn.subtle, button.subtle { color:#d6dff6; background:#0f1830; }
+    .btn.primary:hover, button.primary:hover {
+      filter:brightness(1.05);
+    }
+    .btn.subtle, button.subtle {
+      color:#d6dff6;
+      background:#0f1830;
+    }
     .btn[disabled], button[disabled] {
       opacity:.45;
       cursor:default;
@@ -279,7 +347,7 @@
       .app {
         height:100dvh;
         display:grid;
-        grid-template-columns:360px 1fr;
+        grid-template-columns:390px 1fr;
         grid-template-rows:100dvh;
       }
       .panel {
@@ -320,9 +388,18 @@
 
     <aside class="panel">
       <div class="sticky-head">
-        <div class="kicker">Super Goode companion map</div>
-        <h1>Super Goode Map</h1>
-        <div class="subtitle">Loads Phil Goode’s extracted map data from a static JSON file, keeps local fixes in your browser, and uses the published directions and review links when they exist.</div>
+        <div class="brand-card">
+          <img
+            class="brand-avatar"
+            src="https://static.wixstatic.com/media/5ca2b9_94514466d76d421d9c21b29de7b2e2c9~mv2.png/v1/fill/w_41,h_40,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/5ca2b9_94514466d76d421d9c21b29de7b2e2c9~mv2.png"
+            alt="Philip Goode icon"
+          />
+          <div class="brand-copy">
+            <div class="brand-kicker">Philip Goode</div>
+            <div class="brand-title">Super Goode Map</div>
+            <div class="brand-sub">A cleaner companion map using Phil’s branding, extracted restaurant data, and exact directions links.</div>
+          </div>
+        </div>
 
         <div class="controls">
           <input id="searchInput" class="search" type="search" placeholder="Search restaurants..." />
