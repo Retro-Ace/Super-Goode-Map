@@ -288,7 +288,7 @@
       color:var(--text);
       border-radius:999px;
       padding:9px 12px;
-      font-size:13px;
+      font-size:12px;
       font-weight:700;
       cursor:pointer;
       text-decoration:none;
@@ -409,7 +409,12 @@
       .stat .value { font-size:23px; }
       .card-actions .btn,
       .card-actions button {
-        flex:1 1 calc(50% - 8px);
+        flex:1 1 calc(33.333% - 8px);
+        font-size:11px;
+        padding:8px 10px;
+      }
+      .card-actions {
+        gap:6px;
       }
     }
     @media (min-width: 900px) {
@@ -504,7 +509,6 @@
         <div class="statusbar">
           <span class="pill"><span class="dot"></span><span id="autoStatus">Ready</span></span>
           <button id="fitMappedBtn" class="subtle">Fit mapped pins</button>
-          <button id="clearSavedBtn" class="subtle">Clear saved</button>
         </div>
 
         <div class="stats">
@@ -558,7 +562,6 @@
       locateMeBtn: document.getElementById('locateMeBtn'),
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
-      clearSavedBtn: document.getElementById('clearSavedBtn'),
       mobileMapToggle: document.getElementById('mobileMapToggle'),
       quickChips: document.getElementById('quickChips')
     };
@@ -740,18 +743,6 @@
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
       saved[item.name] = { lat:item.lat, lng:item.lng, address:item.address || '' };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-    }
-
-    function clearSaved() {
-      localStorage.removeItem(STORAGE_KEY);
-      state.items = state.baseItems.map(cloneItem);
-      for (const marker of state.markers.values()) {
-        state.map.removeLayer(marker);
-      }
-      state.markers.clear();
-      loadSavedLocations();
-      state.items.filter(i => i.mapped).forEach(upsertMarker);
-      render();
     }
 
     function setMobileMapFocus(enabled) {
@@ -990,7 +981,6 @@
         render();
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
-      els.clearSavedBtn.addEventListener('click', clearSaved);
       els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
       els.quickChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip');
