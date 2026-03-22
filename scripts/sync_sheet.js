@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const crypto = require('crypto');
 const fs = require('fs/promises');
 const os = require('os');
 const path = require('path');
@@ -8,17 +7,7 @@ const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const UPDATE_SCRIPT = path.join(ROOT, 'scripts', 'update_locations.js');
-const DEFAULT_RANGE = 'Sheet1!A1:Z';
 const APPROVED_VALUES = new Set(['yes', 'y', 'true', '1', 'approved', 'publish']);
-
-const argv = process.argv.slice(2);
-const getArg = (name) => {
-  const index = argv.findIndex((arg) => arg === `--${name}` || arg.startsWith(`--${name}=`));
-  if (index < 0) return null;
-  const current = argv[index];
-  if (current.includes('=')) return current.split('=').slice(1).join('=');
-  return argv[index + 1] && !argv[index + 1].startsWith('--') ? argv[index + 1] : null;
-};
 
 function normalizeText(value) {
   return String(value ?? '')
@@ -89,6 +78,84 @@ function canonicalField(header) {
   return null;
 }
 
+function parseCsv(text) {
+  const rows = [];
+  const input = String(text ?? '').replace(/^\uFEFF/, '');
+  let row = [];
+  let cell = '';
+  let i = 0;
+  let inQuotes = false;
+
+  const pushCell = () => {
+    row.push(cell);
+    cell = '';
+  };
+
+  const pushRow = () => {
+    if (row.length || cell.length) {
+      pushCell();
+      rows.push(row);
+    }
+    row = [];
+  };
+
+  while (i < input.length) {
+    const ch = input[i];
+    const next = input[i + 1];
+
+    if (inQuotes) {
+      if (ch === '"' && next === '"') {
+        cell += '"';
+        i += 2;
+        continue;
+      }
+      if (ch === '"') {
+        inQuotes = false;
+        i += 1;
+        continue;
+      }
+      cell += ch;
+      i += 1;
+      continue;
+    }
+
+    if (ch === '"') {
+      inQuotes = true;
+      i += 1;
+      continue;
+    }
+    if (ch === ',') {
+      pushCell();
+      i += 1;
+      continue;
+    }
+    if (ch === '\r') {
+      if (next === '\n') i += 1;
+      pushRow();
+      i += 1;
+      continue;
+    }
+    if (ch === '\n') {
+      pushRow();
+      i += 1;
+      continue;
+    }
+
+    cell += ch;
+    i += 1;
+  }
+
+  if (inQuotes) {
+    throw new Error('CSV parse failed: unterminated quoted field.');
+  }
+
+  if (cell.length || row.length) {
+    pushRow();
+  }
+
+  return rows;
+}
+
 function rowsToObjects(values) {
   if (!Array.isArray(values) || !values.length) return [];
   const [headers, ...rows] = values;
@@ -105,82 +172,22 @@ function rowsToObjects(values) {
   });
 }
 
-function base64Url(input) {
-  return Buffer.from(input).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
-}
-
-function readCredentials() {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
-  const filePath = process.env.GOOGLE_SERVICE_ACCOUNT_FILE;
-  const text = raw || (filePath ? require('fs').readFileSync(filePath, 'utf8') : '');
-  if (!text) {
-    throw new Error('Missing Google service account credentials. Set GOOGLE_SERVICE_ACCOUNT_JSON or GOOGLE_SERVICE_ACCOUNT_FILE.');
+async function fetchCsvRows() {
+  const csvUrl = process.env.GOOGLE_SHEET_CSV_URL;
+  if (!csvUrl) {
+    throw new Error('Missing GOOGLE_SHEET_CSV_URL secret.');
   }
-  const credentials = JSON.parse(text);
-  if (!credentials.client_email || !credentials.private_key) {
-    throw new Error('Service account JSON must include client_email and private_key.');
-  }
-  return credentials;
-}
 
-function createJwt(credentials, scope) {
-  const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
-  const now = Math.floor(Date.now() / 1000);
-  const claims = base64Url(JSON.stringify({
-    iss: credentials.client_email,
-    scope,
-    aud: 'https://oauth2.googleapis.com/token',
-    iat: now,
-    exp: now + 3600,
-  }));
-  const signer = crypto.createSign('RSA-SHA256');
-  signer.update(`${header}.${claims}`);
-  signer.end();
-  const signature = signer.sign(credentials.private_key);
-  return `${header}.${claims}.${base64Url(signature)}`;
-}
-
-async function fetchAccessToken(credentials) {
-  const assertion = createJwt(credentials, 'https://www.googleapis.com/auth/spreadsheets.readonly');
-  const body = new URLSearchParams({
-    grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-    assertion,
-  });
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body,
-  });
+  const response = await fetch(csvUrl, { cache: 'no-store' });
   if (!response.ok) {
-    throw new Error(`Token exchange failed: ${response.status} ${await response.text()}`);
-  }
-  const data = await response.json();
-  if (!data.access_token) {
-    throw new Error('Token exchange did not return an access token.');
-  }
-  return data.access_token;
-}
-
-async function fetchSheetRows() {
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID || getArg('spreadsheet-id');
-  if (!spreadsheetId) {
-    throw new Error('Missing spreadsheet ID. Set GOOGLE_SHEETS_SPREADSHEET_ID or pass --spreadsheet-id.');
+    throw new Error(`CSV fetch failed: ${response.status} ${await response.text()}`);
   }
 
-  const range = process.env.GOOGLE_SHEETS_RANGE || getArg('range') || DEFAULT_RANGE;
-  const credentials = readCredentials();
-  const token = await fetchAccessToken(credentials);
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}/values/${encodeURIComponent(range)}?majorDimension=ROWS`;
-  const response = await fetch(url, {
-    headers: { authorization: `Bearer ${token}` },
-  });
-  if (!response.ok) {
-    throw new Error(`Sheet fetch failed: ${response.status} ${await response.text()}`);
-  }
-  const data = await response.json();
+  const csvText = await response.text();
+  const values = parseCsv(csvText);
   return {
-    range,
-    values: Array.isArray(data.values) ? data.values : [],
+    url: csvUrl,
+    values,
   };
 }
 
@@ -188,7 +195,7 @@ async function main() {
   const tmpPath = path.join(os.tmpdir(), `super-goode-sheet-import-${process.pid}.json`);
 
   try {
-    const { range, values } = await fetchSheetRows();
+    const { url, values } = await fetchCsvRows();
     const rows = rowsToObjects(values);
     const approved = rows.filter((row) => isApproved(row.approved));
     const imported = approved
@@ -199,7 +206,7 @@ async function main() {
 
     await fs.writeFile(tmpPath, `${JSON.stringify(imported, null, 2)}\n`, 'utf8');
 
-    console.log(`Google Sheet range: ${range}`);
+    console.log(`CSV source: ${url}`);
     console.log(`Rows read: ${rows.length}`);
     console.log(`Approved rows: ${approved.length}`);
     console.log(`Skipped rows: ${skipped}`);
