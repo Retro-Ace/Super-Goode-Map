@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Super Goode Map App v7</title>
+  <title>Super Goode Map</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://a.basemaps.cartocdn.com">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -321,8 +321,8 @@
     <aside class="panel">
       <div class="sticky-head">
         <div class="kicker">Super Goode companion map</div>
-        <h1>Super Goode Map App v7</h1>
-        <div class="subtitle">Auto-locates places in the background, uses tighter cards, fixes the Google Maps link, and includes a placeholder spot for review video links.</div>
+        <h1>Super Goode Map</h1>
+        <div class="subtitle">Loads Phil Goode’s extracted map data from a static JSON file, keeps local fixes in your browser, and uses the published directions and review links when they exist.</div>
 
         <div class="controls">
           <input id="searchInput" class="search" type="search" placeholder="Search restaurants..." />
@@ -364,7 +364,7 @@
       </div>
 
       <div id="list" class="list"></div>
-      <div class="footer-note">Review video buttons are placeholders for now. Once you have Phil’s real video links, you can paste them into the <code>reviewUrl</code> field for each place.</div>
+      <div class="footer-note">The site reads from <code>locations.json</code> so the published coordinates stay static on GitHub Pages. You can still add browser-only fixes locally without changing the shared dataset.</div>
     </aside>
   </div>
 
@@ -375,7 +375,9 @@
     const DATA = [{"name": "QP Greek Food with a kick", "score": 9.1, "reviewUrl": ""}, {"name": "Falafil Hut", "score": 8.9, "reviewUrl": ""}, {"name": "The Assembly Bar", "score": 7.8, "reviewUrl": ""}, {"name": "Pizza Pushers", "score": 8.1, "reviewUrl": ""}, {"name": "Franks for the Memories", "score": 8.6, "reviewUrl": ""}, {"name": "JJ Fish & Chicken", "score": 8.9, "reviewUrl": ""}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.2, "reviewUrl": ""}, {"name": "Cubano Bros", "score": 8.4, "reviewUrl": ""}, {"name": "Takito Holic", "score": 7.9, "reviewUrl": ""}, {"name": "Rammy's Sub Contractors", "score": 8.2, "reviewUrl": ""}, {"name": "Chicago Bagel Authority", "score": 9.2, "reviewUrl": ""}, {"name": "Fry The Coop", "score": 8.1, "reviewUrl": ""}, {"name": "Ochoa’s Mexican Grill", "score": 7.8, "reviewUrl": ""}, {"name": "Pizza Boy Chicago", "score": 8.3, "reviewUrl": ""}, {"name": "Cafe Tola", "score": 8.7, "reviewUrl": ""}, {"name": "Panes Bread Cafe", "score": 8.0, "reviewUrl": ""}, {"name": "Rand Red Hots", "score": 7.9, "reviewUrl": ""}, {"name": "Shwings", "score": 8.7, "reviewUrl": ""}, {"name": "Smack Dab Chicago", "score": 9.2, "reviewUrl": ""}, {"name": "Holt's", "score": 8.4, "reviewUrl": ""}, {"name": "Porkito", "score": 8.3, "reviewUrl": ""}, {"name": "Village Tavern & Grill", "score": 7.7, "reviewUrl": ""}, {"name": "Dario's", "score": 8.2, "reviewUrl": ""}, {"name": "Dak Dak Korean Wings", "score": 8.0, "reviewUrl": ""}, {"name": "Monti's", "score": 9.2, "reviewUrl": ""}, {"name": "Dawg Park", "score": 8.0, "reviewUrl": ""}, {"name": "The Sandlot", "score": 8.2, "reviewUrl": ""}, {"name": "Evette's", "score": 8.4, "reviewUrl": ""}, {"name": "Tony's Italian Deli", "score": 7.8, "reviewUrl": ""}, {"name": "Urban Counter", "score": 8.2, "reviewUrl": ""}, {"name": "Jim's Original", "score": 8.1, "reviewUrl": ""}, {"name": "QuesaBirria Jalisco Tacos", "score": 9.1, "reviewUrl": ""}, {"name": "Gators Wing Shack", "score": 8.4, "reviewUrl": ""}, {"name": "El Asadero", "score": 8.1, "reviewUrl": ""}, {"name": "Pita BBQ", "score": 7.8, "reviewUrl": ""}, {"name": "Chicago Culinary Kitchen", "score": 8.5, "reviewUrl": ""}, {"name": "Cracked", "score": 7.6, "reviewUrl": ""}, {"name": "B.B.Q Chicken", "score": 7.8, "reviewUrl": ""}, {"name": "Ricobene's", "score": 8.1, "reviewUrl": ""}, {"name": "Thlaco Taco", "score": 8.1, "reviewUrl": ""}, {"name": "En Hakkore 2.0", "score": 8.2, "reviewUrl": ""}, {"name": "Pupuseria Cheros", "score": 7.6, "reviewUrl": ""}, {"name": "Boba Burger", "score": 8.6, "reviewUrl": ""}, {"name": "Big Ange's Eatery", "score": 8.7, "reviewUrl": ""}, {"name": "Aloha Wagon", "score": 8.0, "reviewUrl": ""}, {"name": "Johnnie's Beef", "score": 9.3, "reviewUrl": ""}, {"name": "Marco Roma", "score": 7.8, "reviewUrl": ""}, {"name": "Felicia's Deli", "score": 8.4, "reviewUrl": ""}, {"name": "Taco Boom", "score": 7.7, "reviewUrl": ""}, {"name": "Pizza Bella", "score": 8.2, "reviewUrl": ""}, {"name": "Student Burger", "score": 7.5, "reviewUrl": ""}, {"name": "Chi Tea", "score": 8.3, "reviewUrl": ""}, {"name": "Nonna's", "score": 8.6, "reviewUrl": ""}, {"name": "Fry Chicken n Fries", "score": 8.1, "reviewUrl": ""}, {"name": "Schmaltz Deli", "score": 8.2, "reviewUrl": ""}, {"name": "Byrds Hot Chicken", "score": 7.9, "reviewUrl": ""}, {"name": "Savory Crust", "score": 8.8, "reviewUrl": ""}, {"name": "Scatchell's Beef", "score": 9.1, "reviewUrl": ""}, {"name": "La Birria Loca", "score": 8.5, "reviewUrl": ""}, {"name": "Culinary Gangster", "score": 8.3, "reviewUrl": ""}, {"name": "Nu Crepes", "score": 9.0, "reviewUrl": ""}, {"name": "One Taco Dos Tequila's", "score": 8.4, "reviewUrl": ""}, {"name": "Apolis Greek Street Food", "score": 8.6, "reviewUrl": ""}, {"name": "Pinoy Grill", "score": 8.2, "reviewUrl": ""}, {"name": "Maz Mez Grill", "score": 7.7, "reviewUrl": ""}, {"name": "Chicago Pickle Eatery", "score": 7.9, "reviewUrl": ""}, {"name": "Priscilla's Ultimate Soul Food", "score": 8.2, "reviewUrl": ""}, {"name": "Pizza Pavia", "score": 8.4, "reviewUrl": ""}, {"name": "Jay's Beef", "score": 8.1, "reviewUrl": ""}, {"name": "Capri Deli", "score": 8.5, "reviewUrl": ""}, {"name": "Vasco's Peri Peri", "score": 7.7, "reviewUrl": ""}, {"name": "Mima's Taste of Cuba", "score": 8.5, "reviewUrl": ""}, {"name": "The Canteen Restaurant", "score": 7.6, "reviewUrl": ""}, {"name": "Nottoli Italian Foods", "score": 8.2, "reviewUrl": ""}, {"name": "The Philly Special", "score": 8.3, "reviewUrl": ""}, {"name": "Fatt Mustard", "score": 7.8, "reviewUrl": ""}, {"name": "Hello Shawarma", "score": 9.0, "reviewUrl": ""}, {"name": "Hot Pockets Bar", "score": 7.7, "reviewUrl": ""}, {"name": "Elena's Deli", "score": 8.7, "reviewUrl": ""}, {"name": "Hagen's Fish Market", "score": 7.8, "reviewUrl": ""}, {"name": "Spiro's Deli", "score": 7.9, "reviewUrl": ""}, {"name": "Chicago Style Taco Shop", "score": 8.2, "reviewUrl": ""}, {"name": "Zenwich", "score": 8.4, "reviewUrl": ""}, {"name": "The Slice Shop", "score": 8.1, "reviewUrl": ""}, {"name": "Algonquin Sandwich Shop", "score": 7.7, "reviewUrl": ""}, {"name": "Tata's Pierogi", "score": 8.0, "reviewUrl": ""}, {"name": "Une Année Brewery", "score": 8.4, "reviewUrl": ""}, {"name": "Big Boss Spicy Fried Chicken", "score": 8.3, "reviewUrl": ""}, {"name": "Sake Sushi", "score": 7.3, "reviewUrl": ""}, {"name": "Holy Wings", "score": 8.6, "reviewUrl": ""}, {"name": "Enzo's Pizza", "score": 8.2, "reviewUrl": ""}, {"name": "Budacki's Drive In", "score": 8.6, "reviewUrl": ""}, {"name": "The Local Kitchen", "score": 8.1, "reviewUrl": ""}, {"name": "Pie Boss", "score": 8.9, "reviewUrl": ""}, {"name": "Bill's Place", "score": 8.2, "reviewUrl": ""}, {"name": "Wilma's Famous BBQ", "score": 8.1, "reviewUrl": ""}, {"name": "Rosie's Sidekick Sandwich Shop", "score": 8.2, "reviewUrl": ""}, {"name": "Primo Pizza", "score": 7.8, "reviewUrl": ""}, {"name": "Sukho Thai Cuisine", "score": 8.2, "reviewUrl": ""}, {"name": "Rep's Place", "score": 7.6, "reviewUrl": ""}, {"name": "Mojo's East Coast Eats", "score": 7.9, "reviewUrl": ""}, {"name": "Garifuna Flava", "score": 8.5, "reviewUrl": ""}, {"name": "Berliner Kebap", "score": 8.1, "reviewUrl": ""}, {"name": "Pholicious", "score": 7.9, "reviewUrl": ""}, {"name": "Doore Chicken", "score": 8.7, "reviewUrl": ""}, {"name": "Gringo and Blondie", "score": 8.1, "reviewUrl": ""}, {"name": "Mr. Kabab", "score": 8.3, "reviewUrl": ""}, {"name": "The Dogfather", "score": 7.6, "reviewUrl": ""}, {"name": "Joy Teriyaki", "score": 8.0, "reviewUrl": ""}, {"name": "Veloce Pizze", "score": 7.7, "reviewUrl": ""}, {"name": "Rep's Burgers", "score": 8.2, "reviewUrl": ""}, {"name": "JT's Genuine Sandwich Shop", "score": 7.8, "reviewUrl": ""}, {"name": "Bacowka", "score": 8.5, "reviewUrl": ""}, {"name": "County Farm Bagels", "score": 7.6, "reviewUrl": ""}, {"name": "Buffalo Joe's", "score": 8.0, "reviewUrl": ""}, {"name": "All Ways Catering & Deli", "score": 8.1, "reviewUrl": ""}, {"name": "Tacos Jerez", "score": 7.2, "reviewUrl": ""}, {"name": "Mughal The Biryani House", "score": 8.0, "reviewUrl": ""}, {"name": "GT's Fast Food", "score": 8.4, "reviewUrl": ""}, {"name": "Joe Donut", "score": 8.7, "reviewUrl": ""}, {"name": "Epic Deli", "score": 8.8, "reviewUrl": ""}, {"name": "Punky's Pizza", "score": 7.7, "reviewUrl": ""}, {"name": "The Lucky Monk", "score": 8.5, "reviewUrl": ""}, {"name": "Uncle Jerry's Pizza Company", "score": 8.2, "reviewUrl": ""}, {"name": "The Budlong", "score": 8.0, "reviewUrl": ""}, {"name": "Frannie's Beef", "score": 8.5, "reviewUrl": ""}, {"name": "Marciana's Kitchen", "score": 8.6, "reviewUrl": ""}, {"name": "Deane's Deli", "score": 7.8, "reviewUrl": ""}, {"name": "Volo Quality Meats", "score": 8.8, "reviewUrl": ""}, {"name": "Jook Sing", "score": 9.1, "reviewUrl": ""}, {"name": "Kaufman's Deli", "score": 8.5, "reviewUrl": ""}, {"name": "Sabor De MI Tierra", "score": 8.8, "reviewUrl": ""}, {"name": "Tony and Tina's Deli", "score": 8.4, "reviewUrl": ""}, {"name": "La Poblanita", "score": 8.0, "reviewUrl": ""}, {"name": "Sarkis Cafe", "score": 7.8, "reviewUrl": ""}, {"name": "Doner 97", "score": 8.3, "reviewUrl": ""}, {"name": "Time Out West Sports Pub", "score": 8.3, "reviewUrl": ""}, {"name": "Shawarma Inn", "score": 7.4, "reviewUrl": ""}, {"name": "Noodle Deli", "score": 8.9, "reviewUrl": ""}, {"name": "Coaches Corner", "score": 7.4, "reviewUrl": ""}, {"name": "Ella's Italian Pub", "score": 8.6, "reviewUrl": ""}, {"name": "El Rincon De Fabio", "score": 9.0, "reviewUrl": ""}, {"name": "Charcoal Flame", "score": 8.2, "reviewUrl": ""}, {"name": "Hot Chi", "score": 7.4, "reviewUrl": ""}, {"name": "Top Arepa", "score": 8.3, "reviewUrl": ""}, {"name": "Monkey King Jian Bing", "score": 7.7, "reviewUrl": ""}, {"name": "Tempesta Market", "score": 8.4, "reviewUrl": ""}, {"name": "Fry N' Wings", "score": 8.6, "reviewUrl": ""}, {"name": "Delishka Sandwiches", "score": 8.3, "reviewUrl": ""}, {"name": "Taqueria Sebastian", "score": 7.6, "reviewUrl": ""}, {"name": "Armo Grill", "score": 8.0, "reviewUrl": ""}, {"name": "Five Square Pizza", "score": 8.6, "reviewUrl": ""}, {"name": "Italia Imports", "score": 7.9, "reviewUrl": ""}, {"name": "Phat Phat", "score": 8.0, "reviewUrl": ""}, {"name": "Southern Belle's", "score": 8.3, "reviewUrl": ""}, {"name": "Tiger Chicken", "score": 7.6, "reviewUrl": ""}, {"name": "Mother Cluckers Chicken", "score": 7.9, "reviewUrl": ""}, {"name": "Forza Meats", "score": 8.4, "reviewUrl": ""}, {"name": "The Burger Local", "score": 8.1, "reviewUrl": ""}, {"name": "Tasty Polish Food", "score": 7.8, "reviewUrl": ""}, {"name": "Barnaby's of Northbrook", "score": 8.1, "reviewUrl": ""}, {"name": "Miskatonic Brewery", "score": 8.0, "reviewUrl": ""}, {"name": "Asti Deli", "score": 8.2, "reviewUrl": ""}, {"name": "Flippin Flavors", "score": 9.0, "reviewUrl": ""}, {"name": "Crazy Tortas", "score": 8.2, "reviewUrl": ""}, {"name": "Ukranian Dishes", "score": 7.7, "reviewUrl": ""}, {"name": "Sando Street", "score": 8.2, "reviewUrl": ""}, {"name": "Wild Wings and Slots", "score": 8.0, "reviewUrl": ""}, {"name": "Al and Joe's", "score": 8.9, "reviewUrl": ""}, {"name": "The Southern Kitchen", "score": 7.7, "reviewUrl": ""}, {"name": "Taqueria Invicto", "score": 8.2, "reviewUrl": ""}, {"name": "Sfera Sicilian Street Food", "score": 7.9, "reviewUrl": ""}, {"name": "Atlas Chicken Shack", "score": 7.7, "reviewUrl": ""}, {"name": "Dorrie's Kitchen", "score": 8.7, "reviewUrl": ""}, {"name": "Steingolds", "score": 8.0, "reviewUrl": ""}, {"name": "Finuccio & Sons", "score": 8.4, "reviewUrl": ""}, {"name": "SmashIT Burger", "score": 7.9, "reviewUrl": ""}, {"name": "Peppo's Subs", "score": 8.2, "reviewUrl": ""}, {"name": "Naansense", "score": 8.5, "reviewUrl": ""}, {"name": "More Than Pasta", "score": 8.0, "reviewUrl": ""}, {"name": "Tribecca's Sandwiches", "score": 8.8, "reviewUrl": ""}, {"name": "K-Coop", "score": 8.1, "reviewUrl": ""}, {"name": "Rubino Italian Imports", "score": 7.8, "reviewUrl": ""}, {"name": "Spice Fire & Grill", "score": 8.4, "reviewUrl": ""}, {"name": "El Taurino", "score": 8.0, "reviewUrl": ""}, {"name": "Soulwich", "score": 8.3, "reviewUrl": ""}, {"name": "Sassy Biscuits", "score": 7.9, "reviewUrl": ""}, {"name": "Franco's Cucina", "score": 8.2, "reviewUrl": ""}, {"name": "Starship Subs", "score": 8.4, "reviewUrl": ""}, {"name": "601 Bar and Grill", "score": 7.8, "reviewUrl": ""}, {"name": "Hong Ning", "score": 8.4, "reviewUrl": ""}, {"name": "Mother's Ruin", "score": 8.3, "reviewUrl": ""}, {"name": "Jerky Jerk", "score": 7.9, "reviewUrl": ""}, {"name": "Neighborhood Inn", "score": 7.5, "reviewUrl": ""}, {"name": "Lotus Banh Mi", "score": 9.0, "reviewUrl": ""}, {"name": "Daniel's Charcuterie", "score": 8.4, "reviewUrl": ""}, {"name": "SD Pizzaria", "score": 7.5, "reviewUrl": ""}, {"name": "Arctic Wolf Ale House", "score": 9.1, "reviewUrl": ""}, {"name": "Blue Box Café", "score": 8.5, "reviewUrl": ""}, {"name": "Taco Verde", "score": 9.2, "reviewUrl": ""}];
 
     const state = {
-      items: DATA.map((d, idx) => ({ id: idx + 1, ...d, lat: null, lng: null, address: '', mapped: false, locating: false, failed: false })),
+      items: [],
+      baseItems: [],
+      sharedIndex: new Map(),
       map: null,
       markers: new Map(),
       quickChip: 'all',
@@ -406,6 +408,25 @@
       return 'gray';
     }
 
+    function cloneItem(item) {
+      return { ...item };
+    }
+
+    function buildStateItem(data, idx) {
+      const lat = Number(data.lat);
+      const lng = Number(data.lng);
+      return {
+        id: idx + 1,
+        ...data,
+        lat: Number.isFinite(lat) ? lat : null,
+        lng: Number.isFinite(lng) ? lng : null,
+        address: data.address || '',
+        mapped: Number.isFinite(lat) && Number.isFinite(lng),
+        locating: false,
+        failed: false,
+      };
+    }
+
     function markerColor(score) {
       if (score >= 9) return '#f2c94c';
       if (score >= 8) return '#b678ff';
@@ -430,17 +451,12 @@
         .trim();
     }
 
-    function queryVariants(item) {
-      const name = normalizeName(item.name);
-      return [
-        `${name}, Chicago, IL`,
-        `${name} restaurant, Chicago, IL`,
-        `${name}, Illinois`,
-        `${name}`
-      ];
-    }
-
-    function mapsSearchUrl(item) {
+    function directionsUrl(item) {
+      if (item.directionsUrl) return item.directionsUrl;
+      if (item.loc && item.loc.directionsUrl) return item.loc.directionsUrl;
+      if (item.address) {
+        return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.address)}`;
+      }
       return `https://www.google.com/maps/search/${encodeURIComponent(normalizeName(item.name) + ', Chicago, IL')}`;
     }
 
@@ -448,7 +464,7 @@
       const reviewHtml = item.reviewUrl
         ? `<a href="${item.reviewUrl}" target="_blank" rel="noopener noreferrer">Review Video</a>`
         : `<span>Review Video</span>`;
-      const dirHtml = `<a href="${mapsSearchUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
+      const dirHtml = `<a href="${directionsUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
       const address = item.address ? escapeHtml(item.address) : 'Location not locked yet';
       return `
         <div class="popup-title">${escapeHtml(item.name)} (${item.score.toFixed(1)})</div>
@@ -491,57 +507,35 @@
 
     function clearSaved() {
       localStorage.removeItem(STORAGE_KEY);
-      state.items.forEach(item => {
-        item.lat = null;
-        item.lng = null;
-        item.address = '';
-        item.mapped = false;
-        item.failed = false;
-        item.locating = false;
-      });
+      state.items = state.baseItems.map(cloneItem);
       for (const marker of state.markers.values()) {
         state.map.removeLayer(marker);
       }
       state.markers.clear();
-      startAutoLocation(true);
+      loadSavedLocations();
+      state.items.filter(i => i.mapped).forEach(upsertMarker);
       render();
     }
 
     async function geocodeItem(item) {
-      if (item.mapped || item.locating) return false;
+      if (item.locating) return false;
       item.locating = true;
       item.failed = false;
       renderStatus();
 
-      for (const q of queryVariants(item)) {
-        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q=${encodeURIComponent(q)}`;
-        try {
-          const res = await fetch(url, {
-            headers: {
-              'Accept': 'application/json',
-              'Accept-Language': 'en-US,en;q=0.9'
-            }
-          });
-          if (!res.ok) continue;
-          const data = await res.json();
-          if (Array.isArray(data) && data.length) {
-            const hit = data[0];
-            item.lat = Number(hit.lat);
-            item.lng = Number(hit.lon);
-            item.address = hit.display_name || '';
-            item.mapped = Number.isFinite(item.lat) && Number.isFinite(item.lng);
-            item.locating = false;
-            if (item.mapped) {
-              persistItem(item);
-              upsertMarker(item);
-              render();
-              return true;
-            }
-          }
-        } catch (err) {
-          console.warn('Geocode failed for', item.name, err);
-        }
-        await sleep(400);
+      const shared = state.sharedIndex.get(normalizeName(item.name).toLowerCase());
+      if (shared && Number.isFinite(shared.lat) && Number.isFinite(shared.lng)) {
+        item.lat = shared.lat;
+        item.lng = shared.lng;
+        item.address = shared.address || '';
+        item.reviewUrl = shared.reviewUrl || item.reviewUrl || '';
+        item.directionsUrl = shared.directionsUrl || item.directionsUrl || '';
+        item.mapped = true;
+        item.locating = false;
+        persistItem(item);
+        upsertMarker(item);
+        render();
+        return true;
       }
 
       item.locating = false;
@@ -657,9 +651,9 @@
       const remaining = state.items.length - mapped;
       const active = state.items.find(i => i.locating);
       if (active) {
-        els.autoStatus.textContent = `Locating: ${active.name} · ${mapped} mapped`;
+        els.autoStatus.textContent = `Matching: ${active.name} · ${mapped} mapped`;
       } else if (remaining > 0) {
-        els.autoStatus.textContent = `Auto-locating in background · ${mapped} mapped`;
+        els.autoStatus.textContent = `Shared data loaded · ${mapped} mapped`;
       } else {
         els.autoStatus.textContent = `All places processed · ${mapped} mapped`;
       }
@@ -692,8 +686,8 @@
           </div>
           <div class="card-actions">
             <button class="primary" data-action="show" data-id="${item.id}" ${item.mapped ? '' : 'disabled'}>Show on map</button>
-            <button class="subtle" data-action="retry" data-id="${item.id}" ${item.locating ? 'disabled' : ''}>Find location</button>
-            <a class="btn subtle" href="${mapsSearchUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>
+            <button class="subtle" data-action="retry" data-id="${item.id}" ${item.locating ? 'disabled' : ''}>Refresh match</button>
+            <a class="btn subtle" href="${directionsUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>
             <button class="subtle" data-action="video" data-id="${item.id}" ${item.reviewUrl ? '' : 'disabled'}>Review video</button>
           </div>
         </article>
@@ -777,11 +771,35 @@
       setTimeout(() => state.map.invalidateSize(), 120);
     }
 
-    loadSavedLocations();
-    initMap();
-    bindEvents();
-    render();
-    startAutoLocation();
+    async function loadSharedData() {
+      const response = await fetch(SHARED_DATA_URL, { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(`Failed to load ${SHARED_DATA_URL}: ${response.status}`);
+      }
+      const data = await response.json();
+      state.baseItems = Array.isArray(data) ? data.map(buildStateItem) : [];
+      state.items = state.baseItems.map(cloneItem);
+      state.sharedIndex = new Map(state.baseItems.map((item) => [normalizeName(item.name).toLowerCase(), item]));
+    }
+
+    async function bootstrap() {
+      try {
+        await loadSharedData();
+      } catch (err) {
+        console.warn('Falling back to embedded data', err);
+        state.baseItems = DATA.map(buildStateItem);
+        state.items = state.baseItems.map(cloneItem);
+        state.sharedIndex = new Map(state.baseItems.map((item) => [normalizeName(item.name).toLowerCase(), item]));
+      }
+
+      loadSavedLocations();
+      initMap();
+      bindEvents();
+      render();
+      startAutoLocation();
+    }
+
+    bootstrap();
   </script>
 </body>
 </html>
