@@ -10,8 +10,15 @@ const ROOT_LOCATIONS_PATH = path.join(ROOT, 'locations.json');
 const NEW_REVIEWS_PATH = path.join(DATA_DIR, 'new-reviews.json');
 const MANUAL_FIXES_PATH = path.join(DATA_DIR, 'manual-fixes.json');
 
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv.filter((arg) => arg.startsWith('--')).map((arg) => arg.split('=')[0]));
 const keepNewReviews = args.has('--keep-new-reviews');
+const inputArgIndex = argv.findIndex((arg) => arg === '--input' || arg.startsWith('--input='));
+const inputOverride = inputArgIndex >= 0
+  ? (argv[inputArgIndex].includes('=') ? argv[inputArgIndex].split('=').slice(1).join('=') : argv[inputArgIndex + 1])
+  : null;
+const intakePath = inputOverride ? path.resolve(ROOT, inputOverride) : NEW_REVIEWS_PATH;
+const intakeLabel = path.basename(intakePath);
 
 const confidenceRank = {
   low: 0,
@@ -199,7 +206,7 @@ async function main() {
   try {
     const [locationsRaw, newReviewsRaw, manualFixesRaw] = await Promise.all([
       readJsonFile(LOCATIONS_PATH, []),
-      readJsonFile(NEW_REVIEWS_PATH, []),
+      readJsonFile(intakePath, []),
       readJsonFile(MANUAL_FIXES_PATH, {}),
     ]);
 
@@ -241,7 +248,7 @@ async function main() {
       }
 
       if (seenIncoming.has(key)) {
-        summary.skipped.push(`${entry.name} (duplicate in new-reviews.json)`);
+        summary.skipped.push(`${entry.name} (duplicate in ${intakeLabel})`);
         resolvedRows.add(rowIndex);
         continue;
       }
@@ -302,10 +309,10 @@ async function main() {
       await writeJsonFile(LOCATIONS_PATH, locations);
       await writeJsonFile(ROOT_LOCATIONS_PATH, locations);
       if (keepNewReviews) {
-        await writeJsonFile(NEW_REVIEWS_PATH, incoming);
+        await writeJsonFile(intakePath, incoming);
       } else {
         await writeJsonFile(
-          NEW_REVIEWS_PATH,
+          intakePath,
           incoming.filter((_, idx) => !resolvedRows.has(idx)),
         );
       }
