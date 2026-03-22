@@ -1624,7 +1624,7 @@
     "score": 9.2,
     "subtitle": "Phil ate the House Burger w/ Bacon",
     "address": "Park Ridge, IL",
-    "city": "",
+    "city": "Chicago",
     "state": "IL",
     "lat": 42.0111412,
     "lng": -87.84061919999999,
@@ -3283,5 +3283,35 @@
     "sourceType": "structured-data",
     "confidence": "high",
     "notes": "Review URL was missing from both the structured payload and popup HTML."
+  },
+  {
+    "name": "Test Pizza Place",
+    "score": 9.9,
+    "subtitle": "",
+    "address": "",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "directionsUrl": "",
+    "reviewUrl": "",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
+  },
+  {
+    "name": "TEST BURGER",
+    "score": 10,
+    "subtitle": "",
+    "address": "",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "directionsUrl": "",
+    "reviewUrl": "https://youtube.com/test",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
