@@ -51,20 +51,17 @@
     .map-toggle {
       display:none;
       position:absolute;
-      left:50%;
-      top:auto;
-      bottom:12px;
-      transform:translateX(-50%);
-      width:min(220px, calc(100% - 24px));
+      left:12px;
+      top:12px;
       z-index:600;
       border:none;
       border-radius:999px;
-      padding:14px 18px;
-      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
-      color:white;
-      backdrop-filter:blur(14px);
-      box-shadow:0 14px 28px rgba(73, 36, 138, .28);
-      font-size:15px;
+      padding:11px 14px;
+      background:rgba(11,21,41,.9);
+      color:#fff;
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+      font-size:14px;
       font-weight:900;
       letter-spacing:.01em;
     }
@@ -343,6 +340,14 @@
       padding:18px;
       text-align:center;
     }
+    .map-focus .map-wrap {
+      height:100dvh;
+      min-height:0;
+      max-height:none;
+    }
+    .map-focus .map-toggle {
+      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
+    }
     .leaflet-popup-content-wrapper { border-radius:18px; }
     .popup-title { font-size:18px; font-weight:800; line-height:1.2; margin:0 0 6px; }
     .popup-sub { font-size:13px; color:#586077; margin-bottom:8px; }
@@ -365,6 +370,10 @@
         max-height:26dvh;
         border-bottom:1px solid var(--line);
       }
+      .map-toggle {
+        display:inline-flex;
+        align-items:center;
+      }
       .panel {
         overflow:visible;
         padding:10px 12px calc(20px + env(safe-area-inset-bottom));
@@ -372,6 +381,9 @@
         border-radius:24px 24px 0 0;
         background:linear-gradient(180deg, rgba(247,246,251,.98), rgba(244,242,248,.96));
         box-shadow:none;
+      }
+      .map-focus .panel {
+        margin-top:0;
       }
       .sticky-head {
         position:relative;
@@ -432,6 +444,7 @@
   <div class="app">
     <section class="map-wrap">
       <div id="map" aria-label="Map of restaurants"></div>
+      <button id="mobileMapToggle" class="map-toggle" type="button">Show full map</button>
       <div class="map-legend">
         <div class="legend-title">Score tiers</div>
         <div class="legend-row"><span class="swatch" style="background:#f2c94c"></span>9.0 and up</div>
@@ -520,6 +533,7 @@
       quickChip: 'all',
       userLocation: loadUserLocation(),
       nearbyOnly: false,
+      mobileMapFocus: false,
       userMarker: null,
       locatingQueue: [],
       queueIndex: 0,
@@ -541,6 +555,7 @@
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
       clearSavedBtn: document.getElementById('clearSavedBtn'),
+      mobileMapToggle: document.getElementById('mobileMapToggle'),
       quickChips: document.getElementById('quickChips')
     };
 
@@ -733,6 +748,18 @@
       loadSavedLocations();
       state.items.filter(i => i.mapped).forEach(upsertMarker);
       render();
+    }
+
+    function setMobileMapFocus(enabled) {
+      state.mobileMapFocus = enabled;
+      document.body.classList.toggle('map-focus', enabled);
+      if (els.mobileMapToggle) {
+        els.mobileMapToggle.textContent = enabled ? 'Show list' : 'Show full map';
+      }
+      setTimeout(() => state.map?.invalidateSize(), 120);
+      if (enabled) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     async function geocodeItem(item) {
@@ -960,6 +987,7 @@
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
       els.clearSavedBtn.addEventListener('click', clearSaved);
+      els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
       els.quickChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip');
         if (!btn) return;
