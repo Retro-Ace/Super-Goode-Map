@@ -8,6 +8,7 @@ const { spawnSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const UPDATE_SCRIPT = path.join(ROOT, 'scripts', 'update_locations.js');
 const APPROVED_VALUES = new Set(['yes', 'y', 'true', '1', 'approved', 'publish']);
+const BLOCKED_TEMPORARY_NAMES = new Set(['test burger', 'test pizza place']);
 
 function normalizeText(value) {
   return String(value ?? '')
@@ -56,6 +57,15 @@ function sanitizeRow(row) {
     confidence: 'medium',
     notes: cleanOptional(row.notes),
   };
+}
+
+function temporaryNameKey(value) {
+  return normalizeText(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function isBlockedTemporaryEntry(value) {
+  const key = temporaryNameKey(value);
+  return BLOCKED_TEMPORARY_NAMES.has(key) || /^test\b/.test(key) || /^demo\b/.test(key) || /^sample\b/.test(key) || /^placeholder\b/.test(key) || /^temp(?:orary)?\b/.test(key);
 }
 
 function headerKey(header) {
@@ -198,10 +208,12 @@ async function main() {
     const { url, values } = await fetchCsvRows();
     const rows = rowsToObjects(values);
     const approved = rows.filter((row) => isApproved(row.approved));
-    const imported = approved
+    const blocked = approved.filter((row) => isBlockedTemporaryEntry(row.name));
+    const importable = approved.filter((row) => !isBlockedTemporaryEntry(row.name));
+    const imported = importable
       .map((row) => sanitizeRow(row))
       .filter(Boolean);
-    const invalid = approved.length - imported.length;
+    const invalid = importable.length - imported.length;
     const skipped = rows.length - approved.length;
 
     await fs.writeFile(tmpPath, `${JSON.stringify(imported, null, 2)}\n`, 'utf8');
@@ -209,6 +221,7 @@ async function main() {
     console.log(`CSV source: ${url}`);
     console.log(`Rows read: ${rows.length}`);
     console.log(`Approved rows: ${approved.length}`);
+    console.log(`Blocked temporary rows: ${blocked.length}`);
     console.log(`Skipped rows: ${skipped}`);
     console.log(`Invalid approved rows: ${invalid}`);
     console.log(`Temp intake: ${tmpPath}`);

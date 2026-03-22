@@ -26,6 +26,11 @@ const confidenceRank = {
   high: 2,
 };
 
+const blockedTemporaryNames = new Set([
+  'test burger',
+  'test pizza place',
+]);
+
 function decodeHtmlEntities(input) {
   const str = String(input ?? '');
   return str
@@ -55,6 +60,15 @@ function normalizeName(value) {
     .replace(/&/g, ' and ')
     .replace(/['"`]/g, '')
     .replace(/[^a-z0-9]+/g, '');
+}
+
+function temporaryNameKey(value) {
+  return normalizeText(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function isBlockedTemporaryEntry(value) {
+  const key = temporaryNameKey(value);
+  return blockedTemporaryNames.has(key) || /^test\b/.test(key) || /^demo\b/.test(key) || /^sample\b/.test(key) || /^placeholder\b/.test(key) || /^temp(?:orary)?\b/.test(key);
 }
 
 function cleanString(value) {
@@ -234,6 +248,11 @@ async function main() {
       const entry = sanitizeEntry(raw);
       if (!entry.name) {
         summary.errors.push('Skipped an entry with a missing restaurant name.');
+        continue;
+      }
+      if (isBlockedTemporaryEntry(entry.name)) {
+        summary.skipped.push(`${entry.name} (temporary/test entry)`);
+        resolvedRows.add(rowIndex);
         continue;
       }
       if (!Number.isFinite(entry.score)) {
