@@ -343,44 +343,6 @@
       padding:18px;
       text-align:center;
     }
-    .map-focus .panel { display:block; }
-    .mobile-tabs {
-      display:none;
-      position:fixed;
-      left:12px;
-      right:12px;
-      bottom:calc(12px + env(safe-area-inset-bottom));
-      z-index:900;
-      gap:10px;
-    }
-    .mobile-tabs .tab {
-      flex:1 1 0;
-      border:none;
-      border-radius:999px;
-      padding:14px 16px;
-      font-size:15px;
-      font-weight:900;
-      letter-spacing:.01em;
-      color:#dfe6ff;
-      background:rgba(11,21,41,.88);
-      backdrop-filter:blur(14px);
-      box-shadow:0 14px 28px rgba(0,0,0,.18);
-    }
-    .mobile-tabs .tab.active {
-      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
-      color:white;
-    }
-    .map-focus .map-wrap {
-      order:1;
-      height:100dvh;
-      min-height:0;
-      max-height:none;
-      border-bottom:none;
-    }
-    .map-focus .map-toggle {
-      background:rgba(255,255,255,.95);
-      color:var(--ink);
-    }
     .leaflet-popup-content-wrapper { border-radius:18px; }
     .popup-title { font-size:18px; font-weight:800; line-height:1.2; margin:0 0 6px; }
     .popup-sub { font-size:13px; color:#586077; margin-bottom:8px; }
@@ -391,77 +353,47 @@
     }
     .popup-links span { color:#99a0b4; }
     @media (max-width: 899px) {
-      html, body { overflow:hidden; height:100%; }
+      html, body { overflow:auto; height:auto; }
       .app {
-        height:100dvh;
-        overflow:hidden;
+        min-height:100dvh;
+        height:auto;
+        overflow:visible;
       }
       .map-wrap {
-        height:48dvh;
-        min-height:250px;
-        max-height:52dvh;
-        border-bottom:none;
-      }
-      .map-toggle {
-        display:none;
-      }
-      .mobile-tabs {
-        display:flex;
+        height:24dvh;
+        min-height:190px;
+        max-height:26dvh;
+        border-bottom:1px solid var(--line);
       }
       .panel {
-        overflow:auto;
-        -webkit-overflow-scrolling:touch;
-        scrollbar-width:none;
-        padding:16px 12px calc(16px + env(safe-area-inset-bottom));
-        margin-top:-30px;
-        border-radius:30px 30px 0 0;
+        overflow:visible;
+        padding:10px 12px calc(20px + env(safe-area-inset-bottom));
+        margin-top:0;
+        border-radius:24px 24px 0 0;
         background:linear-gradient(180deg, rgba(247,246,251,.98), rgba(244,242,248,.96));
-        box-shadow:0 -26px 48px rgba(7,10,20,.18);
+        box-shadow:none;
       }
-      .panel::-webkit-scrollbar { display:none; }
       .sticky-head {
-        position:sticky;
-        top:0;
-        z-index:20;
+        position:relative;
+        top:auto;
+        z-index:auto;
         padding-bottom:10px;
-        background:linear-gradient(180deg, rgba(247,246,251,.98) 82%, rgba(247,246,251,0));
-        backdrop-filter: blur(14px);
+        background:none;
+        backdrop-filter:none;
       }
       .brand-card { padding:14px; border-radius:22px; }
       .brand-avatar { width:46px; height:46px; }
       .brand-title { font-size:28px; }
-      .controls { gap:9px; }
-      .map-toggle {
-        bottom: 14px;
-        font-size:16px;
-        padding:15px 18px;
-      }
+      .controls { gap:8px; margin-bottom:10px; }
+      .stats { margin-bottom:8px; }
+      .brand-card { margin-bottom:10px; }
+      .chip { padding:8px 11px; }
+      .search, select { height:42px; }
       .stats { grid-template-columns:1fr 1fr; }
       .stat .value { font-size:23px; }
-      .list { scrollbar-width:none; }
-      .list::-webkit-scrollbar { display:none; }
       .card-actions .btn,
       .card-actions button {
         flex:1 1 calc(50% - 8px);
-      }
-      .map-focus .panel {
-        display:block;
-        transform:translateY(calc(100% - 64px));
-        transition:transform .22s ease;
-      }
-      .map-focus .mobile-tabs .map-tab {
-        background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
-        color:white;
-      }
-      .map-focus .mobile-tabs .list-tab {
-        color:#dfe6ff;
-        background:rgba(11,21,41,.88);
-      }
-      .mobile-tabs .map-tab {
-        background:rgba(11,21,41,.88);
-      }
-      .mobile-tabs .list-tab {
-        background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
       }
     }
     @media (min-width: 900px) {
@@ -500,7 +432,6 @@
   <div class="app">
     <section class="map-wrap">
       <div id="map" aria-label="Map of restaurants"></div>
-      <button id="mobileMapToggle" class="map-toggle" type="button">Show full map</button>
       <div class="map-legend">
         <div class="legend-title">Score tiers</div>
         <div class="legend-row"><span class="swatch" style="background:#f2c94c"></span>9.0 and up</div>
@@ -508,11 +439,6 @@
         <div class="legend-row"><span class="swatch" style="background:#a8b1c3"></span>7.0 to 7.9</div>
       </div>
     </section>
-
-    <div class="mobile-tabs" aria-label="Mobile view switcher">
-      <button id="mobileMapTab" class="tab map-tab" type="button">Map</button>
-      <button id="mobileListTab" class="tab list-tab active" type="button">Restaurants</button>
-    </div>
 
     <aside class="panel">
       <div class="sticky-head">
@@ -594,7 +520,6 @@
       quickChip: 'all',
       userLocation: loadUserLocation(),
       nearbyOnly: false,
-      mobileMapFocus: false,
       userMarker: null,
       locatingQueue: [],
       queueIndex: 0,
@@ -616,9 +541,6 @@
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
       clearSavedBtn: document.getElementById('clearSavedBtn'),
-      mobileMapToggle: document.getElementById('mobileMapToggle'),
-      mobileMapTab: document.getElementById('mobileMapTab'),
-      mobileListTab: document.getElementById('mobileListTab'),
       quickChips: document.getElementById('quickChips')
     };
 
@@ -811,14 +733,6 @@
       loadSavedLocations();
       state.items.filter(i => i.mapped).forEach(upsertMarker);
       render();
-    }
-
-    function setMobileMapFocus(enabled) {
-      state.mobileMapFocus = enabled;
-      document.body.classList.toggle('map-focus', enabled);
-      if (els.mobileMapTab) els.mobileMapTab.classList.toggle('active', enabled);
-      if (els.mobileListTab) els.mobileListTab.classList.toggle('active', !enabled);
-      setTimeout(() => state.map?.invalidateSize(), 120);
     }
 
     async function geocodeItem(item) {
@@ -1046,9 +960,6 @@
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
       els.clearSavedBtn.addEventListener('click', clearSaved);
-      els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
-      els.mobileMapTab.addEventListener('click', () => setMobileMapFocus(true));
-      els.mobileListTab.addEventListener('click', () => setMobileMapFocus(false));
       els.quickChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip');
         if (!btn) return;
@@ -1099,9 +1010,6 @@
         fitUserLocation();
       }
       setTimeout(() => state.map.invalidateSize(), 120);
-      if (window.matchMedia('(max-width: 899px)').matches) {
-        setMobileMapFocus(false);
-      }
     }
 
     async function loadSharedData() {
