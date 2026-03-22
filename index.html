@@ -343,7 +343,33 @@
       padding:18px;
       text-align:center;
     }
-    .map-focus .panel { display:none; }
+    .map-focus .panel { display:block; }
+    .mobile-tabs {
+      display:none;
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:calc(12px + env(safe-area-inset-bottom));
+      z-index:900;
+      gap:10px;
+    }
+    .mobile-tabs .tab {
+      flex:1 1 0;
+      border:none;
+      border-radius:999px;
+      padding:14px 16px;
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.01em;
+      color:#dfe6ff;
+      background:rgba(11,21,41,.88);
+      backdrop-filter:blur(14px);
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
+    }
+    .mobile-tabs .tab.active {
+      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
+      color:white;
+    }
     .map-focus .map-wrap {
       order:1;
       height:100dvh;
@@ -377,9 +403,10 @@
         border-bottom:none;
       }
       .map-toggle {
-        display:inline-flex;
-        align-items:center;
-        gap:8px;
+        display:none;
+      }
+      .mobile-tabs {
+        display:flex;
       }
       .panel {
         overflow:auto;
@@ -416,6 +443,25 @@
       .card-actions .btn,
       .card-actions button {
         flex:1 1 calc(50% - 8px);
+      }
+      .map-focus .panel {
+        display:block;
+        transform:translateY(calc(100% - 64px));
+        transition:transform .22s ease;
+      }
+      .map-focus .mobile-tabs .map-tab {
+        background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
+        color:white;
+      }
+      .map-focus .mobile-tabs .list-tab {
+        color:#dfe6ff;
+        background:rgba(11,21,41,.88);
+      }
+      .mobile-tabs .map-tab {
+        background:rgba(11,21,41,.88);
+      }
+      .mobile-tabs .list-tab {
+        background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
       }
     }
     @media (min-width: 900px) {
@@ -462,6 +508,11 @@
         <div class="legend-row"><span class="swatch" style="background:#a8b1c3"></span>7.0 to 7.9</div>
       </div>
     </section>
+
+    <div class="mobile-tabs" aria-label="Mobile view switcher">
+      <button id="mobileMapTab" class="tab map-tab" type="button">Map</button>
+      <button id="mobileListTab" class="tab list-tab active" type="button">Restaurants</button>
+    </div>
 
     <aside class="panel">
       <div class="sticky-head">
@@ -566,6 +617,8 @@
       fitMappedBtn: document.getElementById('fitMappedBtn'),
       clearSavedBtn: document.getElementById('clearSavedBtn'),
       mobileMapToggle: document.getElementById('mobileMapToggle'),
+      mobileMapTab: document.getElementById('mobileMapTab'),
+      mobileListTab: document.getElementById('mobileListTab'),
       quickChips: document.getElementById('quickChips')
     };
 
@@ -763,9 +816,8 @@
     function setMobileMapFocus(enabled) {
       state.mobileMapFocus = enabled;
       document.body.classList.toggle('map-focus', enabled);
-      if (els.mobileMapToggle) {
-        els.mobileMapToggle.textContent = enabled ? 'Show list' : 'Show full map';
-      }
+      if (els.mobileMapTab) els.mobileMapTab.classList.toggle('active', enabled);
+      if (els.mobileListTab) els.mobileListTab.classList.toggle('active', !enabled);
       setTimeout(() => state.map?.invalidateSize(), 120);
     }
 
@@ -995,6 +1047,8 @@
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
       els.clearSavedBtn.addEventListener('click', clearSaved);
       els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
+      els.mobileMapTab.addEventListener('click', () => setMobileMapFocus(true));
+      els.mobileListTab.addEventListener('click', () => setMobileMapFocus(false));
       els.quickChips.addEventListener('click', (e) => {
         const btn = e.target.closest('.chip');
         if (!btn) return;
