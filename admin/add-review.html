@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Review Helper</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f2fa;
+      --panel: rgba(255,255,255,.9);
+      --ink: #191b24;
+      --muted: #5d6478;
+      --line: rgba(33, 38, 59, .12);
+      --brand: #8b5cf6;
+      --brand2: #c084fc;
+      --shadow: 0 16px 40px rgba(20, 20, 35, .08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: radial-gradient(circle at top left, #fff 0, #f4f2fa 35%, #eceef7 100%); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    body { padding: 18px; }
+    .shell { max-width: 1060px; margin: 0 auto; display: grid; gap: 16px; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .hero { padding: 20px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .18em; color: var(--brand); font-size: 11px; font-weight: 800; margin: 0 0 10px; }
+    h1 { margin: 0; font-size: clamp(28px, 5vw, 42px); line-height: 1; letter-spacing: -.04em; }
+    .sub { margin: 10px 0 0; color: var(--muted); line-height: 1.45; max-width: 62rem; }
+    .grid { display: grid; gap: 16px; }
+    @media (min-width: 920px) { .grid { grid-template-columns: 1.05fr .95fr; } }
+    .card { padding: 18px; }
+    .section-title { margin: 0 0 12px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .fields { display: grid; gap: 12px; }
+    @media (min-width: 760px) { .two { grid-template-columns: 1fr 1fr; } }
+    label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: rgba(139,92,246,.55); box-shadow: 0 0 0 4px rgba(139,92,246,.12); }
+    textarea { min-height: 170px; resize: vertical; }
+    .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .primary { color: #fff; background: linear-gradient(135deg, var(--brand), var(--brand2)); }
+    .ghost { color: var(--ink); background: #eef0f8; }
+    .compact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .status { margin-top: 10px; color: var(--muted); font-size: 13px; min-height: 1.2em; }
+    .hint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.45; }
+    .preview-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f0eefc;
+      color: #6346d8;
+      font-size: 12px;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <p class="eyebrow">Private admin helper</p>
+      <h1>Add a restaurant in under a minute</h1>
+      <p class="sub">Enter the review details, generate a valid JSON object, copy it, and paste it into <code>data/new-reviews.json</code>. Use the compact mode for a single-line snippet.</p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <p class="section-title">Restaurant Details</p>
+        <div class="fields">
+          <label>Restaurant Name *
+            <input id="name" required autocomplete="off" placeholder="Example: Johnnie's Beef" />
+          </label>
+          <div class="fields two">
+            <label>Score *
+              <input id="score" required inputmode="decimal" type="number" step="0.1" min="0" max="10" placeholder="8.7" />
+            </label>
+            <label>City
+              <input id="city" value="Chicago" autocomplete="off" />
+            </label>
+          </div>
+          <div class="fields two">
+            <label>Subtitle / Category
+              <input id="subtitle" autocomplete="off" placeholder="Optional" />
+            </label>
+            <label>State
+              <input id="state" value="IL" autocomplete="off" maxlength="2" />
+            </label>
+          </div>
+          <label>Review Video URL
+            <input id="reviewUrl" type="url" autocomplete="off" placeholder="https://..." />
+          </label>
+          <label>Directions URL
+            <input id="directionsUrl" type="url" autocomplete="off" placeholder="https://..." />
+          </label>
+          <label>Address
+            <input id="address" autocomplete="off" placeholder="Optional" />
+          </label>
+          <label>Notes
+            <textarea id="notes" placeholder="Optional"></textarea>
+          </label>
+        </div>
+        <div class="actions">
+          <button id="generate" class="primary" type="button">Generate JSON</button>
+          <button id="copy" class="ghost" type="button">Copy JSON</button>
+          <label class="compact"><input id="compact" type="checkbox" /> One-line snippet</label>
+        </div>
+        <div id="status" class="status"></div>
+      </section>
+
+      <section class="card">
+        <div class="preview-head">
+          <p class="section-title" style="margin:0;">Generated JSON</p>
+          <span class="pill">Paste into <code>data/new-reviews.json</code></span>
+        </div>
+        <textarea id="output" readonly spellcheck="false" placeholder="Generated JSON will appear here."></textarea>
+        <div class="hint">This page only prepares the JSON object. It does not touch the dataset until you paste the output into <code>data/new-reviews.json</code> and run the merge script.</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const fields = ['name', 'score', 'subtitle', 'reviewUrl', 'directionsUrl', 'address', 'city', 'state', 'notes'];
+    const el = Object.fromEntries(fields.concat(['generate', 'copy', 'compact', 'output', 'status']).map((id) => [id, document.getElementById(id)]));
+
+    function normalizeText(value) {
+      return String(value ?? '')
+        .replace(/[\u2018\u2019\u201A\u201B]/g, "'")
+        .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function value(id) {
+      return normalizeText(document.getElementById(id).value);
+    }
+
+    function buildObject() {
+      const name = value('name');
+      const scoreRaw = value('score');
+
+      if (!name) throw new Error('Restaurant name is required.');
+      if (!scoreRaw) throw new Error('Score is required and must be a number.');
+
+      const score = Number(scoreRaw);
+      if (!Number.isFinite(score)) throw new Error('Score is required and must be a number.');
+
+      const obj = {
+        name,
+        score,
+        subtitle: value('subtitle'),
+        address: value('address'),
+        city: value('city') || 'Chicago',
+        state: (value('state') || 'IL').toUpperCase(),
+        lat: null,
+        lng: null,
+        directionsUrl: value('directionsUrl'),
+        reviewUrl: value('reviewUrl'),
+        sourceType: 'manual',
+        confidence: 'medium',
+        notes: value('notes'),
+      };
+
+      return obj;
+    }
+
+    function generate() {
+      const obj = buildObject();
+      el.output.value = el.compact.checked ? JSON.stringify(obj) : JSON.stringify(obj, null, 2);
+      el.status.textContent = 'JSON ready.';
+      return obj;
+    }
+
+    async function copyOutput() {
+      if (!el.output.value.trim()) generate();
+      try {
+        await navigator.clipboard.writeText(el.output.value);
+      } catch (_) {
+        el.output.focus();
+        el.output.select();
+        document.execCommand('copy');
+      }
+      el.status.textContent = 'Copied to clipboard.';
+    }
+
+    el.generate.addEventListener('click', () => {
+      try {
+        generate();
+      } catch (err) {
+        el.status.textContent = err.message;
+      }
+    });
+
+    el.copy.addEventListener('click', async () => {
+      try {
+        await copyOutput();
+      } catch (err) {
+        el.status.textContent = err.message || 'Copy failed.';
+      }
+    });
+
+    el.status.textContent = 'Ready.';
+  </script>
+</body>
+</html>
