@@ -55,10 +55,9 @@
 
 ## Places Needing Human Review
 - (POP UP) Mcbrennan's Gourmet Burger Shack (9.2) [low]: The live map did not expose a full street-level address for this place, so the location should be reviewed before treating it as exact. Present on the current site map but not in the provided known list.
-- Atlas Chicken Shack (7.7) [medium]: The live map did not expose a full street-level address for this place, so the location should be reviewed before treating it as exact. This location is outside Illinois on the current live site map.
 
 ## Notes
 - The current site map exposes direct structured location data, so no pin-by-pin click scraping was required for address or coordinate extraction.
+- Two rows were corrected after the initial extraction using screenshot and address verification: The Southern Kitchen and Atlas Chicken Shack.
 - The Directions URLs are not stored in the page JSON itself; they are rendered in the Google Maps iframe popup HTML as `https://www.google.com/maps/dir/?api=1&destination=...`.
-- Two current-site entries resolve outside Illinois and were preserved exactly as published by the live map.
 - Validation used the provided known list as a coverage and dedupe check, but the current live site map can differ from that list over time.
