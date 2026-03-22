@@ -51,16 +51,22 @@
     .map-toggle {
       display:none;
       position:absolute;
-      left:12px;
-      top:12px;
+      left:50%;
+      top:auto;
+      bottom:12px;
+      transform:translateX(-50%);
+      width:min(220px, calc(100% - 24px));
       z-index:600;
       border:none;
       border-radius:999px;
-      padding:10px 14px;
-      background:rgba(11,21,41,.88);
+      padding:14px 18px;
+      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
       color:white;
-      backdrop-filter:blur(12px);
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      backdrop-filter:blur(14px);
+      box-shadow:0 14px 28px rgba(73, 36, 138, .28);
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.01em;
     }
     .panel {
       order:2;
@@ -346,7 +352,7 @@
       border-bottom:none;
     }
     .map-focus .map-toggle {
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.95);
       color:var(--ink);
     }
     .leaflet-popup-content-wrapper { border-radius:18px; }
@@ -379,11 +385,11 @@
         overflow:auto;
         -webkit-overflow-scrolling:touch;
         scrollbar-width:none;
-        padding:12px 12px calc(16px + env(safe-area-inset-bottom));
-        margin-top:-18px;
-        border-radius:28px 28px 0 0;
+        padding:16px 12px calc(16px + env(safe-area-inset-bottom));
+        margin-top:-30px;
+        border-radius:30px 30px 0 0;
         background:linear-gradient(180deg, rgba(247,246,251,.98), rgba(244,242,248,.96));
-        box-shadow:0 -20px 45px rgba(7,10,20,.18);
+        box-shadow:0 -26px 48px rgba(7,10,20,.18);
       }
       .panel::-webkit-scrollbar { display:none; }
       .sticky-head {
@@ -398,6 +404,11 @@
       .brand-avatar { width:46px; height:46px; }
       .brand-title { font-size:28px; }
       .controls { gap:9px; }
+      .map-toggle {
+        bottom: 14px;
+        font-size:16px;
+        padding:15px 18px;
+      }
       .stats { grid-template-columns:1fr 1fr; }
       .stat .value { font-size:23px; }
       .list { scrollbar-width:none; }
@@ -443,7 +454,7 @@
   <div class="app">
     <section class="map-wrap">
       <div id="map" aria-label="Map of restaurants"></div>
-      <button id="mobileMapToggle" class="map-toggle" type="button">Full map</button>
+      <button id="mobileMapToggle" class="map-toggle" type="button">Show full map</button>
       <div class="map-legend">
         <div class="legend-title">Score tiers</div>
         <div class="legend-row"><span class="swatch" style="background:#f2c94c"></span>9.0 and up</div>
@@ -753,7 +764,7 @@
       state.mobileMapFocus = enabled;
       document.body.classList.toggle('map-focus', enabled);
       if (els.mobileMapToggle) {
-        els.mobileMapToggle.textContent = enabled ? 'List view' : 'Full map';
+        els.mobileMapToggle.textContent = enabled ? 'Show list' : 'Show full map';
       }
       setTimeout(() => state.map?.invalidateSize(), 120);
     }
