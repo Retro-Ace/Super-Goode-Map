@@ -503,8 +503,8 @@
         top:auto;
         bottom:12px;
         transform:none;
-        padding:9px 12px;
-        font-size:12.5px;
+        padding:8px 11px;
+        font-size:11.5px;
         box-shadow:0 10px 20px rgba(0,0,0,.16);
       }
       .panel {
@@ -541,28 +541,33 @@
       .stats-mobile {
         display:flex;
         align-items:center;
-        justify-content:center;
-        gap:8px;
-        margin-bottom:7px;
-        min-height:34px;
-        padding:7px 10px;
-        border:1px solid rgba(58,70,107,.78);
-        border-radius:999px;
-        background:linear-gradient(180deg,#0f192f,#0c1426);
-        color:#c7d0e7;
+        justify-content:space-between;
+        gap:12px;
+        margin-bottom:8px;
+        min-height:auto;
+        padding:0 1px;
+        border:none;
+        border-radius:0;
+        background:none;
+        color:#8f99b4;
         font-size:11.5px;
-        line-height:1;
+        line-height:1.15;
         letter-spacing:-.01em;
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.02);
       }
       .stats-mobile strong {
-        color:var(--text);
+        color:#c7b3ff;
         font-size:12.5px;
         font-weight:800;
       }
-      .stats-mobile .sep {
-        color:#8e98b5;
-        font-size:11px;
+      .stats-mobile .item {
+        display:flex;
+        align-items:baseline;
+        gap:5px;
+        min-width:0;
+      }
+      .stats-mobile .item:last-child {
+        justify-content:flex-end;
+        text-align:right;
       }
       .stat { padding:8px 9px; }
       .stat .value { font-size:21px; }
@@ -600,7 +605,11 @@
         min-height:max-content;
       }
       .results-divider {
-        margin:0 0 8px;
+        height:1px;
+        margin:0 0 10px;
+        background:linear-gradient(90deg, rgba(125,140,255,0), rgba(125,140,255,.42), rgba(184,102,255,.34), rgba(125,140,255,.42), rgba(125,140,255,0));
+        box-shadow:0 1px 0 rgba(255,255,255,.05);
+        opacity:1;
       }
       .empty { padding:18px 14px; margin-top:2px; }
     }
@@ -693,9 +702,8 @@
           <div class="stat"><div class="label">Top score</div><div class="value" id="statTop">0.0</div></div>
         </div>
         <div class="stats-mobile" aria-label="results summary">
-          <span>Showing <strong id="statShowingMobile">0</strong></span>
-          <span class="sep">•</span>
-          <span>Top score <strong id="statTopMobile">0.0</strong></span>
+          <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
+          <span class="item"><span>Top score</span><strong id="statTopMobile">0.0</strong></span>
         </div>
       </div>
 
