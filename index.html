@@ -520,16 +520,22 @@
       outline-offset:2px;
     }
     @media (max-width: 899px) {
-      html, body { overflow:auto; height:auto; }
+      html, body {
+        overflow:hidden;
+        height:100dvh;
+      }
       .app {
+        height:100dvh;
         min-height:100dvh;
-        height:auto;
-        overflow:visible;
+        overflow:hidden;
+        display:flex;
+        flex-direction:column;
       }
       .map-wrap {
-        height:24dvh;
-        min-height:190px;
-        max-height:26dvh;
+        flex:0 0 auto;
+        height:23dvh;
+        min-height:176px;
+        max-height:220px;
         border-bottom:1px solid var(--line);
       }
       .map-toggle {
@@ -541,47 +547,67 @@
         transform:none;
       }
       .panel {
-        overflow:visible;
-        padding:8px 10px calc(16px + env(safe-area-inset-bottom));
+        flex:1 1 auto;
+        min-height:0;
+        overflow:hidden;
+        display:flex;
+        flex-direction:column;
+        padding:8px 10px 10px;
         margin-top:0;
         border-radius:24px 24px 0 0;
         background:linear-gradient(180deg, rgba(247,246,251,.98), rgba(244,242,248,.96));
         box-shadow:none;
       }
       .map-focus .panel {
-        margin-top:0;
+        display:none;
       }
       .sticky-head {
+        flex:0 0 auto;
         position:relative;
         top:auto;
-        z-index:auto;
-        padding-bottom:10px;
-        background:none;
-        backdrop-filter:none;
+        z-index:10;
+        padding-bottom:8px;
+        background:linear-gradient(180deg, rgba(247,246,251,.99) 84%, rgba(244,242,248,0));
+        backdrop-filter:blur(6px);
       }
-      .brand-card { padding:13px 14px 12px; border-radius:22px; margin-bottom:8px; }
+      .brand-card { padding:12px 13px 11px; border-radius:22px; margin-bottom:7px; }
       .brand-avatar { width:44px; height:44px; }
-      .brand-title { font-size:27px; }
+      .brand-title { font-size:25px; }
       .brand-note { font-size:11px; }
-      .controls { gap:7px; margin-bottom:8px; padding:9px; border-radius:18px; }
+      .controls { gap:6px; margin-bottom:7px; padding:8px; border-radius:18px; }
       .chip { padding:7px 10px; }
-      .search, select { min-height:41px; }
-      .stats { grid-template-columns:1fr 1fr; margin-bottom:8px; gap:7px; }
-      .stat .value { font-size:22px; }
-      .statusbar { margin:7px 0 9px; }
+      .search, select { min-height:40px; font-size:14px; padding:0 12px; }
+      .stats { grid-template-columns:1fr 1fr; margin-bottom:6px; gap:7px; }
+      .stat { padding:8px 9px; }
+      .stat .value { font-size:21px; }
+      .statusbar { margin:6px 0 8px; gap:7px; }
+      .pill { padding:6px 8px; font-size:11.5px; }
+      .row2 { gap:7px; }
+      button, .btn { min-height:38px; font-size:11.5px; padding:8px 10px; }
       .card-actions .btn,
       .card-actions button {
         font-size:11px;
         padding:8px 8px;
       }
       .card-actions {
-        gap:6px;
+        gap:5px;
       }
-      .card { padding:9px; }
+      .card { padding:9px; border-radius:17px; }
       .name { font-size:14px; }
       .restaurant-subtitle { font-size:11px; }
-      .list { gap:10px; }
-      .empty { padding:18px 14px; }
+      .meta { font-size:11px; }
+      .dist { font-size:10.5px; }
+      .list {
+        flex:1 1 auto;
+        min-height:0;
+        overflow-y:auto;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
+        overscroll-behavior:contain;
+        gap:9px;
+        padding:0 1px calc(18px + env(safe-area-inset-bottom));
+      }
+      .empty { padding:18px 14px; margin-top:2px; }
     }
     @media (min-width: 900px) {
       html, body { overflow:hidden; }
