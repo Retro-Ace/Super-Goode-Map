@@ -201,6 +201,21 @@
       background:radial-gradient(circle, rgba(184,102,255,.2), rgba(184,102,255,0) 68%);
       pointer-events:none;
     }
+    .top-score-stat .value-badge {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:62px;
+      min-height:34px;
+      padding:0 14px;
+      border-radius:999px;
+      background:var(--gold);
+      color:#0a0f1a;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      box-shadow:0 10px 18px rgba(242,201,76,.18), inset 0 1px 0 rgba(255,255,255,.2);
+    }
     .list {
       display:grid;
       gap:11px;
@@ -567,9 +582,9 @@
         min-height:28px;
         padding:0 11px;
         border-radius:999px;
-        background:linear-gradient(135deg, rgba(125,140,255,.96), rgba(184,102,255,.96));
-        color:#fff;
-        box-shadow:0 8px 18px rgba(139,92,246,.18), inset 0 1px 0 rgba(255,255,255,.18);
+        background:var(--gold);
+        color:#0a0f1a;
+        box-shadow:0 8px 16px rgba(242,201,76,.14), inset 0 1px 0 rgba(255,255,255,.2);
       }
       .stats-mobile .item {
         display:flex;
@@ -655,6 +670,12 @@
       }
       .stats { grid-template-columns:1fr 1fr; }
       .stat .value { font-size:18px; }
+      .top-score-stat .value-badge {
+        min-width:58px;
+        min-height:32px;
+        padding:0 13px;
+        font-size:17px;
+      }
     }
   </style>
 </head>
@@ -711,7 +732,7 @@
 
         <div class="stats">
           <div class="stat"><div class="label">Showing</div><div class="value" id="statShowing">0</div></div>
-          <div class="stat"><div class="label">Top score</div><div class="value" id="statTop">0.0</div></div>
+          <div class="stat top-score-stat"><div class="label">Top score</div><div class="value value-badge" id="statTop">0.0</div></div>
         </div>
         <div class="stats-mobile" aria-label="results summary">
           <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
