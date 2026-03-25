@@ -172,34 +172,34 @@
       gap:8px;
     }
     .stats {
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:8px;
-      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:10px;
+      padding:0 1px;
+      color:#8f99b4;
+      font-size:12px;
+      line-height:1.15;
+      letter-spacing:-.01em;
     }
     .stats-mobile {
       display:none;
     }
-    .stat {
-      border:1px solid rgba(58,70,107,.88);
-      background:linear-gradient(180deg,#0f192f,#0c1426);
-      border-radius:16px;
-      padding:8px 10px;
+    .stats .item {
+      display:flex;
+      align-items:baseline;
+      gap:6px;
       min-width:0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.02);
     }
-    .stat .label { color:var(--muted); font-size:11px; margin-bottom:2px; }
-    .stat .value { font-weight:800; font-size:23px; line-height:1; letter-spacing:-.02em; }
-    .stat::after {
-      content:'';
-      position:absolute;
-      inset:auto -20px -20px auto;
-      width:64px;
-      height:64px;
-      background:radial-gradient(circle, rgba(184,102,255,.2), rgba(184,102,255,0) 68%);
-      pointer-events:none;
+    .stats .item:last-child {
+      justify-content:flex-end;
+      text-align:right;
+    }
+    .stats strong {
+      color:#c7b3ff;
+      font-size:13px;
+      font-weight:800;
     }
     .top-score-stat .value-badge {
       display:inline-flex;
@@ -668,8 +668,13 @@
         padding-bottom:10px;
         background:linear-gradient(180deg, rgba(7,16,31,1) 78%, rgba(7,16,31,0));
       }
-      .stats { grid-template-columns:1fr 1fr; }
-      .stat .value { font-size:18px; }
+      .stats {
+        margin-bottom:8px;
+        font-size:12px;
+      }
+      .stats strong {
+        font-size:13px;
+      }
       .top-score-stat .value-badge {
         min-width:58px;
         min-height:32px;
@@ -730,9 +735,9 @@
           </div>
         </div>
 
-        <div class="stats">
-          <div class="stat"><div class="label">Showing</div><div class="value" id="statShowing">0</div></div>
-          <div class="stat top-score-stat"><div class="label">Top score</div><div class="value value-badge" id="statTop">0.0</div></div>
+        <div class="stats" aria-label="results summary">
+          <span class="item"><span>Showing</span><strong id="statShowing">0</strong></span>
+          <span class="item top-score-stat"><span>Top score</span><strong class="value-badge" id="statTop">0.0</strong></span>
         </div>
         <div class="stats-mobile" aria-label="results summary">
           <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
