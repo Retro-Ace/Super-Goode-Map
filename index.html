@@ -166,59 +166,10 @@
       gap:8px;
       align-items:stretch;
     }
-    .chips {
-      display:flex;
-      gap:6px;
-      overflow:auto hidden;
-      padding:1px 0 2px;
-      scrollbar-width:none;
-    }
-    .chips::-webkit-scrollbar { display:none; }
-    .chip {
-      border:1px solid rgba(58,70,107,.9);
-      background:#101a31;
-      color:#e7ebf7;
-      border-radius:999px;
-      padding:7px 11px;
-      font-weight:700;
-      font-size:12px;
-      white-space:nowrap;
-      cursor:pointer;
-      user-select:none;
-      line-height:1.1;
-      transition:transform .16s ease, background .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
-    }
-    .chip.active {
-      background:linear-gradient(135deg,var(--accent2),var(--accent));
-      border-color:transparent;
-      color:white;
-      box-shadow:0 8px 18px rgba(139,92,246,.22);
-    }
-    .statusbar {
-      display:flex;
-      align-items:center;
+    .location-actions {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
       gap:8px;
-      flex-wrap:wrap;
-      margin:9px 0 11px;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .pill {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border:1px solid rgba(61,73,111,.9);
-      background:rgba(16,25,47,.94);
-      border-radius:999px;
-      padding:6px 9px;
-      line-height:1.2;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.02);
-    }
-    .dot {
-      width:8px; height:8px; border-radius:50%;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow:0 0 0 3px rgba(184,102,255,.12);
-      flex:0 0 auto;
     }
     .stats {
       display:grid;
@@ -495,13 +446,11 @@
       transform:scale(1.08);
     }
     @media (hover:hover) {
-      .chip:hover,
       button:hover,
       .btn:hover,
       .card:hover {
         transform:translateY(-1px);
       }
-      .chip:hover { border-color:rgba(124,94,214,.88); }
       button:hover, .btn:hover { filter:brightness(1.04); }
       .card:hover {
         border-color:rgba(124,94,214,.45);
@@ -513,7 +462,6 @@
     }
     button:focus-visible,
     .btn:focus-visible,
-    .chip:focus-visible,
     .search:focus-visible,
     select:focus-visible {
       outline:2px solid rgba(184,102,255,.68);
@@ -575,14 +523,12 @@
       .brand-title { font-size:25px; }
       .brand-note { font-size:11px; }
       .controls { gap:6px; margin-bottom:7px; padding:8px; border-radius:18px; }
-      .chip { padding:7px 10px; }
       .search, select { min-height:40px; font-size:14px; padding:0 12px; }
       .stats { grid-template-columns:1fr 1fr; margin-bottom:6px; gap:7px; }
       .stat { padding:8px 9px; }
       .stat .value { font-size:21px; }
-      .statusbar { margin:6px 0 8px; gap:7px; }
-      .pill { padding:6px 8px; font-size:11.5px; }
       .row2 { gap:7px; }
+      .location-actions { gap:7px; }
       button, .btn { min-height:38px; font-size:11.5px; padding:8px 10px; }
       .card-actions .btn,
       .card-actions button {
@@ -693,21 +639,11 @@
               <option value="near">Nearest to me</option>
             </select>
           </div>
-          <div class="chips" id="quickChips">
-            <button class="chip active" data-chip="all">All</button>
-            <button class="chip" data-chip="9plus">9+</button>
-            <button class="chip" data-chip="8plus">8s</button>
-            <button class="chip" data-chip="7s">7s</button>
-          </div>
-          <div class="row2">
+          <div class="location-actions">
             <button id="locateMeBtn" class="btn">Use my location</button>
             <button id="showNearbyBtn" class="btn">Near me</button>
+            <button id="fitMappedBtn" class="btn subtle">Fit visible pins</button>
           </div>
-        </div>
-
-        <div class="statusbar">
-          <span class="pill"><span class="dot"></span><span id="autoStatus">Ready</span></span>
-          <button id="fitMappedBtn" class="subtle">Fit visible pins</button>
         </div>
 
         <div class="stats">
@@ -753,12 +689,10 @@
       sortFilter: document.getElementById('sortFilter'),
       statShowing: document.getElementById('statShowing'),
       statTop: document.getElementById('statTop'),
-      autoStatus: document.getElementById('autoStatus'),
       locateMeBtn: document.getElementById('locateMeBtn'),
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
-      mobileMapToggle: document.getElementById('mobileMapToggle'),
-      quickChips: document.getElementById('quickChips')
+      mobileMapToggle: document.getElementById('mobileMapToggle')
     };
 
     function scoreClass(score) {
@@ -884,12 +818,12 @@
 
     function requestUserLocation() {
       if (!navigator.geolocation) {
-        els.autoStatus.textContent = 'This browser does not support current location.';
+        if (els.autoStatus) els.autoStatus.textContent = 'This browser does not support current location.';
         els.locateMeBtn.classList.remove('primary');
         return;
       }
 
-      els.autoStatus.textContent = 'Requesting your location...';
+      if (els.autoStatus) els.autoStatus.textContent = 'Requesting your location...';
       navigator.geolocation.getCurrentPosition(
         (position) => {
           state.userLocation = {
@@ -908,7 +842,7 @@
           state.nearbyOnly = false;
           els.locateMeBtn.classList.remove('primary');
           els.showNearbyBtn.classList.remove('primary');
-          els.autoStatus.textContent = 'Location off';
+          if (els.autoStatus) els.autoStatus.textContent = 'Location off';
           render();
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
@@ -1134,6 +1068,7 @@
     }
 
     function renderStatus() {
+      if (!els.autoStatus) return;
       const active = state.items.find(i => i.locating);
       if (active) {
         els.autoStatus.textContent = `Matching: ${active.name}`;
@@ -1196,9 +1131,11 @@
 
     function setActiveChip(chip) {
       state.quickChip = chip;
-      [...els.quickChips.querySelectorAll('.chip')].forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.chip === chip);
-      });
+      if (els.quickChips) {
+        [...els.quickChips.querySelectorAll('.chip')].forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.chip === chip);
+        });
+      }
       render();
       refreshQueue();
     }
@@ -1226,11 +1163,13 @@
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
       els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
-      els.quickChips.addEventListener('click', (e) => {
-        const btn = e.target.closest('.chip');
-        if (!btn) return;
-        setActiveChip(btn.dataset.chip);
-      });
+      if (els.quickChips) {
+        els.quickChips.addEventListener('click', (e) => {
+          const btn = e.target.closest('.chip');
+          if (!btn) return;
+          setActiveChip(btn.dataset.chip);
+        });
+      }
 
       els.list.addEventListener('click', async (e) => {
         const target = e.target.closest('[data-action]');
