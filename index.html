@@ -559,6 +559,18 @@
         font-size:12.5px;
         font-weight:800;
       }
+      .stats-mobile .value-badge {
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width:48px;
+        min-height:28px;
+        padding:0 11px;
+        border-radius:999px;
+        background:linear-gradient(135deg, rgba(125,140,255,.96), rgba(184,102,255,.96));
+        color:#fff;
+        box-shadow:0 8px 18px rgba(139,92,246,.18), inset 0 1px 0 rgba(255,255,255,.18);
+      }
       .stats-mobile .item {
         display:flex;
         align-items:baseline;
@@ -703,7 +715,7 @@
         </div>
         <div class="stats-mobile" aria-label="results summary">
           <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
-          <span class="item"><span>Top score</span><strong id="statTopMobile">0.0</strong></span>
+          <span class="item"><span>Top score</span><strong id="statTopMobile" class="value-badge">0.0</strong></span>
         </div>
       </div>
 
