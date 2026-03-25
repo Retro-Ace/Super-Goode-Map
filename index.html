@@ -506,9 +506,9 @@
       }
       .map-wrap {
         flex:0 0 auto;
-        height:23dvh;
-        min-height:176px;
-        max-height:220px;
+        height:25dvh;
+        min-height:188px;
+        max-height:236px;
         border-bottom:1px solid var(--line);
       }
       .map-toggle {
@@ -542,15 +542,25 @@
         position:relative;
         top:auto;
         z-index:10;
-        padding-bottom:8px;
+        padding-bottom:6px;
         background:linear-gradient(180deg, rgba(247,246,251,.99) 84%, rgba(244,242,248,0));
         backdrop-filter:blur(6px);
       }
-      .brand-card { padding:12px 13px 11px; border-radius:22px; margin-bottom:7px; }
-      .brand-avatar { width:44px; height:44px; }
-      .brand-title { font-size:25px; }
-      .brand-note { font-size:11px; }
-      .controls { gap:6px; margin-bottom:7px; padding:8px; border-radius:18px; }
+      .brand-card {
+        gap:11px;
+        padding:10px 12px 9px;
+        border-radius:20px;
+        margin-bottom:6px;
+      }
+      .brand-avatar { width:38px; height:38px; }
+      .brand-kicker { margin:0 0 2px; font-size:10px; }
+      .brand-title { font-size:22px; }
+      .brand-note {
+        font-size:10.5px;
+        line-height:1.25;
+        margin-top:1px;
+      }
+      .controls { gap:6px; margin-bottom:6px; padding:8px; border-radius:18px; }
       .search, select { min-height:40px; font-size:14px; padding:0 12px; }
       .stats { display:none; }
       .stats-mobile {
@@ -668,18 +678,33 @@
         padding-bottom:10px;
         background:linear-gradient(180deg, rgba(7,16,31,1) 78%, rgba(7,16,31,0));
       }
+      .brand-card {
+        gap:12px;
+        padding:12px 14px 11px;
+        margin-bottom:9px;
+      }
+      .brand-avatar {
+        width:48px;
+        height:48px;
+      }
+      .brand-note {
+        font-size:11.5px;
+        line-height:1.28;
+      }
       .stats {
         margin-bottom:8px;
-        font-size:12px;
+        font-size:13.5px;
+        gap:20px;
       }
+      .stats .item { gap:7px; }
       .stats strong {
-        font-size:13px;
+        font-size:15px;
       }
       .top-score-stat .value-badge {
-        min-width:58px;
-        min-height:32px;
-        padding:0 13px;
-        font-size:17px;
+        min-width:62px;
+        min-height:34px;
+        padding:0 14px;
+        font-size:18px;
       }
     }
   </style>
