@@ -195,7 +195,7 @@
     }
     .stats {
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(2,1fr);
       gap:10px;
       margin-bottom:12px;
     }
@@ -513,7 +513,6 @@
               <option value="scoreAsc">Lowest score</option>
               <option value="nameAsc">A to Z</option>
               <option value="near">Nearest to me</option>
-              <option value="mappedFirst">Mapped first</option>
             </select>
           </div>
           <div class="chips" id="quickChips">
@@ -521,23 +520,20 @@
             <button class="chip" data-chip="9plus">9+</button>
             <button class="chip" data-chip="8plus">8s</button>
             <button class="chip" data-chip="7s">7s</button>
-            <button class="chip" data-chip="mapped">Mapped</button>
           </div>
           <div class="row2">
-            <button id="locateMeBtn" class="btn primary">Use my location</button>
+            <button id="locateMeBtn" class="btn">Use my location</button>
             <button id="showNearbyBtn" class="btn">Near me</button>
           </div>
         </div>
 
         <div class="statusbar">
           <span class="pill"><span class="dot"></span><span id="autoStatus">Ready</span></span>
-          <button id="fitMappedBtn" class="subtle">Fit mapped pins</button>
+          <button id="fitMappedBtn" class="subtle">Fit visible pins</button>
         </div>
 
         <div class="stats">
           <div class="stat"><div class="label">Showing</div><div class="value" id="statShowing">0</div></div>
-          <div class="stat"><div class="label">Mapped</div><div class="value" id="statMapped">0</div></div>
-          <div class="stat"><div class="label">Average</div><div class="value" id="statAvg">0.0</div></div>
           <div class="stat"><div class="label">Top score</div><div class="value" id="statTop">0.0</div></div>
         </div>
       </div>
@@ -577,8 +573,6 @@
       scoreFilter: document.getElementById('scoreFilter'),
       sortFilter: document.getElementById('sortFilter'),
       statShowing: document.getElementById('statShowing'),
-      statMapped: document.getElementById('statMapped'),
-      statAvg: document.getElementById('statAvg'),
       statTop: document.getElementById('statTop'),
       autoStatus: document.getElementById('autoStatus'),
       locateMeBtn: document.getElementById('locateMeBtn'),
@@ -690,6 +684,7 @@
     function requestUserLocation() {
       if (!navigator.geolocation) {
         els.autoStatus.textContent = 'This browser does not support current location.';
+        els.locateMeBtn.classList.remove('primary');
         return;
       }
 
@@ -703,14 +698,16 @@
           saveUserLocation(state.userLocation);
           els.sortFilter.value = 'near';
           state.nearbyOnly = true;
+          els.locateMeBtn.classList.add('primary');
           els.showNearbyBtn.classList.add('primary');
           render();
           fitUserLocation();
         },
         () => {
           state.nearbyOnly = false;
+          els.locateMeBtn.classList.remove('primary');
           els.showNearbyBtn.classList.remove('primary');
-          els.autoStatus.textContent = 'Location permission was not granted.';
+          els.autoStatus.textContent = 'Location off';
           render();
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
@@ -882,12 +879,13 @@
       const sort = els.sortFilter.value;
 
       let arr = state.items.filter(item => {
-        if (q && !item.name.toLowerCase().includes(q)) return false;
+        const nameMatch = item.name.toLowerCase().includes(q);
+        const subtitleMatch = (item.subtitle || '').toLowerCase().includes(q);
+        if (q && !nameMatch && !subtitleMatch) return false;
         if (scoreFilter !== 'all' && item.score < Number(scoreFilter)) return false;
         if (state.quickChip === '9plus' && item.score < 9) return false;
         if (state.quickChip === '8plus' && (item.score < 8 || item.score >= 9)) return false;
         if (state.quickChip === '7s' && item.score >= 8) return false;
-        if (state.quickChip === 'mapped' && !item.mapped) return false;
         if (state.nearbyOnly) {
           const dist = distanceMiles(item);
           if (!Number.isFinite(dist) || dist > 10) return false;
@@ -901,36 +899,29 @@
         if (sort === 'near' && state.userLocation) {
           return (distanceMiles(a) ?? 1e9) - (distanceMiles(b) ?? 1e9) || b.score - a.score || a.name.localeCompare(b.name);
         }
-        if (sort === 'mappedFirst') return Number(b.mapped) - Number(a.mapped) || b.score - a.score;
         return b.score - a.score || a.name.localeCompare(b.name);
       });
       return arr;
     }
 
     function renderStats(filtered) {
-      const mappedCount = state.items.filter(i => i.mapped).length;
-      const avg = filtered.length ? filtered.reduce((s,i) => s + i.score, 0) / filtered.length : 0;
       const top = filtered.length ? Math.max(...filtered.map(i => i.score)) : 0;
       els.statShowing.textContent = filtered.length;
-      els.statMapped.textContent = mappedCount;
-      els.statAvg.textContent = avg.toFixed(1);
       els.statTop.textContent = top.toFixed(1);
     }
 
     function renderStatus() {
-      const mapped = state.items.filter(i => i.mapped).length;
-      const remaining = state.items.length - mapped;
       const active = state.items.find(i => i.locating);
       if (active) {
-        els.autoStatus.textContent = `Matching: ${active.name} · ${mapped} mapped`;
+        els.autoStatus.textContent = `Matching: ${active.name}`;
       } else if (state.userLocation && state.nearbyOnly) {
-        els.autoStatus.textContent = `Showing places near you · ${mapped} mapped`;
+        els.autoStatus.textContent = 'Showing places near you';
       } else if (state.userLocation) {
-        els.autoStatus.textContent = `Location on · ${mapped} mapped`;
-      } else if (remaining > 0) {
-        els.autoStatus.textContent = `Shared data loaded · ${mapped} mapped`;
+        els.autoStatus.textContent = `Location on · ${state.items.length} restaurants`;
+      } else if (state.items.length > 0) {
+        els.autoStatus.textContent = `Shared data loaded · ${state.items.length} restaurants`;
       } else {
-        els.autoStatus.textContent = `All places processed · ${mapped} mapped`;
+        els.autoStatus.textContent = 'All places processed';
       }
     }
 
@@ -1092,6 +1083,7 @@
       loadSavedLocations();
       initMap();
       bindEvents();
+      els.locateMeBtn.classList.toggle('primary', false);
       els.showNearbyBtn.classList.toggle('primary', state.nearbyOnly);
       render();
       startAutoLocation();
