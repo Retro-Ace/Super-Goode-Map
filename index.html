@@ -858,6 +858,7 @@
       return {
         id: idx + 1,
         ...data,
+        reviewUrl: normalizeReviewUrl(data.reviewUrl || ''),
         lat: Number.isFinite(lat) ? lat : null,
         lng: Number.isFinite(lng) ? lng : null,
         address: data.address || '',
@@ -895,6 +896,41 @@
         .trim();
     }
 
+    function normalizeReviewUrl(rawUrl) {
+      if (!rawUrl) return '';
+
+      const trimmed = String(rawUrl).trim();
+      if (!trimmed) return '';
+
+      let parsed;
+      try {
+        parsed = new URL(trimmed);
+      } catch {
+        return trimmed;
+      }
+
+      const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+      const keepParams = new Set();
+
+      if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+        ['v', 'list', 'index', 't', 'start', 'end'].forEach((key) => keepParams.add(key));
+      } else if (host === 'youtu.be') {
+        ['t', 'start', 'end'].forEach((key) => keepParams.add(key));
+      }
+
+      const nextParams = new URLSearchParams();
+      for (const [key, value] of parsed.searchParams.entries()) {
+        if (keepParams.has(key)) {
+          nextParams.append(key, value);
+        }
+      }
+
+      parsed.search = nextParams.toString();
+      parsed.hash = '';
+
+      return parsed.toString();
+    }
+
     function directionsUrl(item) {
       if (item.directionsUrl) return item.directionsUrl;
       if (item.loc && item.loc.directionsUrl) return item.loc.directionsUrl;
@@ -905,8 +941,9 @@
     }
 
     function popupHtml(item) {
-      const reviewHtml = item.reviewUrl
-        ? `<a href="${item.reviewUrl}" target="_blank" rel="noopener noreferrer">Review Video</a>`
+      const reviewUrl = normalizeReviewUrl(item.reviewUrl);
+      const reviewHtml = reviewUrl
+        ? `<a href="${escapeHtml(reviewUrl)}" target="_blank" rel="noopener noreferrer">Review Video</a>`
         : `<span>Review Video</span>`;
       const dirHtml = `<a href="${directionsUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
       const address = item.address ? escapeHtml(item.address) : 'Location not locked yet';
@@ -1071,7 +1108,7 @@
         item.lat = shared.lat;
         item.lng = shared.lng;
         item.address = shared.address || '';
-        item.reviewUrl = shared.reviewUrl || item.reviewUrl || '';
+        item.reviewUrl = normalizeReviewUrl(shared.reviewUrl || item.reviewUrl || '');
         item.directionsUrl = shared.directionsUrl || item.directionsUrl || '';
         item.mapped = true;
         item.locating = false;
@@ -1336,7 +1373,9 @@
           render();
         }
         if (action === 'video' && item.reviewUrl) {
-          window.open(item.reviewUrl, '_blank', 'noopener,noreferrer');
+          const reviewUrl = normalizeReviewUrl(item.reviewUrl);
+          if (!reviewUrl) return;
+          window.open(reviewUrl, '_blank', 'noopener,noreferrer');
         }
       });
 
