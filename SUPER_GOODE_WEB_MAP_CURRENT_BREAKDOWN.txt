@@ -1,0 +1,366 @@
+SUPER GOODE WEB MAP CURRENT BREAKDOWN
+
+Last updated: 2026-03-27
+
+1. PROJECT OVERVIEW
+
+The Super Goode web map is a static restaurant discovery website built around Phil Goode's review data. It presents reviewed restaurants on an interactive map and in a browsable results list, with scores, subtitles, addresses, directions links, and review video links.
+
+The project solves a simple but valuable problem: Phil's review content lives across social/video links, while the map site needs one clean place where people can browse all reviewed restaurants, sort them, search them, and quickly open directions or the review itself.
+
+The live repo and site exist to keep that map experience fast, static, easy to host, and easy to update without a backend.
+
+2. SCOPE CLARIFICATION
+
+This breakdown is for the WEB MAP PROJECT ONLY.
+
+It covers:
+- the static website
+- the restaurant dataset
+- the admin intake helper
+- the sync/merge scripts
+- the GitHub Actions workflow
+- GitHub Pages deployment
+
+It explicitly does NOT cover:
+- any mobile app
+- any Expo app
+- any separate Super Goode app concept
+- any native wrapper or app-store build
+
+3. CURRENT WEB MAP FUNCTIONALITY
+
+The website currently does the following:
+
+- Loads restaurant data from a shared static JSON dataset
+- Renders all mapped restaurants on a Leaflet map
+- Shows a styled sidebar/panel with restaurant cards
+- Lets users search by restaurant name and subtitle
+- Lets users filter by score using a dropdown
+- Lets users sort by highest score, lowest score, A to Z, or nearest to the user
+- Lets users use current location and enable nearby filtering
+- Lets users fit the currently visible map pins
+- Shows score tiers with a small legend
+- Opens map popups with title, subtitle, address, review link, and directions link
+- Opens review links in a new tab/window
+- Opens directions links to Google Maps
+- Highlights selected restaurants/cards/pins
+
+Map behavior:
+- The map is built in index.html using Leaflet
+- Pins are color-coded by score tier
+- Selecting a restaurant can fly the map to that restaurant and open the popup
+- The app syncs visible markers to the current filter/search result set
+- The map includes a mobile "Show full map" toggle
+
+Restaurant browsing behavior:
+- Search matches both item.name and item.subtitle
+- Search is case-insensitive
+- Score filtering is currently done through the score dropdown only
+- Nearby mode filters to places within roughly 10 miles when user location is active
+- Results can be sorted by distance when the user has location enabled
+
+Score display / tier behavior:
+- Score tiers are:
+  - 9.0 and up
+  - 8.0 to 8.9
+  - 7.0 to 7.9
+- Current dataset count is 219 restaurants
+- Current score distribution is:
+  - 18 restaurants at 9.0+
+  - 141 restaurants in the 8.x range
+  - 60 restaurants in the 7.x range
+
+Directions / review link behavior:
+- Directions links resolve from directionsUrl when present
+- If directionsUrl is missing, the app can fall back to a Google Maps directions/search URL
+- Review links are normalized at runtime before opening, so query junk such as Instagram tracking parameters is stripped while preserving the core content path
+
+Desktop and mobile experience at a high level:
+- Desktop uses a two-pane layout: map on one side and the main browsing panel on the other
+- Mobile uses a top map section, a dark controls/header area, and a separate independently scrolling results area below
+- The mobile results area is intentionally scrollable on its own
+- The mobile design has been tuned repeatedly to make the web map feel more app-like without changing the static hosting model
+
+4. DATA STRUCTURE / SOURCE OF TRUTH
+
+Current source of truth:
+- data/locations.json
+
+Compatibility mirror:
+- locations.json
+
+Current relationship between the two:
+- Right now they are exact mirrors
+- Both currently contain 219 restaurant entries
+- Both currently match byte-for-byte as JSON content
+
+Current dataset shape:
+- name
+- score
+- subtitle
+- address
+- city
+- state
+- lat
+- lng
+- directionsUrl
+- reviewUrl
+- sourceType
+- confidence
+- notes
+
+Current dataset state:
+- all 219 entries currently have coordinates
+- all 219 entries currently have subtitles
+- all 219 entries currently have review URLs
+
+Supporting export files:
+- super_goode_locations.csv
+  - CSV export of the live data source
+  - includes the same main public data fields as the JSON dataset
+- extraction_report.md
+  - historical extraction writeup from the original structured-data extraction process
+  - useful context, but not the daily source of truth
+
+Supporting intake/override files:
+- data/new-reviews.json
+  - currently an empty array []
+  - used as a manual intake staging file for new additions
+- data/manual-fixes.json
+  - currently an empty object {}
+  - used for permanent last-pass overrides during merges
+
+How they fit together:
+- data/locations.json is the main published dataset
+- locations.json is kept as a compatibility mirror for fallback loading
+- new-reviews.json is a manual staging source
+- manual-fixes.json is the override layer applied last
+- super_goode_locations.csv is an export, not the live source of truth
+
+5. ADMIN / INTAKE WORKFLOW
+
+There are currently two web-map-side ways to add restaurants.
+
+Manual intake path:
+- Open admin/add-review.html
+- Enter restaurant info
+- Generate a JSON object
+- Paste that output into data/new-reviews.json
+- Run node scripts/update_locations.js
+- Review the console summary
+- Commit and push
+
+admin/add-review.html role:
+- Single-file helper page
+- No build tools required
+- Generates valid JSON matching the dataset shape
+- Supports compact one-line output and pretty output
+- Built for quick manual additions
+
+Sheet / form path:
+- A Google Form or Google Sheet can be used as intake
+- The sheet is published as CSV
+- The workflow only publishes rows where approved is a yes/true-style value
+
+Approval logic:
+- Approval is handled in scripts/sync_sheet.js
+- Only approved rows are passed into the merge flow
+- Unapproved rows are ignored
+
+6. SCRIPTS / AUTOMATION
+
+scripts/update_locations.js
+
+Purpose:
+- Safely merges incoming restaurant rows into data/locations.json
+
+What it does:
+- Reads:
+  - data/locations.json
+  - data/new-reviews.json by default, or an override input file with --input
+  - data/manual-fixes.json
+- Normalizes names and text
+- Prevents obvious duplicate merges
+- Tries to merge into an existing row when names match cleanly
+- Preserves stronger data already in the dataset
+- Applies manual fixes last
+- Writes both:
+  - data/locations.json
+  - locations.json
+- Clears data/new-reviews.json after merge unless --keep-new-reviews is used
+- Prints a summary of Added / Updated / Skipped / Ambiguous / Errors
+
+Important merge behavior:
+- It does not blindly overwrite stronger existing data
+- It upgrades missing data when the incoming row adds something useful
+- It blocks obvious temporary/test entries such as TEST BURGER and Test Pizza Place
+
+scripts/sync_sheet.js
+
+Purpose:
+- Pulls approved intake rows from a published CSV URL and feeds them into the same merge pipeline
+
+What it does:
+- Reads GOOGLE_SHEET_CSV_URL from environment/secrets
+- Downloads the published CSV
+- Parses the CSV locally
+- Canonicalizes expected fields
+- Keeps only approved rows
+- Blocks obvious temporary/test entries
+- Writes a temporary JSON intake file
+- Calls scripts/update_locations.js with that temp file as input
+
+What is automated vs manual:
+- Manual:
+  - editing data/new-reviews.json
+  - using admin/add-review.html
+  - optionally running update_locations.js locally
+- Automated:
+  - scheduled CSV sync via GitHub Actions
+  - committing refreshed data/locations.json and locations.json back to the repo when approved rows change the dataset
+
+7. REPO / FILE STRUCTURE SUMMARY
+
+Important top-level files:
+
+- index.html
+  - the entire static web app UI
+  - contains the HTML, CSS, and app logic for the map and sidebar
+
+- README.md
+  - repo overview and setup guidance
+  - now includes the hero/promo image near the top
+
+- data/locations.json
+  - main live dataset used by the web map
+
+- locations.json
+  - compatibility mirror/fallback dataset
+
+- super_goode_locations.csv
+  - static CSV export of the current data
+
+- extraction_report.md
+  - report from the original extraction effort from supergoode.com
+
+- SUPER_GOODE_PROJECT_LOG.txt
+- SUPER_GOODE_PROJECT_LOG copy.txt
+  - older historical project logs
+  - now superseded by this new current breakdown
+
+Important folders:
+
+- admin/
+  - contains add-review.html
+  - used for manual restaurant intake
+
+- data/
+  - contains the JSON dataset and supporting intake/override files
+
+- scripts/
+  - contains update_locations.js and sync_sheet.js
+  - powers the merge and sheet sync workflow
+
+- .github/workflows/
+  - contains sync-sheet.yml
+  - runs the automated sheet-to-dataset sync
+
+8. DEPLOYMENT / HOSTING
+
+Hosting model:
+- GitHub Pages
+
+Web source repo:
+- Super-Goode-Map
+
+Current publishing model:
+- The web map is a static site
+- The main web app is served from the repo contents
+- The site reads JSON data from the repo itself
+
+What that means operationally:
+- No backend server
+- No database
+- No dynamic API requirement for the live site
+- Updates happen by changing files in the repo and pushing commits
+
+9. UI / DESIGN SUMMARY
+
+Current visual style:
+- dark navy / purple app-style layout
+- premium/static-site feel rather than plain document styling
+- white rounded branding card at the top of the panel
+- gold / purple / gray score system tied to score tiers
+
+Notable current web-only UI characteristics:
+- desktop map + panel composition
+- dark controls surface
+- styled score legend on the map
+- dark restaurant cards with score pills
+- compact popup styling
+- current-location and nearby browsing tools
+- normalized review link opening behavior
+
+Desktop behavior:
+- desktop keeps the map visible beside the content panel
+- the header, controls, summary row, and restaurant list are all part of the main browsing experience
+- the desktop stats section uses a slim summary row rather than large stat cards
+
+Mobile behavior:
+- mobile keeps the map at the top
+- the controls area remains at the top section
+- the restaurant list scrolls independently
+- the top section and results section are visually separated
+- the results background is lighter, while the controls section stays darker for contrast
+
+10. RECENT PROGRESS / CURRENT STATE
+
+Current high-level state:
+- The web map is fully functional as a static GitHub Pages site
+- The data source and compatibility mirror are aligned
+- The app has received multiple rounds of UI cleanup and mobile-focused refinement
+- The review URL handling is now safer at runtime because review URLs are normalized before use
+- The CSV export has been regenerated from the current live data source
+- The repo README now includes a promo/hero image
+
+Most relevant current web-map updates:
+- Mobile layout was refined into a map-at-top + independently scrolling results experience
+- Desktop and mobile stats were simplified from heavy cards into lighter summary treatments
+- Controls were cleaned up by removing the old quick chip row and simplifying the top controls area
+- Popup spacing and map-side styling were polished
+- Review URLs are normalized before opening so Instagram tracking junk does not affect link behavior
+- super_goode_locations.csv has been regenerated from the current live dataset
+- README.md now has a centered hero image near the top
+
+What changed relative to the older logs:
+- The older logs describe score chips and some older control/status treatments that are no longer visible in the current UI
+- The older logs mention "fit mapped pins"; the current visible label is "Fit visible pins"
+- The older logs do not reflect the most recent review URL normalization and the latest README hero-image update
+- The two old project log files are duplicates of each other, not separate divergent histories
+
+11. KNOWN CONSTRAINTS / CAVEATS
+
+- This is still a single-file front-end app for the main UI, so most UI logic lives in index.html
+- The root locations.json file is a mirror, which means changes should keep both JSON files in sync
+- The automated sheet sync depends on correct external setup:
+  - a published CSV URL
+  - the GitHub secret GOOGLE_SHEET_CSV_URL
+- If the external CSV is not published correctly or the secret is missing, sync automation will fail
+- data/manual-fixes.json and data/new-reviews.json exist but are currently empty
+- extraction_report.md is useful context, but it reflects the original extraction pass rather than the full current maintenance workflow
+- node_modules is present locally, but it is not the important long-term source material for understanding the web map
+
+12. RECOMMENDED NEXT WEB-ONLY STEPS
+
+- Move repeated data utilities, such as review URL normalization and related dataset helpers, into a small shared script so index.html carries less logic
+- Add a lightweight dataset validation/export script that can regenerate CSV and validate both JSON mirrors in one command
+- Add a simple smoke-check script for the static site so common regressions in filtering, link wiring, and data loading are easier to catch before pushing
+- Consider splitting a small portion of the app logic out of index.html if maintenance keeps growing, while still keeping the site fully static
+- Add a short maintenance section in README specifically for the web map data workflow, including how to keep data/locations.json, locations.json, and super_goode_locations.csv aligned
+
+13. CURRENT WEB MAP STATUS SUMMARY
+
+The Super Goode web map is currently a static GitHub Pages website backed by a 219-entry restaurant dataset with full coordinates, subtitles, and review links. It supports map browsing, search, score filtering, directions, review opening, current-location browsing, mobile-friendly scrolling results, manual intake through admin/add-review.html, and automated approved-row ingestion through a published CSV plus GitHub Actions.
+
+This file is intended to be the current plain-English reference for the WEB MAP PROJECT ONLY.
