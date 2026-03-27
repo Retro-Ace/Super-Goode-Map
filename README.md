@@ -1,5 +1,10 @@
 # Super-Goode-Map
+
 Super Goode Food Map Interactive
+
+<p align="center">
+  <img src="./super-goode-info.png" alt="Super Goode Map promo graphic" width="900" />
+</p>
 
 ## Add restaurants online
 Use a private Google Form or Google Sheet as the intake source, then publish the sheet as CSV.
