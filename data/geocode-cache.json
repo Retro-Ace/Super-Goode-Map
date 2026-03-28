@@ -1,1 +1,9 @@
-{}
+{
+  "1823 w golf rd, schaumburg, il, usa": {
+    "status": "ok",
+    "lat": 42.0472537,
+    "lng": -88.1245701,
+    "displayName": "1823, West Golf Road, Schaumburg, Schaumburg Township, Cook County, Illinois, 60194, United States",
+    "updatedAt": "2026-03-28T05:19:31.573Z"
+  }
+}

@@ -39,7 +39,13 @@ function isFiniteCoordinate(value) {
 }
 
 function hasUsableCoordinates(entry) {
-  return isFiniteCoordinate(entry.lat) && isFiniteCoordinate(entry.lng);
+  if (!isFiniteCoordinate(entry.lat) || !isFiniteCoordinate(entry.lng)) return false;
+  const lat = Number(entry.lat);
+  const lng = Number(entry.lng);
+  if (lat === 0 && lng === 0) return false;
+  if (lat < -90 || lat > 90) return false;
+  if (lng < -180 || lng > 180) return false;
+  return true;
 }
 
 function hasUsableDirectionsUrl(entry) {

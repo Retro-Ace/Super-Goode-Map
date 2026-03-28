@@ -3,7 +3,10 @@
 const fs = require('fs/promises');
 const path = require('path');
 const {
+  buildFullAddress,
   enrichLocationEntry,
+  hasUsableCoordinates,
+  hasUsableDirectionsUrl,
   readGeocodeCache,
   writeGeocodeCache,
 } = require('./location_enrichment');
@@ -337,6 +340,15 @@ async function main() {
     }
     for (const missing of manualResult.unresolved) {
       summary.errors.push(`Manual fix target not found: ${missing}`);
+    }
+
+    for (let i = 0; i < locations.length; i += 1) {
+      const entry = locations[i];
+      const fullAddress = buildFullAddress(entry);
+      if (!fullAddress) continue;
+      if (!hasUsableCoordinates(entry) || !hasUsableDirectionsUrl(entry)) {
+        enrichmentTargets.add(i);
+      }
     }
 
     for (const targetIndex of enrichmentTargets) {
