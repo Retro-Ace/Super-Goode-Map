@@ -5,5 +5,68 @@
     "lng": -88.1245701,
     "displayName": "1823, West Golf Road, Schaumburg, Schaumburg Township, Cook County, Illinois, 60194, United States",
     "updatedAt": "2026-03-28T05:19:31.573Z"
+  },
+  "2464 n lincoln ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9266848,
+    "lng": -87.6509521,
+    "displayName": "Dog Haus, 2464, North Lincoln Avenue, Wrightwood Neighbors, Lincoln Park, Chicago, Lake View Township, Cook County, Illinois, 60614, United States",
+    "updatedAt": "2026-03-28T17:16:25.484Z"
+  },
+  "11026 s cicero ave, oak lawn, il, usa": {
+    "status": "ok",
+    "lat": 41.6916475,
+    "lng": -87.7402744,
+    "displayName": "Baba Saj, 11026, South Cicero Avenue, Oak Lawn, Worth Township, Cook County, Illinois, 60453, United States",
+    "updatedAt": "2026-03-28T17:16:26.502Z"
+  },
+  "665 n cass ave, westmont, il, usa": {
+    "status": "ok",
+    "lat": 41.8124402,
+    "lng": -87.9747257,
+    "displayName": "Katy's Dumpling House, 665, North Cass Avenue, Westmont, DuPage County, Illinois, 60559, United States",
+    "updatedAt": "2026-03-28T17:16:27.649Z"
+  },
+  "5699 touhy ave, niles, il, usa": {
+    "status": "ok",
+    "lat": 42.0114232,
+    "lng": -87.7693325,
+    "displayName": "Dear Franks, 5699, West Touhy Avenue, Niles, Niles Township, Cook County, Illinois, 60714, United States",
+    "updatedAt": "2026-03-28T17:16:28.711Z"
+  },
+  "1901 south dixie highway, west palm beach, fl, usa": {
+    "status": "ok",
+    "lat": 26.6969036,
+    "lng": -80.0543814,
+    "displayName": "1901, South Dixie Highway, West Palm Beach, Palm Beach County, Florida, 33401, United States",
+    "updatedAt": "2026-03-28T17:16:29.887Z"
+  },
+  "52 w roosevelt rd, lombard, il, usa": {
+    "status": "ok",
+    "lat": 41.8601482,
+    "lng": -88.01814,
+    "displayName": "52, West Roosevelt Road, Lombard, DuPage County, Illinois, 60148, United States",
+    "updatedAt": "2026-03-28T17:16:31.078Z"
+  },
+  "1079 w taylor st, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.8693169,
+    "lng": -87.6540015,
+    "displayName": "Al's Beef, 1079, West Taylor Street, Little Italy, Near West Side, Chicago, West Chicago Township, Cook County, Illinois, 60607, United States",
+    "updatedAt": "2026-03-28T17:16:32.531Z"
+  },
+  "200 us-1, north palm beach, fl, usa": {
+    "status": "ok",
+    "lat": 26.8056762,
+    "lng": -80.0553797,
+    "displayName": "200, Federal Highway, North Palm Beach, Lake Park, Palm Beach County, Florida, 33408, United States",
+    "updatedAt": "2026-03-28T17:16:33.565Z"
+  },
+  "931 e ogden ave, naperville, il, usa": {
+    "status": "ok",
+    "lat": 41.7898038,
+    "lng": -88.1328225,
+    "displayName": "931, East Ogden Avenue, Naperville, DuPage County, Illinois, 60563, United States",
+    "updatedAt": "2026-03-28T17:16:34.443Z"
   }
 }
