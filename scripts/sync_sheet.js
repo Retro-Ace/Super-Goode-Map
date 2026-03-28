@@ -69,7 +69,13 @@ function isBlockedTemporaryEntry(value) {
 }
 
 function headerKey(header) {
-  return normalizeText(header).toLowerCase().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ');
+  return normalizeText(header)
+    .toLowerCase()
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s*\/\s*/g, ' / ')
+    .replace(/[.:]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function canonicalField(header) {
@@ -77,7 +83,7 @@ function canonicalField(header) {
   if (!key) return null;
   if (['name', 'restaurant name', 'restaurant', 'place name'].includes(key)) return 'name';
   if (['score', 'rating'].includes(key)) return 'score';
-  if (['subtitle', 'category', 'category / subtitle', 'type'].includes(key)) return 'subtitle';
+  if (['subtitle', 'category', 'subtitle / category', 'category / subtitle', 'type'].includes(key)) return 'subtitle';
   if (['reviewurl', 'review video url', 'review video', 'review', 'video url'].includes(key)) return 'reviewUrl';
   if (['directionsurl', 'directions url', 'map url', 'google maps url'].includes(key)) return 'directionsUrl';
   if (['address', 'street address'].includes(key)) return 'address';
