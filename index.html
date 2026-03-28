@@ -896,6 +896,17 @@
         .trim();
     }
 
+    function hasUsableCoordinates(value) {
+      if (!value) return false;
+      const lat = Number(value.lat);
+      const lng = Number(value.lng);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) return false;
+      if (lat === 0 && lng === 0) return false;
+      if (lat < -90 || lat > 90) return false;
+      if (lng < -180 || lng > 180) return false;
+      return true;
+    }
+
     function normalizeReviewUrl(rawUrl) {
       if (!rawUrl) return '';
 
@@ -1051,14 +1062,37 @@
     function loadSavedLocations() {
       try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        let changed = false;
         for (const item of state.items) {
           const s = saved[item.name];
-          if (s && Number.isFinite(s.lat) && Number.isFinite(s.lng)) {
-            item.lat = s.lat;
-            item.lng = s.lng;
-            item.address = s.address || '';
+          if (!s) continue;
+
+          const sharedHasCoords = hasUsableCoordinates(item);
+          const savedHasCoords = hasUsableCoordinates(s);
+
+          if (sharedHasCoords) {
+            if (savedHasCoords || s.address) {
+              delete saved[item.name];
+              changed = true;
+            }
             item.mapped = true;
+            continue;
           }
+
+          if (!savedHasCoords) {
+            delete saved[item.name];
+            changed = true;
+            continue;
+          }
+
+          item.lat = Number(s.lat);
+          item.lng = Number(s.lng);
+          item.address = s.address || item.address || '';
+          item.mapped = true;
+        }
+
+        if (changed) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
         }
       } catch (err) {
         console.warn('Could not load saved locations', err);
