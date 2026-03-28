@@ -25,22 +25,23 @@ It does not cover:
 The web map is a static GitHub Pages site built from committed files.
 
 Current state derived from data/locations.json:
-- total restaurants: 220
-- 9.0 and up: 19
-- 8.0 to 8.9: 141
-- 7.0 to 7.9: 60
+- total restaurants: 229
+- 9.0 and up: 20
+- 8.0 to 8.9: 148
+- 7.0 to 7.9: 61
 - sourceType distribution:
 - structured-data: 219
-- sheet: 1
+- sheet: 10
 
 Current completeness:
-- coordinates present for 220 of 220 restaurants
-- subtitles present for 220 of 220 restaurants
-- review URLs present for 220 of 220 restaurants
-- directions URLs present for 220 of 220 restaurants
+- coordinates present for 229 of 229 restaurants
+- subtitles present for 229 of 229 restaurants
+- review URLs present for 229 of 229 restaurants
+- directions URLs present for 229 of 229 restaurants
 
-Notable current addition:
-- Daruma Restaurant is present in the canonical dataset and export set
+Notable current additions:
+- the latest approved sheet-synced restaurants are present in the canonical dataset, export, and embedded fallback
+- recent additions at the end of the source data include Buccan Sandwich Shop, NYC Halal Eats, Al's Beef, Brass Ring Pub, and Chicken Lit Tenders
 
 3. WHAT THE SITE CURRENTLY DOES
 
@@ -96,7 +97,7 @@ Canonical JSON fields:
 
 CSV export behavior:
 - one row per restaurant
-- current row count: 220
+- current row count: 229
 - current header count: 20
 - existing header order is preserved
 - export-only columns are retained for future use
@@ -262,4 +263,4 @@ When updating the web map data:
 
 13. SUMMARY
 
-The current Super Goode web map repo is a static GitHub Pages project backed by a 220-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, preserves a 20-column CSV export schema, and maintains an embedded fallback dataset inside index.html. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.
+The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, preserves a 20-column CSV export schema, and maintains an embedded fallback dataset inside index.html. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.

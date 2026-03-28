@@ -12,12 +12,12 @@ The site turns Phil Goode's review posts into a browsable map and list experienc
 
 ## Current Project State
 
-As of 2026-03-28, the live web-map dataset contains 220 restaurants sourced from [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json).
+As of 2026-03-28, the live web-map dataset contains 229 restaurants sourced from [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json).
 
-- 19 restaurants score 9.0 or higher
-- 141 restaurants score in the 8.x range
-- 60 restaurants score in the 7.x range
-- 220 of 220 restaurants currently have coordinates, subtitles, review URLs, and directions URLs
+- 20 restaurants score 9.0 or higher
+- 148 restaurants score in the 8.x range
+- 61 restaurants score in the 7.x range
+- 229 of 229 restaurants currently have coordinates, subtitles, review URLs, and directions URLs
 
 The current data model is:
 

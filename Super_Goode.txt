@@ -9,10 +9,10 @@ Current source-of-truth setup:
 - index.html also keeps an embedded fallback snapshot for offline/shared-data failure cases
 
 Current dataset state as of 2026-03-28:
-- 220 restaurants total
-- 19 restaurants at 9.0+
-- 141 restaurants in the 8.x range
-- 60 restaurants in the 7.x range
+- 229 restaurants total
+- 20 restaurants at 9.0+
+- 148 restaurants in the 8.x range
+- 61 restaurants in the 7.x range
 - all current entries have coordinates, subtitles, review URLs, and directions URLs
 
 Current update workflow:
