@@ -3283,5 +3283,20 @@
     "sourceType": "structured-data",
     "confidence": "high",
     "notes": "Review URL was missing from both the structured payload and popup HTML."
+  },
+  {
+    "name": "Daruma Restaurant",
+    "score": 9,
+    "subtitle": "",
+    "address": "1823 W Golf Rd",
+    "city": "Schaumburg",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DWYxdCGk4X4/?utm_source=chatgpt.com",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
