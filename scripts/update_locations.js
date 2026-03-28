@@ -2,6 +2,11 @@
 
 const fs = require('fs/promises');
 const path = require('path');
+const {
+  enrichLocationEntry,
+  readGeocodeCache,
+  writeGeocodeCache,
+} = require('./location_enrichment');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -214,6 +219,9 @@ async function main() {
     updated: [],
     skipped: [],
     ambiguous: [],
+    autoGeocoded: [],
+    autoDirections: [],
+    geocodeFailed: [],
     errors: [],
   };
 
@@ -223,11 +231,13 @@ async function main() {
       readJsonFile(intakePath, []),
       readJsonFile(MANUAL_FIXES_PATH, {}),
     ]);
+    const geocodeCache = await readGeocodeCache();
 
     const locations = Array.isArray(locationsRaw) ? locationsRaw.map((item) => sanitizeEntry(item)) : [];
     const incoming = Array.isArray(newReviewsRaw) ? newReviewsRaw : [];
     const manualFixes = manualFixesRaw && typeof manualFixesRaw === 'object' ? manualFixesRaw : {};
     const resolvedRows = new Set();
+    const enrichmentTargets = new Set();
 
     const index = new Map();
     for (let i = 0; i < locations.length; i += 1) {
@@ -283,6 +293,7 @@ async function main() {
         const matchIndex = matches[0];
         const merged = mergeEntry(locations[matchIndex], entry);
         locations[matchIndex] = merged.entry;
+        enrichmentTargets.add(matchIndex);
         if (merged.changed) {
           summary.updated.push(entry.name);
         } else {
@@ -309,15 +320,35 @@ async function main() {
       };
 
       locations.push(next);
-      index.set(key, [locations.length - 1]);
+      const newIndex = locations.length - 1;
+      index.set(key, [newIndex]);
+      enrichmentTargets.add(newIndex);
       summary.added.push(entry.name);
       resolvedRows.add(rowIndex);
     }
 
     const manualResult = applyManualFixes(locations, manualFixes);
     summary.updated.push(...manualResult.touched.filter((name) => !summary.updated.includes(name)));
+    for (const name of manualResult.touched) {
+      const matches = index.get(normalizeName(name)) || [];
+      for (const matchIndex of matches) {
+        enrichmentTargets.add(matchIndex);
+      }
+    }
     for (const missing of manualResult.unresolved) {
       summary.errors.push(`Manual fix target not found: ${missing}`);
+    }
+
+    for (const targetIndex of enrichmentTargets) {
+      const entry = locations[targetIndex];
+      if (!entry) continue;
+      const before = clone(entry);
+      const changed = await enrichLocationEntry(entry, geocodeCache, summary);
+      if (changed && !summary.added.includes(entry.name) && !summary.updated.includes(entry.name)) {
+        summary.updated.push(entry.name);
+      } else if (!changed && JSON.stringify(before) !== JSON.stringify(entry) && !summary.updated.includes(entry.name)) {
+        summary.updated.push(entry.name);
+      }
     }
 
     if (!summary.errors.length) {
@@ -327,6 +358,7 @@ async function main() {
     if (!process.argv.includes('--dry-run')) {
       await writeJsonFile(LOCATIONS_PATH, locations);
       await writeJsonFile(ROOT_LOCATIONS_PATH, locations);
+      await writeGeocodeCache(geocodeCache);
       if (keepNewReviews) {
         await writeJsonFile(intakePath, incoming);
       } else {
@@ -348,6 +380,15 @@ async function main() {
     console.log('');
     console.log('Ambiguous:');
     formatList(summary.ambiguous).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Auto-generated directions URLs:');
+    formatList(summary.autoDirections).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Auto-geocoded:');
+    formatList(summary.autoGeocoded).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Geocode failures:');
+    formatList(summary.geocodeFailed).forEach((line) => console.log(line));
     console.log('');
     console.log('Errors:');
     formatList(summary.errors).forEach((line) => console.log(line));
