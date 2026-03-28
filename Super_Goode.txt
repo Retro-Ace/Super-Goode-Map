@@ -1,211 +1,30 @@
-Super Goode Map - Full Project Overview
+Super Goode Web Map - Quick Project Note
 
-Project Goal
-Build a static web map application that shows restaurants reviewed by Phil Goode, including map pins, review scores, subtitles/categories, directions links, review video links, nearby sorting, and mobile-friendly UI.
+The Super Goode repo is currently a static web map hosted through GitHub Pages. It turns Phil Goode's review posts into a searchable restaurant map and list with score filtering, nearby sorting, review links, directions links, and a mobile-friendly layout.
 
-1. Core Architecture
-The project is a fully static web app with no backend and no database. It runs from static files on GitHub Pages and uses JSON plus GitHub automation for updates.
+Current source-of-truth setup:
+- data/locations.json is the canonical dataset
+- locations.json is the required compatibility mirror
+- super_goode_locations.csv is an export only
+- index.html also keeps an embedded fallback snapshot for offline/shared-data failure cases
 
-Main flow:
-User Interface
--> JSON dataset
--> GitHub automation
--> Google Sheet / CSV intake
+Current dataset state as of 2026-03-28:
+- 220 restaurants total
+- 19 restaurants at 9.0+
+- 141 restaurants in the 8.x range
+- 60 restaurants in the 7.x range
+- all current entries have coordinates, subtitles, review URLs, and directions URLs
 
-2. The Map Application
-The public website is a map-based restaurant browser.
+Current update workflow:
+1. Add a restaurant manually through admin/add-review.html or approve it through the published sheet.
+2. Run node scripts/update_locations.js to merge intake into the canonical dataset.
+3. Run node scripts/refresh_static_artifacts.js to sync the root mirror, CSV export, and embedded fallback snapshot.
+4. Validate the JSON files, CSV row count, and docs.
+5. Commit and push the static files.
 
-It loads restaurant data from:
-data/locations.json
+Current automation:
+- GitHub Actions can pull approved rows from GOOGLE_SHEET_CSV_URL every hour or on demand.
+- The sync flow filters approved rows, blocks test entries, enriches missing location data when needed, and commits updated JSON files back to the repo.
 
-For compatibility it also falls back to:
-locations.json
-
-The UI includes:
-- restaurant pins
-- clickable markers
-- zoom and navigation
-- fit mapped pins
-- restaurant cards
-- name, score, subtitle, address, distance, directions, and review video actions
-
-3. Mobile Experience Improvements
-The UI was tuned for phones and small screens.
-
-Improvements included:
-- responsive layout
-- larger touch targets
-- map/list behavior improvements
-- mobile map focus toggle
-- location-aware sorting
-- distance display
-- Phil branding and color treatment
-
-4. Data Extraction and Cleanup
-The original map data was extracted into a shared JSON dataset and cleaned.
-
-Stored fields include:
-- name
-- score
-- subtitle
-- reviewUrl
-- directionsUrl
-- address
-- city
-- state
-- lat
-- lng
-- sourceType
-- confidence
-- notes
-
-Cleanup work included:
-- correcting mismatched coordinates
-- correcting bad addresses
-- removing duplicate rows
-- removing test rows like TEST BURGER and Test Pizza Place
-- preserving stronger existing data when merging updates
-
-5. Admin Intake Tool
-The repo includes a single-file admin helper:
-admin/add-review.html
-
-It supports:
-- restaurant name
-- score
-- subtitle
-- review URL
-- directions URL
-- address
-- city
-- state
-- notes
-
-It can output:
-- pretty JSON
-- one-line JSON snippet
-
-6. Data Merge System
-The merge script:
-scripts/update_locations.js
-
-Purpose:
-Merge intake rows into the master dataset safely.
-
-Features:
-- prevents duplicates
-- normalizes names
-- preserves stronger existing data
-- applies manual fixes last
-- blocks obvious test/demo rows
-- prints Added / Updated / Skipped / Ambiguous / Errors
-
-7. Google Sheet / CSV Integration
-The repository uses a Google Sheet as the intake source, published as CSV.
-
-The sync script:
-scripts/sync_sheet.js
-
-It:
-- downloads the published CSV from GOOGLE_SHEET_CSV_URL
-- parses the CSV
-- keeps only approved rows
-- blocks obvious test entries
-- feeds the approved rows into the merge script
-
-8. GitHub Automation
-GitHub Actions workflow:
-.github/workflows/sync-sheet.yml
-
-It:
-- runs on a schedule and manually
-- downloads the published CSV
-- merges approved rows
-- updates data/locations.json
-- commits the changes back to the repo
-
-9. CSV Export
-The repo also includes a static CSV export generated from the live data source:
-super_goode_locations.csv
-
-Columns:
-- name
-- score
-- subtitle
-- address
-- city
-- state
-- lat
-- lng
-- reviewUrl
-- directionsUrl
-- sourceType
-- confidence
-- notes
-
-10. Repository Structure
-Top level:
-- index.html
-- README.md
-- locations.json
-- super_goode_locations.csv
-- Super_Goode.txt
-- SUPER_GOODE_PROJECT_LOG.txt
-- extraction_report.md
-
-Folders:
-admin/
-- add-review.html
-
-data/
-- locations.json
-- manual-fixes.json
-- new-reviews.json
-
-scripts/
-- update_locations.js
-- sync_sheet.js
-
-.github/workflows/
-- sync-sheet.yml
-
-11. GitHub Work Done
-Major tasks completed:
-- pushed the extracted dataset to GitHub
-- fixed the shared-data loader
-- deployed the public GitHub Pages app
-- improved mobile layout and branding
-- added the admin intake page
-- added merge scripts
-- added Google Sheet CSV sync
-- removed test restaurants from the published dataset
-- removed the footer note from the site
-- kept the system static and GitHub Pages compatible
-
-12. Current System Behavior
-Adding restaurants:
-Admin fills out the form or adds rows in the sheet.
-
-Approval:
-Only rows marked approved are published.
-
-Sync:
-GitHub Actions downloads the CSV, merges rows, and commits the updated data.
-
-Site update:
-GitHub Pages serves the latest static JSON dataset.
-
-13. Current Project Status
-The system is:
-- fully static
-- hosted on GitHub Pages
-- mobile optimized
-- automatically updatable
-- protected from obvious test entries
-- duplicate-aware
-- designed to keep the site simple and reliable
-
-14. Notes
-This repo intentionally avoids a backend, database, or dynamic server dependency.
-The public app reads the updated JSON file only.
-The CSV export and text overview are local repo artifacts for backup and documentation.
+Important rule:
+The repo is web-map only. Keep docs, shared JSON, compatibility mirror, CSV export, and fallback artifacts aligned with the current web dataset.
