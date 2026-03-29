@@ -51,6 +51,11 @@ function buildGooglePlaceUrl(entry) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
+function isGeneratedGooglePlaceUrl(entry) {
+  if (!hasUsableGooglePlaceUrl(entry)) return false;
+  return String(entry.googlePlaceUrl) === buildGooglePlaceUrl(entry);
+}
+
 function hasUsableGooglePlaceUrl(entry) {
   if (!entry?.googlePlaceUrl) return false;
   try {
@@ -89,6 +94,10 @@ function hasUsableDirectionsUrl(entry) {
 
 function shouldGenerateDirectionsUrl(entry) {
   return !hasUsableGooglePlaceUrl(entry) && !hasUsableDirectionsUrl(entry);
+}
+
+function shouldSkipAutoGooglePlaceUrl(options = {}) {
+  return Boolean(options.disableAutoGooglePlaceUrl);
 }
 
 function cacheKeyForAddress(address) {
@@ -188,11 +197,17 @@ async function geocodeAddress(address, cache) {
   return { status: 'ok', result, cached: false };
 }
 
-async function enrichLocationEntry(entry, cache, summary) {
+async function enrichLocationEntry(entry, cache, summary, options = {}) {
   const fullAddress = buildFullAddress(entry);
   let changed = false;
 
-  if (!hasUsableGooglePlaceUrl(entry)) {
+  if (shouldSkipAutoGooglePlaceUrl(options) && isGeneratedGooglePlaceUrl(entry)) {
+    entry.googlePlaceUrl = '';
+    summary.clearedPlaceUrls.push(`${entry.name} -> cleared weak auto-generated place URL`);
+    changed = true;
+  }
+
+  if (!hasUsableGooglePlaceUrl(entry) && !shouldSkipAutoGooglePlaceUrl(options)) {
     const googlePlaceUrl = buildGooglePlaceUrl(entry);
     if (googlePlaceUrl) {
       entry.googlePlaceUrl = googlePlaceUrl;
@@ -240,10 +255,12 @@ module.exports = {
   buildGooglePlaceUrl,
   buildGooglePlaceQuery,
   enrichLocationEntry,
+  isGeneratedGooglePlaceUrl,
   hasUsableGooglePlaceUrl,
   hasUsableCoordinates,
   hasUsableDirectionsUrl,
   readGeocodeCache,
+  shouldSkipAutoGooglePlaceUrl,
   shouldGenerateDirectionsUrl,
   writeGeocodeCache,
 };

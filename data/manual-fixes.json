@@ -1,1 +1,8 @@
-{}
+{
+  "Dorrie's Kitchen": {
+    "googlePlaceUrl": "",
+    "_controls": {
+      "disableAutoGooglePlaceUrl": true
+    }
+  }
+}

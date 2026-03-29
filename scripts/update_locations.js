@@ -195,11 +195,20 @@ function applyManualFixes(entries, manualFixes) {
   }
 
   const touched = [];
+  const controlsByName = new Map();
   for (const entry of entries) {
     const fix = fixes.get(normalizeName(entry.name));
     if (!fix || typeof fix !== 'object' || Array.isArray(fix)) continue;
+    const rawControls = fix._controls;
+    const controls = rawControls && typeof rawControls === 'object' && !Array.isArray(rawControls)
+      ? rawControls
+      : {};
+    if (Object.keys(controls).length) {
+      controlsByName.set(normalizeName(entry.name), controls);
+    }
     const before = clone(entry);
     for (const [key, value] of Object.entries(fix)) {
+      if (key === '_controls') continue;
       entry[key] = value;
     }
     if (JSON.stringify(before) !== JSON.stringify(entry)) {
@@ -211,7 +220,7 @@ function applyManualFixes(entries, manualFixes) {
     return !entries.some((entry) => normalizeName(entry.name) === normalizeName(name));
   });
 
-  return { touched, unresolved };
+  return { touched, unresolved, controlsByName };
 }
 
 function formatList(items) {
@@ -226,6 +235,7 @@ async function main() {
     skipped: [],
     ambiguous: [],
     autoPlaceUrls: [],
+    clearedPlaceUrls: [],
     autoGeocoded: [],
     autoDirections: [],
     geocodeFailed: [],
@@ -360,7 +370,8 @@ async function main() {
       const entry = locations[targetIndex];
       if (!entry) continue;
       const before = clone(entry);
-      const changed = await enrichLocationEntry(entry, geocodeCache, summary);
+      const controls = manualResult.controlsByName.get(normalizeName(entry.name)) || {};
+      const changed = await enrichLocationEntry(entry, geocodeCache, summary, controls);
       if (changed && !summary.added.includes(entry.name) && !summary.updated.includes(entry.name)) {
         summary.updated.push(entry.name);
       } else if (!changed && JSON.stringify(before) !== JSON.stringify(entry) && !summary.updated.includes(entry.name)) {
@@ -403,6 +414,9 @@ async function main() {
     console.log('');
     console.log('Auto-generated Google place URLs:');
     formatList(summary.autoPlaceUrls).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Cleared weak Google place URLs:');
+    formatList(summary.clearedPlaceUrls).forEach((line) => console.log(line));
     console.log('');
     console.log('Auto-geocoded:');
     formatList(summary.autoGeocoded).forEach((line) => console.log(line));
