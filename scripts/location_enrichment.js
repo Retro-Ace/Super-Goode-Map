@@ -32,6 +32,16 @@ function buildDirectionsUrl(entry) {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 }
 
+function hasUsableGooglePlaceUrl(entry) {
+  if (!entry?.googlePlaceUrl) return false;
+  try {
+    const parsed = new URL(String(entry.googlePlaceUrl));
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
 function isFiniteCoordinate(value) {
   if (value === null || value === undefined || value === '') return false;
   const num = Number(value);
@@ -56,6 +66,10 @@ function hasUsableDirectionsUrl(entry) {
   } catch {
     return false;
   }
+}
+
+function shouldGenerateDirectionsUrl(entry) {
+  return !hasUsableGooglePlaceUrl(entry) && !hasUsableDirectionsUrl(entry);
 }
 
 function cacheKeyForAddress(address) {
@@ -159,7 +173,7 @@ async function enrichLocationEntry(entry, cache, summary) {
   const fullAddress = buildFullAddress(entry);
   let changed = false;
 
-  if (!hasUsableDirectionsUrl(entry) && fullAddress) {
+  if (shouldGenerateDirectionsUrl(entry) && fullAddress) {
     entry.directionsUrl = buildDirectionsUrl(entry);
     summary.autoDirections.push(`${entry.name} -> ${entry.directionsUrl}`);
     changed = true;
@@ -196,8 +210,10 @@ module.exports = {
   buildDirectionsUrl,
   buildFullAddress,
   enrichLocationEntry,
+  hasUsableGooglePlaceUrl,
   hasUsableCoordinates,
   hasUsableDirectionsUrl,
   readGeocodeCache,
+  shouldGenerateDirectionsUrl,
   writeGeocodeCache,
 };

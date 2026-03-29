@@ -1,6 +1,6 @@
 SUPER GOODE WEB MAP CURRENT BREAKDOWN
 
-Last updated: 2026-03-28
+Last updated: 2026-03-29
 
 1. PROJECT SCOPE
 
@@ -57,7 +57,7 @@ The public site:
 - supports browser geolocation and nearby-only filtering
 - supports fit-to-visible-results behavior
 - opens review videos in a new tab
-- opens directions in Google Maps
+- uses a `Get directions` action that prefers `googlePlaceUrl`, then `directionsUrl`, then a generated Google Maps fallback
 - includes a mobile "Show full map" toggle
 
 4. SOURCE-OF-TRUTH MODEL
@@ -89,6 +89,7 @@ Canonical JSON fields:
 - state
 - lat
 - lng
+- googlePlaceUrl
 - directionsUrl
 - reviewUrl
 - sourceType
@@ -98,10 +99,11 @@ Canonical JSON fields:
 CSV export behavior:
 - one row per restaurant
 - current row count: 229
-- current header count: 20
+- current header count: 21
 - existing header order is preserved
 - export-only columns are retained for future use
 - if an export-only field has no current source value, it stays blank
+- `googlePlaceUrl` is exported even when current rows leave it blank
 
 Current CSV header:
 - name
@@ -114,6 +116,7 @@ Current CSV header:
 - lat
 - lng
 - reviewUrl
+- googlePlaceUrl
 - directionsUrl
 - sourceType
 - confidence
@@ -161,6 +164,8 @@ Current manual intake flow:
 
 What the admin helper does:
 - collects the standard restaurant fields
+- supports an optional Google Maps place/share URL field
+- keeps directions URL support as the fallback field
 - defaults city to Chicago and state to IL
 - outputs JSON in pretty or one-line form
 - does not write directly to the dataset
@@ -175,6 +180,7 @@ Current behavior:
 - also runs hourly on a cron schedule
 - reads GOOGLE_SHEET_CSV_URL from GitHub secrets
 - downloads the published CSV
+- accepts optional Google Maps place/share URL columns and maps them to `googlePlaceUrl`
 - keeps only approved rows
 - blocks obvious temporary/test entries
 - sends approved rows through the same merge logic used by local intake
@@ -189,26 +195,28 @@ scripts/update_locations.js
 - reads data/new-reviews.json by default or an override file with --input
 - applies manual fixes
 - preserves stronger existing values when possible
+- preserves a good existing `googlePlaceUrl` when incoming data leaves it blank
 - writes both data/locations.json and locations.json
 - clears data/new-reviews.json after merge unless --keep-new-reviews is used
 
 scripts/sync_sheet.js
 - downloads the published intake CSV
 - canonicalizes supported sheet headers
+- supports `googlePlaceUrl` header variants such as Google Maps URL, Google Place URL, Google Maps Place URL, Place URL, and Maps URL
 - filters to approved rows
 - blocks temporary/test data
 - hands importable rows to scripts/update_locations.js
 
 scripts/location_enrichment.js
 - builds full addresses
-- creates directions URLs when missing
+- creates directions URLs only when `googlePlaceUrl` is absent and a usable `directionsUrl` is also missing
 - geocodes missing coordinates through Nominatim when needed
 - stores lookup results in data/geocode-cache.json
 
 scripts/refresh_static_artifacts.js
 - mirrors data/locations.json to locations.json
 - rebuilds super_goode_locations.csv from the canonical dataset
-- preserves the existing CSV header structure and legacy columns
+- preserves the existing CSV header structure, adds `googlePlaceUrl` to the export schema, and keeps legacy columns
 - refreshes the embedded fallback DATA array in index.html
 
 10. CURRENT HOSTING / DEPLOYMENT MODEL
@@ -256,6 +264,7 @@ When updating the web map data:
 - edit through the intake flow or approved sheet sync when possible
 - treat data/locations.json as canonical
 - keep locations.json mirrored to the source
+- prefer `googlePlaceUrl` when a true Google Maps place/share link is available
 - refresh super_goode_locations.csv from the canonical data
 - do not remove CSV columns just because values are blank right now
 - keep the index.html fallback snapshot aligned with the source dataset
@@ -263,4 +272,4 @@ When updating the web map data:
 
 13. SUMMARY
 
-The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, preserves a 20-column CSV export schema, and maintains an embedded fallback dataset inside index.html. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.
+The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, supports an optional first-class `googlePlaceUrl` field, preserves a 21-column CSV export schema, and maintains an embedded fallback dataset inside index.html. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.

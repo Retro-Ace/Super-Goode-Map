@@ -1,14 +1,15 @@
 Super Goode Web Map - Quick Project Note
 
-The Super Goode repo is currently a static web map hosted through GitHub Pages. It turns Phil Goode's review posts into a searchable restaurant map and list with score filtering, nearby sorting, review links, directions links, and a mobile-friendly layout.
+The Super Goode repo is currently a static web map hosted through GitHub Pages. It turns Phil Goode's review posts into a searchable restaurant map and list with score filtering, nearby sorting, review links, a `Get directions` flow, and a mobile-friendly layout.
 
 Current source-of-truth setup:
 - data/locations.json is the canonical dataset
 - locations.json is the required compatibility mirror
 - super_goode_locations.csv is an export only
 - index.html also keeps an embedded fallback snapshot for offline/shared-data failure cases
+- googlePlaceUrl is now the preferred optional Google Maps place/share field
 
-Current dataset state as of 2026-03-28:
+Current dataset state as of 2026-03-29:
 - 229 restaurants total
 - 20 restaurants at 9.0+
 - 148 restaurants in the 8.x range
@@ -17,14 +18,15 @@ Current dataset state as of 2026-03-28:
 
 Current update workflow:
 1. Add a restaurant manually through admin/add-review.html or approve it through the published sheet.
-2. Run node scripts/update_locations.js to merge intake into the canonical dataset.
-3. Run node scripts/refresh_static_artifacts.js to sync the root mirror, CSV export, and embedded fallback snapshot.
-4. Validate the JSON files, CSV row count, and docs.
-5. Commit and push the static files.
+2. Include `googlePlaceUrl` when a real Google Maps place/share link is available, otherwise keep using `directionsUrl`.
+3. Run node scripts/update_locations.js to merge intake into the canonical dataset.
+4. Run node scripts/refresh_static_artifacts.js to sync the root mirror, CSV export, and embedded fallback snapshot.
+5. Validate the JSON files, CSV row count, and docs.
+6. Commit and push the static files.
 
 Current automation:
 - GitHub Actions can pull approved rows from GOOGLE_SHEET_CSV_URL every hour or on demand.
-- The sync flow filters approved rows, blocks test entries, enriches missing location data when needed, and commits updated JSON files back to the repo.
+- The sync flow filters approved rows, supports optional place/share URL headers, enriches missing location data when needed, and commits updated JSON files back to the repo.
 
 Important rule:
-The repo is web-map only. Keep docs, shared JSON, compatibility mirror, CSV export, and fallback artifacts aligned with the current web dataset.
+The repo is web-map only. Keep docs, shared JSON, compatibility mirror, CSV export, and fallback artifacts aligned with the current web dataset, with `googlePlaceUrl -> directionsUrl -> generated Google Maps fallback` as the current directions flow.

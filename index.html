@@ -942,11 +942,37 @@
       return parsed.toString();
     }
 
-    function directionsUrl(item) {
-      if (item.directionsUrl) return item.directionsUrl;
-      if (item.loc && item.loc.directionsUrl) return item.loc.directionsUrl;
-      if (item.address) {
-        return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.address)}`;
+    function hasUsableHttpUrl(rawUrl) {
+      if (!rawUrl) return false;
+      try {
+        const parsed = new URL(String(rawUrl));
+        return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+      } catch {
+        return false;
+      }
+    }
+
+    function googleMapsPlaceUrl(item) {
+      if (hasUsableHttpUrl(item.googlePlaceUrl)) return item.googlePlaceUrl;
+      if (hasUsableHttpUrl(item.loc?.googlePlaceUrl)) return item.loc.googlePlaceUrl;
+      return '';
+    }
+
+    function fullAddressForDirections(item) {
+      const address = item.address || item.loc?.address || '';
+      const city = item.city || item.loc?.city || '';
+      const state = item.state || item.loc?.state || '';
+      return [address, city, state].filter(Boolean).join(', ');
+    }
+
+    function directionsHref(item) {
+      const placeUrl = googleMapsPlaceUrl(item);
+      if (placeUrl) return placeUrl;
+      if (hasUsableHttpUrl(item.directionsUrl)) return item.directionsUrl;
+      if (hasUsableHttpUrl(item.loc?.directionsUrl)) return item.loc.directionsUrl;
+      const destination = fullAddressForDirections(item);
+      if (destination) {
+        return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
       }
       return `https://www.google.com/maps/search/${encodeURIComponent(normalizeName(item.name) + ', Chicago, IL')}`;
     }
@@ -956,7 +982,7 @@
       const reviewHtml = reviewUrl
         ? `<a href="${escapeHtml(reviewUrl)}" target="_blank" rel="noopener noreferrer">Review Video</a>`
         : `<span>Review Video</span>`;
-      const dirHtml = `<a href="${directionsUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
+      const dirHtml = `<a href="${directionsHref(item)}" target="_blank" rel="noopener noreferrer">Get directions</a>`;
       const address = item.address ? escapeHtml(item.address) : 'Location not locked yet';
       const subtitleHtml = item.subtitle ? `<div class="popup-subtitle">${escapeHtml(item.subtitle)}</div>` : '';
       return `
@@ -1142,6 +1168,7 @@
         item.lat = shared.lat;
         item.lng = shared.lng;
         item.address = shared.address || '';
+        item.googlePlaceUrl = shared.googlePlaceUrl || item.googlePlaceUrl || '';
         item.reviewUrl = normalizeReviewUrl(shared.reviewUrl || item.reviewUrl || '');
         item.directionsUrl = shared.directionsUrl || item.directionsUrl || '';
         item.mapped = true;
@@ -1336,7 +1363,7 @@
           </div>
           <div class="card-actions">
             <button class="primary" data-action="show" data-id="${item.id}" ${item.mapped ? '' : 'disabled'}>Show on map</button>
-            <a class="btn subtle" href="${directionsUrl(item)}" target="_blank" rel="noopener noreferrer">Directions</a>
+            <a class="btn subtle" href="${directionsHref(item)}" target="_blank" rel="noopener noreferrer">Get directions</a>
             <button class="subtle" data-action="video" data-id="${item.id}" ${item.reviewUrl ? '' : 'disabled'}>Review video</button>
           </div>
         </article>

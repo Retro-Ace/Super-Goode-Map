@@ -6,8 +6,8 @@ const {
   buildFullAddress,
   enrichLocationEntry,
   hasUsableCoordinates,
-  hasUsableDirectionsUrl,
   readGeocodeCache,
+  shouldGenerateDirectionsUrl,
   writeGeocodeCache,
 } = require('./location_enrichment');
 
@@ -109,6 +109,7 @@ function sanitizeEntry(raw) {
     state: cleanState(raw.state),
     lat: coerceNumber(raw.lat),
     lng: coerceNumber(raw.lng),
+    googlePlaceUrl: cleanOptionalString(raw.googlePlaceUrl),
     directionsUrl: cleanOptionalString(raw.directionsUrl),
     reviewUrl: cleanOptionalString(raw.reviewUrl),
     sourceType: cleanOptionalString(raw.sourceType) || 'manual',
@@ -168,6 +169,7 @@ function mergeEntry(existing, incoming) {
   copyIfMissing('state');
   copyIfMissing('lat');
   copyIfMissing('lng');
+  copyIfMissing('googlePlaceUrl');
   copyIfMissing('directionsUrl');
   copyIfMissing('reviewUrl');
   copyIfMissing('sourceType');
@@ -315,6 +317,7 @@ async function main() {
         state: entry.state || 'IL',
         lat: entry.lat ?? null,
         lng: entry.lng ?? null,
+        googlePlaceUrl: entry.googlePlaceUrl || '',
         directionsUrl: entry.directionsUrl || '',
         reviewUrl: entry.reviewUrl || '',
         sourceType: entry.sourceType || 'manual',
@@ -346,7 +349,7 @@ async function main() {
       const entry = locations[i];
       const fullAddress = buildFullAddress(entry);
       if (!fullAddress) continue;
-      if (!hasUsableCoordinates(entry) || !hasUsableDirectionsUrl(entry)) {
+      if (!hasUsableCoordinates(entry) || shouldGenerateDirectionsUrl(entry)) {
         enrichmentTargets.add(i);
       }
     }

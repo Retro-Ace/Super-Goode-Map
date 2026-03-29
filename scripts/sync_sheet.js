@@ -51,6 +51,7 @@ function sanitizeRow(row) {
     state: cleanState(row.state),
     lat: null,
     lng: null,
+    googlePlaceUrl: cleanOptional(row.googlePlaceUrl),
     directionsUrl: cleanOptional(row.directionsUrl),
     reviewUrl: cleanOptional(row.reviewUrl),
     sourceType: 'sheet',
@@ -85,7 +86,18 @@ function canonicalField(header) {
   if (['score', 'rating'].includes(key)) return 'score';
   if (['subtitle', 'category', 'subtitle / category', 'category / subtitle', 'type'].includes(key)) return 'subtitle';
   if (['reviewurl', 'review video url', 'review video', 'review', 'video url'].includes(key)) return 'reviewUrl';
-  if (['directionsurl', 'directions url', 'map url', 'google maps url'].includes(key)) return 'directionsUrl';
+  if ([
+    'google maps url',
+    'google place url',
+    'google maps place url',
+    'google maps place / share url',
+    'google maps place share url',
+    'google maps share url',
+    'place url',
+    'place share url',
+    'maps url',
+  ].includes(key)) return 'googlePlaceUrl';
+  if (['directionsurl', 'directions url', 'google directions url', 'google maps directions url', 'map url'].includes(key)) return 'directionsUrl';
   if (['address', 'street address'].includes(key)) return 'address';
   if (key === 'city') return 'city';
   if (key === 'state') return 'state';

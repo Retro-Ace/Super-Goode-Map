@@ -93,7 +93,7 @@
     <section class="hero">
       <p class="eyebrow">Private admin helper</p>
       <h1>Add a restaurant in under a minute</h1>
-      <p class="sub">Enter the review details, generate a valid JSON object, copy it, and paste it into <code>data/new-reviews.json</code>. Use the compact mode for a single-line snippet.</p>
+      <p class="sub">Enter the review details, generate a valid JSON object, copy it, and paste it into <code>data/new-reviews.json</code>. Add a Google Maps place/share URL when you have one, and keep the directions URL as the fallback field.</p>
     </section>
 
     <div class="grid">
@@ -122,7 +122,10 @@
           <label>Review Video URL
             <input id="reviewUrl" type="url" autocomplete="off" placeholder="https://..." />
           </label>
-          <label>Directions URL
+          <label>Google Maps Place / Share URL
+            <input id="googlePlaceUrl" type="url" autocomplete="off" placeholder="https://..." />
+          </label>
+          <label>Directions URL (fallback)
             <input id="directionsUrl" type="url" autocomplete="off" placeholder="https://..." />
           </label>
           <label>Address
@@ -152,7 +155,7 @@
   </div>
 
   <script>
-    const fields = ['name', 'score', 'subtitle', 'reviewUrl', 'directionsUrl', 'address', 'city', 'state', 'notes'];
+    const fields = ['name', 'score', 'subtitle', 'reviewUrl', 'googlePlaceUrl', 'directionsUrl', 'address', 'city', 'state', 'notes'];
     const el = Object.fromEntries(fields.concat(['generate', 'copy', 'compact', 'output', 'status']).map((id) => [id, document.getElementById(id)]));
 
     function normalizeText(value) {
@@ -186,6 +189,7 @@
         state: (value('state') || 'IL').toUpperCase(),
         lat: null,
         lng: null,
+        googlePlaceUrl: value('googlePlaceUrl'),
         directionsUrl: value('directionsUrl'),
         reviewUrl: value('reviewUrl'),
         sourceType: 'manual',

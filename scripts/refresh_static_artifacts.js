@@ -18,11 +18,13 @@ const DEFAULT_HEADERS = [
   'lat',
   'lng',
   'reviewUrl',
+  'googlePlaceUrl',
   'directionsUrl',
   'sourceType',
   'confidence',
   'notes',
 ];
+const CANONICAL_EXPORT_FIELDS = new Set(DEFAULT_HEADERS);
 
 function normalizeName(value) {
   return String(value ?? '')
@@ -160,6 +162,14 @@ async function readExistingCsv() {
 
 function determineHeaders(existingHeaders, locations) {
   const headers = existingHeaders.length ? [...existingHeaders] : [...DEFAULT_HEADERS];
+  if (!headers.includes('googlePlaceUrl')) {
+    const directionsIndex = headers.indexOf('directionsUrl');
+    if (directionsIndex >= 0) {
+      headers.splice(directionsIndex, 0, 'googlePlaceUrl');
+    } else {
+      headers.push('googlePlaceUrl');
+    }
+  }
   const locationKeys = new Set(headers);
 
   for (const location of locations) {
@@ -179,6 +189,9 @@ function buildCsvText(locations, headers, rowMap) {
   for (const location of locations) {
     const preserved = rowMap.get(normalizeName(location.name)) || {};
     const line = headers.map((header) => {
+      if (CANONICAL_EXPORT_FIELDS.has(header)) {
+        return escapeCsv(location[header] ?? '');
+      }
       if (Object.prototype.hasOwnProperty.call(location, header)) {
         return escapeCsv(location[header]);
       }
