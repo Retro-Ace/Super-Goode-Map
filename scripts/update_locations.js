@@ -5,6 +5,7 @@ const path = require('path');
 const {
   buildFullAddress,
   enrichLocationEntry,
+  hasUsableGooglePlaceUrl,
   hasUsableCoordinates,
   readGeocodeCache,
   shouldGenerateDirectionsUrl,
@@ -224,6 +225,7 @@ async function main() {
     updated: [],
     skipped: [],
     ambiguous: [],
+    autoPlaceUrls: [],
     autoGeocoded: [],
     autoDirections: [],
     geocodeFailed: [],
@@ -349,7 +351,7 @@ async function main() {
       const entry = locations[i];
       const fullAddress = buildFullAddress(entry);
       if (!fullAddress) continue;
-      if (!hasUsableCoordinates(entry) || shouldGenerateDirectionsUrl(entry)) {
+      if (!hasUsableCoordinates(entry) || shouldGenerateDirectionsUrl(entry) || !hasUsableGooglePlaceUrl(entry)) {
         enrichmentTargets.add(i);
       }
     }
@@ -398,6 +400,9 @@ async function main() {
     console.log('');
     console.log('Auto-generated directions URLs:');
     formatList(summary.autoDirections).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Auto-generated Google place URLs:');
+    formatList(summary.autoPlaceUrls).forEach((line) => console.log(line));
     console.log('');
     console.log('Auto-geocoded:');
     formatList(summary.autoGeocoded).forEach((line) => console.log(line));

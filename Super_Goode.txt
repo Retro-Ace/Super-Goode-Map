@@ -15,6 +15,8 @@ Current dataset state as of 2026-03-29:
 - 148 restaurants in the 8.x range
 - 61 restaurants in the 7.x range
 - all current entries have coordinates, subtitles, review URLs, and directions URLs
+- 228 current entries now have `googlePlaceUrl`
+- 1 low-confidence popup row remains blank until a reliable place match is available
 
 Current update workflow:
 1. Add a restaurant manually through admin/add-review.html or approve it through the published sheet.
@@ -26,7 +28,7 @@ Current update workflow:
 
 Current automation:
 - GitHub Actions can pull approved rows from GOOGLE_SHEET_CSV_URL every hour or on demand.
-- The sync flow filters approved rows, supports optional place/share URL headers, enriches missing location data when needed, and commits updated JSON files back to the repo.
+- The sync flow filters approved rows, supports optional place/share URL headers, auto-builds place-style Google Maps URLs for rows that still need them when a street-level address is available, enriches missing location data when needed, and commits updated JSON files back to the repo.
 
 Important rule:
 The repo is web-map only. Keep docs, shared JSON, compatibility mirror, CSV export, and fallback artifacts aligned with the current web dataset, with `googlePlaceUrl -> directionsUrl -> generated Google Maps fallback` as the current directions flow.

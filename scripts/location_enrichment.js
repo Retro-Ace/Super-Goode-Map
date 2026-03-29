@@ -32,6 +32,25 @@ function buildDirectionsUrl(entry) {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 }
 
+function buildGooglePlaceQuery(entry) {
+  const name = normalizeAddressPart(entry?.name);
+  const address = normalizeAddressPart(entry?.address);
+  const city = normalizeAddressPart(entry?.city);
+  const state = normalizeAddressPart(entry?.state).toUpperCase();
+  const locationParts = [address, city, state].filter(Boolean);
+
+  // Require a street-level-ish address before auto-generating a place-style URL.
+  // This avoids turning city-only or popup-style rows into misleading place links.
+  if (!name || !locationParts.length || !/\d/.test(address)) return '';
+  return [name, ...locationParts].join(', ');
+}
+
+function buildGooglePlaceUrl(entry) {
+  const query = buildGooglePlaceQuery(entry);
+  if (!query) return '';
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 function hasUsableGooglePlaceUrl(entry) {
   if (!entry?.googlePlaceUrl) return false;
   try {
@@ -173,6 +192,15 @@ async function enrichLocationEntry(entry, cache, summary) {
   const fullAddress = buildFullAddress(entry);
   let changed = false;
 
+  if (!hasUsableGooglePlaceUrl(entry)) {
+    const googlePlaceUrl = buildGooglePlaceUrl(entry);
+    if (googlePlaceUrl) {
+      entry.googlePlaceUrl = googlePlaceUrl;
+      summary.autoPlaceUrls.push(`${entry.name} -> ${entry.googlePlaceUrl}`);
+      changed = true;
+    }
+  }
+
   if (shouldGenerateDirectionsUrl(entry) && fullAddress) {
     entry.directionsUrl = buildDirectionsUrl(entry);
     summary.autoDirections.push(`${entry.name} -> ${entry.directionsUrl}`);
@@ -209,6 +237,8 @@ module.exports = {
   GEOCODE_CACHE_PATH,
   buildDirectionsUrl,
   buildFullAddress,
+  buildGooglePlaceUrl,
+  buildGooglePlaceQuery,
   enrichLocationEntry,
   hasUsableGooglePlaceUrl,
   hasUsableCoordinates,

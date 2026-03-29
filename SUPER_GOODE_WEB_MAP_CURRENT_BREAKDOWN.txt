@@ -38,10 +38,12 @@ Current completeness:
 - subtitles present for 229 of 229 restaurants
 - review URLs present for 229 of 229 restaurants
 - directions URLs present for 229 of 229 restaurants
+- googlePlaceUrl present for 228 of 229 restaurants
 
 Notable current additions:
 - the latest approved sheet-synced restaurants are present in the canonical dataset, export, and embedded fallback
 - recent additions at the end of the source data include Buccan Sandwich Shop, NYC Halal Eats, Al's Beef, Brass Ring Pub, and Chicken Lit Tenders
+- the current bulk place-link pass intentionally leaves `(POP UP) Mcbrennan's Gourmet Burger Shack` blank because the row is low-confidence and lacks a trustworthy street-level place match
 
 3. WHAT THE SITE CURRENTLY DOES
 
@@ -209,6 +211,7 @@ scripts/sync_sheet.js
 
 scripts/location_enrichment.js
 - builds full addresses
+- auto-builds best-effort Google Maps place-style search URLs from restaurant name plus street-level address data when `googlePlaceUrl` is missing
 - creates directions URLs only when `googlePlaceUrl` is absent and a usable `directionsUrl` is also missing
 - geocodes missing coordinates through Nominatim when needed
 - stores lookup results in data/geocode-cache.json
@@ -272,4 +275,4 @@ When updating the web map data:
 
 13. SUMMARY
 
-The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, supports an optional first-class `googlePlaceUrl` field, preserves a 21-column CSV export schema, and maintains an embedded fallback dataset inside index.html. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.
+The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, supports an optional first-class `googlePlaceUrl` field, preserves a 21-column CSV export schema, and maintains an embedded fallback dataset inside index.html. The current bulk enrichment pass populated `googlePlaceUrl` for 228 restaurants and intentionally left 1 ambiguous popup row blank rather than forcing a weak match. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.

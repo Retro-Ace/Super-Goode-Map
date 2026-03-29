@@ -18,6 +18,8 @@ As of 2026-03-29, the live web-map dataset contains 229 restaurants sourced from
 - 148 restaurants score in the 8.x range
 - 61 restaurants score in the 7.x range
 - 229 of 229 restaurants currently have coordinates, subtitles, review URLs, and directions URLs
+- 228 of 229 restaurants currently have a populated `googlePlaceUrl`
+- 1 low-confidence popup row is intentionally left without `googlePlaceUrl` until a reliable place match is available
 
 The current data model is:
 
@@ -66,6 +68,14 @@ The repo also supports approved-row intake from a published Google Sheet CSV.
 2. Store the CSV URL in the `GOOGLE_SHEET_CSV_URL` GitHub secret.
 3. Run the workflow in [`.github/workflows/sync-sheet.yml`](/Users/anthonylarosa/CODEX/Super Goode/.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
 4. The workflow keeps only approved rows, accepts optional Google Maps place/share URL columns, blocks obvious test entries, geocodes missing coordinates when possible, writes the shared JSON files, and commits the updated data back to the repo.
+
+## Current Place-Link Enrichment
+
+The current dataset has been bulk-enriched with best-effort Google Maps place-style URLs built from restaurant name plus street-level address data when a trustworthy place/share URL was not already present.
+
+- `googlePlaceUrl` is now populated for 228 current restaurants
+- 1 row remains blank because the available data is too ambiguous to assign a reliable place link
+- The unmatched row is `(POP UP) Mcbrennan's Gourmet Burger Shack`
 
 ## Static Artifact Refresh
 
