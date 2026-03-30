@@ -68,5 +68,12 @@
     "lng": -88.1328225,
     "displayName": "931, East Ogden Avenue, Naperville, DuPage County, Illinois, 60563, United States",
     "updatedAt": "2026-03-28T17:16:34.443Z"
+  },
+  "9655 w 143rd st, orland park, il, usa": {
+    "status": "ok",
+    "lat": 41.630377,
+    "lng": -87.8554138,
+    "displayName": "9655, West 143rd Street, Orland Park, Orland Township, Cook County, Illinois, 60462, United States",
+    "updatedAt": "2026-03-30T16:07:35.686Z"
   }
 }
