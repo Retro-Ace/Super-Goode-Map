@@ -3678,5 +3678,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Smitty's on the Corner",
+    "score": 7.7,
+    "subtitle": "Phil ate the Groucho sandwich",
+    "address": "15 E Main St",
+    "city": "St. Charles",
+    "state": "IL",
+    "lat": 41.9136341,
+    "lng": -88.3125372,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Smitty's%20on%20the%20Corner%2C%2015%20E%20Main%20St%2C%20St.%20Charles%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/p/DWluoCiE2KS/",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": "https://maps.app.goo.gl/AZkVtjYz7pMh6WH28"
   }
 ]

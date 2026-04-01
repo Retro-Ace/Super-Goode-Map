@@ -75,5 +75,12 @@
     "lng": -87.8554138,
     "displayName": "9655, West 143rd Street, Orland Park, Orland Township, Cook County, Illinois, 60462, United States",
     "updatedAt": "2026-03-30T16:07:35.686Z"
+  },
+  "15 e main st, st. charles, il, usa": {
+    "status": "ok",
+    "lat": 41.9136341,
+    "lng": -88.3125372,
+    "displayName": "Smitty's On The Corner, 15, East Main Street, St. Charles, St. Charles Township, Kane County, Illinois, 60174, United States",
+    "updatedAt": "2026-04-01T18:52:20.793Z"
   }
 }
