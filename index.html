@@ -555,8 +555,14 @@
         width:64px;
         height:64px;
       }
-      .brand-copy { gap:5px; }
-      .brand-logo { width:min(100%, 205px); }
+      .brand-copy {
+        gap:5px;
+        align-content:center;
+      }
+      .brand-logo {
+        width:min(100%, 186px);
+        justify-self:center;
+      }
       .brand-note {
         font-size:10.5px;
         line-height:1.25;
@@ -564,6 +570,7 @@
         white-space:nowrap;
         overflow:hidden;
         text-overflow:ellipsis;
+        text-align:center;
       }
       .controls { gap:6px; margin-bottom:6px; padding:8px; border-radius:18px; }
       .controls {
