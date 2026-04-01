@@ -546,7 +546,10 @@
         backdrop-filter:blur(6px);
       }
       .brand-card {
-        gap:11px;
+        display:grid;
+        grid-template-columns:64px minmax(0,1fr);
+        column-gap:11px;
+        row-gap:4px;
         padding:10px 12px;
         border-radius:20px;
         margin-bottom:6px;
@@ -556,6 +559,7 @@
         height:64px;
       }
       .brand-copy {
+        min-width:0;
         gap:4px;
         align-content:center;
         justify-items:center;
@@ -565,12 +569,14 @@
         justify-self:center;
       }
       .brand-note {
-        font-size:9.8px;
+        grid-column:1 / -1;
+        width:100%;
+        font-size:9.4px;
         line-height:1.25;
-        max-width:172px;
+        max-width:none;
         white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
+        overflow:visible;
+        text-overflow:clip;
         text-align:center;
       }
       .controls { gap:6px; margin-bottom:6px; padding:8px; border-radius:18px; }
