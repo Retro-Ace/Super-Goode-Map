@@ -76,6 +76,15 @@
       padding:12px;
       overflow:visible;
     }
+    .top-sections {
+      display:flex;
+      flex-direction:column;
+    }
+    .header-section,
+    .controls-section,
+    .results-section {
+      min-width:0;
+    }
     .brand-card {
       display:flex;
       align-items:center;
@@ -220,6 +229,9 @@
       margin:0 0 10px;
       background:linear-gradient(90deg, rgba(125,140,255,0), rgba(125,140,255,.28), rgba(184,102,255,.18), rgba(125,140,255,0));
       opacity:.9;
+    }
+    .results-handle {
+      display:none;
     }
     .card {
       border:1px solid rgba(58,70,107,.86);
@@ -487,76 +499,47 @@
       outline:2px solid rgba(184,102,255,.68);
       outline-offset:2px;
     }
-    @media (max-width: 899px) {
+    @media (max-width: 768px) {
       html, body {
-        overflow:hidden;
-        height:100dvh;
+        height:100%;
+        overflow:hidden !important;
       }
-      .app {
-        height:100dvh;
+      body {
         min-height:100dvh;
-        overflow:hidden;
-        display:flex;
-        flex-direction:column;
       }
-      .map-wrap {
+      .app,
+      .app-container {
+        display:flex !important;
+        flex-direction:column !important;
+        height:100dvh !important;
+        min-height:100dvh !important;
+        overflow:hidden !important;
+      }
+      .panel,
+      .top-sections {
+        display:contents !important;
+      }
+      .header-section {
+        order:1 !important;
         flex:0 0 auto;
-        height:25dvh;
-        min-height:188px;
-        max-height:236px;
-        border-bottom:1px solid var(--line);
-      }
-      .map-toggle {
-        display:inline-flex;
-        align-items:center;
-        left:12px;
-        top:auto;
-        bottom:12px;
-        transform:none;
-        padding:8px 11px;
-        font-size:11.5px;
-        box-shadow:0 10px 20px rgba(0,0,0,.16);
-      }
-      .panel {
-        flex:1 1 auto;
-        min-height:0;
-        overflow:hidden;
-        display:flex;
-        flex-direction:column;
-        padding:8px 10px 10px;
-        margin-top:0;
-        border-radius:24px 24px 0 0;
+        padding:8px 10px 0 !important;
         background:
-          radial-gradient(circle at top left, rgba(139,92,246,.2), rgba(139,92,246,0) 34%),
-          radial-gradient(circle at 85% 18%, rgba(125,140,255,.14), rgba(125,140,255,0) 26%),
           linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
-      }
-      .map-focus .panel {
-        display:none;
-      }
-      .sticky-head {
-        flex:0 0 auto;
         position:relative;
-        top:auto;
-        z-index:10;
-        padding-bottom:6px;
-        background:
-          linear-gradient(180deg, rgba(13,22,42,.98) 78%, rgba(13,22,42,.84) 92%, rgba(13,22,42,0));
-        backdrop-filter:blur(6px);
+        z-index:4;
       }
       .brand-card {
         display:grid;
-        grid-template-columns:64px minmax(0,1fr);
-        column-gap:11px;
+        grid-template-columns:44px minmax(0,1fr);
+        column-gap:10px;
         row-gap:4px;
-        padding:10px 12px;
-        border-radius:20px;
-        margin-bottom:6px;
+        padding:10px 12px !important;
+        border-radius:18px;
+        margin:0;
       }
       .brand-avatar {
-        width:64px;
-        height:64px;
+        width:44px !important;
+        height:44px !important;
       }
       .brand-copy {
         min-width:0;
@@ -565,22 +548,65 @@
         justify-items:center;
       }
       .brand-logo {
-        width:min(100%, 160px);
+        width:140px !important;
         justify-self:center;
       }
       .brand-note {
         grid-column:1 / -1;
         width:100%;
-        font-size:9.4px;
-        line-height:1.25;
         max-width:none;
+        font-size:8.8px;
+        line-height:1.2;
         white-space:nowrap;
         overflow:visible;
         text-overflow:clip;
         text-align:center;
       }
-      .controls { gap:6px; margin-bottom:6px; padding:8px; border-radius:18px; }
+      .map-wrap,
+      .map-section {
+        order:2 !important;
+        flex:0 0 42dvh !important;
+        height:42dvh !important;
+        min-height:250px;
+        max-height:45dvh;
+        position:relative;
+        z-index:1;
+        border-bottom:1px solid var(--line);
+      }
+      #map {
+        height:100% !important;
+      }
+      .map-toggle {
+        display:inline-flex;
+        align-items:center;
+        left:12px;
+        top:12px;
+        bottom:auto;
+        transform:none;
+        padding:8px 11px;
+        font-size:11.5px;
+        box-shadow:0 10px 20px rgba(0,0,0,.16);
+      }
+      .map-focus .panel {
+        display:none !important;
+      }
+      .controls-section {
+        order:3 !important;
+        flex:0 0 auto;
+        padding:8px 10px 10px !important;
+        background:
+          radial-gradient(circle at top left, rgba(139,92,246,.2), rgba(139,92,246,0) 34%),
+          radial-gradient(circle at 85% 18%, rgba(125,140,255,.14), rgba(125,140,255,0) 26%),
+          linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+        position:relative;
+        z-index:3;
+      }
       .controls {
+        gap:6px;
+        margin-bottom:8px;
+        padding:8px;
+        border-radius:18px;
         border-color:rgba(86,98,138,.28);
         background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
         box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
@@ -630,8 +656,6 @@
         justify-content:flex-end;
         text-align:right;
       }
-      .stat { padding:8px 9px; }
-      .stat .value { font-size:21px; }
       .row2 { gap:7px; }
       .location-actions { gap:7px; }
       button, .btn { min-height:38px; font-size:11.5px; padding:8px 10px; }
@@ -648,38 +672,70 @@
       .restaurant-subtitle { font-size:11px; }
       .meta { font-size:11px; }
       .dist { font-size:10.5px; }
-      .list {
-        flex:1 1 auto;
-        min-height:0;
-        display:flex;
-        flex-direction:column;
-        align-items:stretch;
-        overflow-y:auto;
+      .results-section {
+        order:4 !important;
+        position:fixed !important;
+        left:0;
+        right:0;
+        bottom:0;
+        height:50dvh;
+        max-height:75dvh;
+        background:rgba(10,15,30,.98);
+        backdrop-filter:blur(12px);
+        -webkit-backdrop-filter:blur(12px);
+        border-top-left-radius:18px;
+        border-top-right-radius:18px;
+        z-index:999;
+        display:flex !important;
+        flex-direction:column !important;
+        transform:translateY(48%);
+        transition:transform .3s ease, box-shadow .3s ease;
+        box-shadow:0 -18px 40px rgba(0,0,0,.32);
+        overflow:hidden;
+        padding:0 10px calc(12px + env(safe-area-inset-bottom));
+      }
+      .results-section.expanded {
+        transform:translateY(0%);
+      }
+      .results-handle {
+        display:block;
+        width:40px;
+        height:5px;
+        background:rgba(255,255,255,.3);
+        border-radius:3px;
+        margin:8px auto;
+        flex:0 0 auto;
+      }
+      .results-section .list {
+        display:grid;
+        gap:9px;
+        margin:0;
+        padding:0 0 14px;
+        background:none;
+        border-top:none;
+        box-shadow:none;
+        overflow-y:auto !important;
         overflow-x:hidden;
         -webkit-overflow-scrolling:touch;
         overscroll-behavior:contain;
-        gap:9px;
-        margin:0 -10px -10px;
-        padding:12px 10px calc(18px + env(safe-area-inset-bottom));
-        background:
-          linear-gradient(180deg, rgba(252,251,255,.98), rgba(244,242,248,.98));
-        border-top:1px solid rgba(151,162,198,.22);
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.55);
+        flex:1 1 auto;
+        min-height:0;
       }
       .list > * {
         flex:0 0 auto;
         min-height:max-content;
       }
       .results-divider {
+        flex:0 0 auto;
         height:1px;
-        margin:0;
+        margin:0 0 10px;
         background:linear-gradient(90deg, rgba(125,140,255,0), rgba(125,140,255,.58), rgba(184,102,255,.46), rgba(125,140,255,.58), rgba(125,140,255,0));
         box-shadow:0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(125,140,255,.1);
         opacity:1;
       }
       .empty { padding:18px 14px; margin-top:2px; }
     }
-    @media (min-width: 900px) {
+    @media (min-width: 769px) {
       html, body { overflow:hidden; }
       .app {
         height:100dvh;
@@ -700,7 +756,8 @@
         min-height:0;
         max-height:none;
       }
-      .sticky-head {
+      .sticky-head,
+      .top-sections {
         position:sticky;
         top:0;
         z-index:20;
@@ -748,8 +805,8 @@
   </style>
 </head>
 <body>
-  <div class="app">
-    <section class="map-wrap">
+  <div class="app app-container">
+    <section class="map-wrap map-section">
       <div id="map" aria-label="Map of restaurants"></div>
       <button id="mobileMapToggle" class="map-toggle" type="button">Show full map</button>
       <div class="map-legend">
@@ -761,58 +818,65 @@
     </section>
 
     <aside class="panel">
-      <div class="sticky-head">
-        <div class="brand-card">
-          <img
-            class="brand-avatar"
-            src="./assets/images/branding/super-goode-headshot.jpg"
-            alt="Philip Goode headshot"
-          />
-          <div class="brand-copy">
+      <div class="top-sections sticky-head">
+        <section class="header-section">
+          <div class="brand-card">
             <img
-              class="brand-logo"
-              src="./assets/images/branding/super-goode-map-logo.png"
-              alt="Super Goode Map logo"
+              class="brand-avatar"
+              src="./assets/images/branding/super-goode-headshot.jpg"
+              alt="Philip Goode headshot"
             />
-            <div class="brand-note">Restaurant scores, directions, and nearby spots in one place.</div>
+            <div class="brand-copy">
+              <img
+                class="brand-logo"
+                src="./assets/images/branding/super-goode-map-logo.png"
+                alt="Super Goode Map logo"
+              />
+              <div class="brand-note">Restaurant scores, directions, and nearby spots in one place.</div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="controls">
-          <input id="searchInput" class="search" type="search" placeholder="Search restaurants..." />
-          <div class="row2">
-            <select id="scoreFilter">
-              <option value="all">All scores</option>
-              <option value="9">9.0 and up</option>
-              <option value="8">8.0 and up</option>
-              <option value="7">7.0 and up</option>
-            </select>
-            <select id="sortFilter">
-              <option value="scoreDesc">Highest score</option>
-              <option value="scoreAsc">Lowest score</option>
-              <option value="nameAsc">A to Z</option>
-              <option value="near">Nearest to me</option>
-            </select>
+        <section class="controls-section">
+          <div class="controls">
+            <input id="searchInput" class="search" type="search" placeholder="Search restaurants..." />
+            <div class="row2">
+              <select id="scoreFilter">
+                <option value="all">All scores</option>
+                <option value="9">9.0 and up</option>
+                <option value="8">8.0 and up</option>
+                <option value="7">7.0 and up</option>
+              </select>
+              <select id="sortFilter">
+                <option value="scoreDesc">Highest score</option>
+                <option value="scoreAsc">Lowest score</option>
+                <option value="nameAsc">A to Z</option>
+                <option value="near">Nearest to me</option>
+              </select>
+            </div>
+            <div class="location-actions">
+              <button id="locateMeBtn" class="btn">Use my location</button>
+              <button id="showNearbyBtn" class="btn">Near me</button>
+              <button id="fitMappedBtn" class="btn subtle">Fit visible pins</button>
+            </div>
           </div>
-          <div class="location-actions">
-            <button id="locateMeBtn" class="btn">Use my location</button>
-            <button id="showNearbyBtn" class="btn">Near me</button>
-            <button id="fitMappedBtn" class="btn subtle">Fit visible pins</button>
-          </div>
-        </div>
 
-        <div class="stats" aria-label="results summary">
-          <span class="item"><span>Showing</span><strong id="statShowing">0</strong></span>
-          <span class="item top-score-stat"><span>Top score</span><strong class="value-badge" id="statTop">0.0</strong></span>
-        </div>
-        <div class="stats-mobile" aria-label="results summary">
-          <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
-          <span class="item"><span>Top score</span><strong id="statTopMobile" class="value-badge">0.0</strong></span>
-        </div>
+          <div class="stats" aria-label="results summary">
+            <span class="item"><span>Showing</span><strong id="statShowing">0</strong></span>
+            <span class="item top-score-stat"><span>Top score</span><strong class="value-badge" id="statTop">0.0</strong></span>
+          </div>
+          <div class="stats-mobile" aria-label="results summary">
+            <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
+            <span class="item"><span>Top score</span><strong id="statTopMobile" class="value-badge">0.0</strong></span>
+          </div>
+        </section>
       </div>
 
-      <div class="results-divider" aria-hidden="true"></div>
-      <div id="list" class="list"></div>
+      <section class="results-section">
+        <div class="results-handle" aria-hidden="true"></div>
+        <div class="results-divider" aria-hidden="true"></div>
+        <div id="list" class="list"></div>
+      </section>
     </aside>
   </div>
 
@@ -854,7 +918,8 @@
       locateMeBtn: document.getElementById('locateMeBtn'),
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
-      mobileMapToggle: document.getElementById('mobileMapToggle')
+      mobileMapToggle: document.getElementById('mobileMapToggle'),
+      resultsSection: document.querySelector('.results-section')
     };
 
     function scoreClass(score) {
@@ -1160,13 +1225,27 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
     }
 
+    function refreshMapLayout(delay = 120) {
+      window.setTimeout(() => state.map?.invalidateSize(), delay);
+    }
+
+    function isMobileViewport() {
+      return window.matchMedia('(max-width: 768px)').matches;
+    }
+
+    function setResultsPanelExpanded(expanded) {
+      if (!els.resultsSection || !isMobileViewport()) return;
+      els.resultsSection.classList.toggle('expanded', expanded);
+      refreshMapLayout(160);
+    }
+
     function setMobileMapFocus(enabled) {
       state.mobileMapFocus = enabled;
       document.body.classList.toggle('map-focus', enabled);
       if (els.mobileMapToggle) {
         els.mobileMapToggle.textContent = enabled ? 'Show list' : 'Show full map';
       }
-      setTimeout(() => state.map?.invalidateSize(), 120);
+      refreshMapLayout();
       if (enabled) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -1425,6 +1504,14 @@
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
       els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
+      if (els.resultsSection) {
+        els.resultsSection.addEventListener('click', (e) => {
+          if (!isMobileViewport()) return;
+          if (e.target.closest('a, button, input, select')) return;
+          els.resultsSection.classList.toggle('expanded');
+          refreshMapLayout(160);
+        });
+      }
       if (els.quickChips) {
         els.quickChips.addEventListener('click', (e) => {
           const btn = e.target.closest('.chip');
@@ -1456,7 +1543,10 @@
       });
 
       window.addEventListener('resize', () => {
-        setTimeout(() => state.map.invalidateSize(), 100);
+        if (els.resultsSection && !isMobileViewport()) {
+          els.resultsSection.classList.remove('expanded');
+        }
+        refreshMapLayout(100);
       });
     }
 
@@ -1477,7 +1567,10 @@
       if (state.userLocation) {
         fitUserLocation();
       }
-      setTimeout(() => state.map.invalidateSize(), 120);
+      if (isMobileViewport()) {
+        setResultsPanelExpanded(false);
+      }
+      refreshMapLayout();
     }
 
     async function loadSharedData() {
@@ -1516,6 +1609,7 @@
       els.locateMeBtn.classList.toggle('primary', false);
       els.showNearbyBtn.classList.toggle('primary', state.nearbyOnly);
       render();
+      refreshMapLayout(180);
       startAutoLocation();
     }
 
