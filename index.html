@@ -71,6 +71,9 @@
     .show-full-map-btn {
       position:absolute;
     }
+    .mobile-map-actions {
+      display:none;
+    }
     .panel {
       order:2;
       background:
@@ -605,6 +608,44 @@
         left:12px !important;
         z-index:1200;
       }
+      .mobile-map-actions {
+        display:grid !important;
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        align-items:center;
+        gap:8px;
+        padding-top:2px;
+        width:100%;
+      }
+      .mobile-map-action {
+        width:100%;
+        height:38px;
+        min-height:38px !important;
+        min-width:0;
+        padding:0 10px !important;
+        border-radius:14px;
+        border:1px solid rgba(86,98,138,.4);
+        box-shadow:0 10px 18px rgba(0,0,0,.18);
+        gap:6px;
+      }
+      .mobile-map-action span {
+        display:block;
+        font-size:15px;
+        line-height:1;
+      }
+      .mobile-map-action-label {
+        font-size:11px !important;
+        font-weight:800;
+        letter-spacing:.01em;
+      }
+      .mobile-map-action-fit {
+        background:rgba(11,21,41,.92);
+        color:#eef2ff;
+      }
+      .mobile-map-action-locate {
+        border:none;
+        background:linear-gradient(135deg,var(--accent2),var(--accent));
+        color:#fff;
+      }
       body.full-map-active .results-section {
         display:none !important;
       }
@@ -625,7 +666,7 @@
       .controls-section {
         order:3 !important;
         flex:0 0 auto;
-        padding:3px 8px 1px !important;
+        padding:2px 8px 0 !important;
         background:
           radial-gradient(circle at top left, rgba(139,92,246,.2), rgba(139,92,246,0) 34%),
           radial-gradient(circle at 85% 18%, rgba(125,140,255,.14), rgba(125,140,255,0) 26%),
@@ -635,15 +676,15 @@
         z-index:10;
       }
       .controls {
-        gap:3px;
-        margin-bottom:1px;
-        padding:4px;
+        gap:4px;
+        margin-bottom:0;
+        padding:4px 4px 2px;
         border-radius:16px;
         border-color:rgba(86,98,138,.28);
         background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
         box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
       }
-      .search, select { min-height:38px; font-size:14px; padding:0 12px; }
+      .search, select { min-height:36px; font-size:14px; padding:0 12px; }
       .stats { display:none; }
       .stats-mobile,
       .results-meta {
@@ -653,7 +694,7 @@
         gap:12px;
         margin-bottom:0;
         min-height:auto;
-        padding:1px 10px 0 !important;
+        padding:0 10px !important;
         border:none;
         border-radius:12px;
         background:none;
@@ -693,7 +734,9 @@
         text-align:right;
       }
       .row2 { gap:4px; }
-      .location-actions { gap:4px; }
+      .location-actions {
+        display:none !important;
+      }
       button, .btn { min-height:36px; font-size:11.5px; padding:7px 10px; }
       .card-actions .btn,
       .card-actions button {
@@ -718,19 +761,21 @@
       .dist { font-size:10.5px; }
       .results-section {
         order:4 !important;
-        position:fixed !important;
-        left:0;
-        right:0;
-        bottom:0;
-        height:25dvh !important;
-        max-height:55dvh;
-        margin-top:0;
+        position:relative !important;
+        left:auto;
+        right:auto;
+        bottom:auto;
+        flex:1 1 auto !important;
+        min-height:0;
+        height:auto !important;
+        max-height:none;
+        margin-top:2px;
         background:rgba(10,15,30,.98);
         backdrop-filter:blur(12px);
         -webkit-backdrop-filter:blur(12px);
         border-top-left-radius:18px;
         border-top-right-radius:18px;
-        z-index:2;
+        z-index:1;
         display:flex !important;
         flex-direction:column !important;
         pointer-events:auto;
@@ -738,21 +783,20 @@
         overflow-x:hidden;
         -webkit-overflow-scrolling:touch;
         overscroll-behavior:contain;
-        transition:height .24s ease, max-height .24s ease, box-shadow .24s ease;
-        box-shadow:0 -18px 40px rgba(0,0,0,.32);
-        padding:0 10px calc(6px + env(safe-area-inset-bottom));
+        transition:box-shadow .24s ease;
+        box-shadow:0 -14px 30px rgba(0,0,0,.22);
+        padding:0 8px calc(6px + env(safe-area-inset-bottom));
       }
       .results-section.expanded {
-        height:55dvh;
-        max-height:55dvh;
+        box-shadow:0 -18px 34px rgba(0,0,0,.26);
       }
       .results-handle {
         display:flex;
         align-items:center;
         justify-content:center;
         width:100%;
-        height:16px;
-        margin:0 auto 2px;
+        height:12px;
+        margin:0 auto 1px;
         flex:0 0 auto;
         position:relative;
         top:0;
@@ -778,15 +822,10 @@
         min-height:auto;
       }
       .results-section .list > * + * {
-        margin-top:7px;
+        margin-top:8px;
       }
       .results-divider {
-        flex:0 0 auto;
-        height:1px;
-        margin:0 0 3px;
-        background:linear-gradient(90deg, rgba(125,140,255,0), rgba(125,140,255,.58), rgba(184,102,255,.46), rgba(125,140,255,.58), rgba(125,140,255,0));
-        box-shadow:0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(125,140,255,.1);
-        opacity:1;
+        display:none;
       }
       .empty { padding:18px 14px; margin-top:2px; }
     }
@@ -909,6 +948,16 @@
                 <option value="near">Nearest to me</option>
               </select>
             </div>
+            <div class="mobile-map-actions" aria-label="Map actions">
+              <button id="mobileFitBtn" class="mobile-map-action mobile-map-action-fit" type="button" aria-label="Fit visible pins" title="Fit visible pins">
+                <span aria-hidden="true">⤢</span>
+                <span class="mobile-map-action-label">Fit</span>
+              </button>
+              <button id="mobileLocateBtn" class="mobile-map-action mobile-map-action-locate" type="button" aria-label="Use my location" title="Use my location">
+                <span aria-hidden="true">⌖</span>
+                <span class="mobile-map-action-label">Locate</span>
+              </button>
+            </div>
             <div class="location-actions">
               <button id="locateMeBtn" class="btn">Use my location</button>
               <button id="showNearbyBtn" class="btn">Near me</button>
@@ -972,6 +1021,8 @@
       locateMeBtn: document.getElementById('locateMeBtn'),
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
+      mobileLocateBtn: document.getElementById('mobileLocateBtn'),
+      mobileFitBtn: document.getElementById('mobileFitBtn'),
       mobileMapToggle: document.getElementById('mobileMapToggle'),
       fullMapBtn: document.querySelector('.show-full-map-btn'),
       resultsSection: document.querySelector('.results-section'),
@@ -1561,6 +1612,9 @@
       els.scoreFilter.addEventListener('change', () => { render(); refreshQueue(); });
       els.sortFilter.addEventListener('change', render);
       els.locateMeBtn.addEventListener('click', requestUserLocation);
+      if (els.mobileLocateBtn) {
+        els.mobileLocateBtn.addEventListener('click', requestUserLocation);
+      }
       els.showNearbyBtn.addEventListener('click', () => {
         state.nearbyOnly = !state.nearbyOnly;
         els.showNearbyBtn.classList.toggle('primary', state.nearbyOnly);
@@ -1571,6 +1625,9 @@
         render();
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
+      if (els.mobileFitBtn) {
+        els.mobileFitBtn.addEventListener('click', fitMappedPins);
+      }
       const fullMapBtn = document.querySelector('.show-full-map-btn') || els.mobileMapToggle;
       const showListBtn = document.querySelector('.show-list-btn') || els.mobileMapToggle;
       if (fullMapBtn && showListBtn && fullMapBtn === showListBtn) {
