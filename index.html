@@ -830,17 +830,6 @@
         box-shadow:0 -10px 22px rgba(11,21,41,.14);
         padding:0 8px calc(5px + env(safe-area-inset-bottom));
       }
-      .results-section::after {
-        content:'';
-        position:absolute;
-        left:0;
-        right:0;
-        bottom:0;
-        height:38px;
-        background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.84) 58%, #ffffff 100%);
-        pointer-events:none;
-        z-index:2;
-      }
       .results-section.expanded {
         box-shadow:0 -14px 28px rgba(11,21,41,.18);
       }
@@ -867,7 +856,7 @@
       .results-list {
         display:block;
         margin:0;
-        padding:0 0 24px !important;
+        padding:0 0 10px !important;
         background:none;
         border-top:none;
         box-shadow:none;
