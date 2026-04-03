@@ -82,5 +82,12 @@
     "lng": -88.3125372,
     "displayName": "Smitty's On The Corner, 15, East Main Street, St. Charles, St. Charles Township, Kane County, Illinois, 60174, United States",
     "updatedAt": "2026-04-01T18:52:20.793Z"
+  },
+  "4114 n kedzie ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9562325,
+    "lng": -87.7083394,
+    "displayName": "4114, North Kedzie Avenue, Irving Park, Chicago, Jefferson Township, Cook County, Illinois, 60618, United States",
+    "updatedAt": "2026-04-03T14:47:40.632Z"
   }
 }

@@ -6894,5 +6894,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": "https://maps.app.goo.gl/AZkVtjYz7pMh6WH28"
+  },
+  {
+    "name": "Luella's Southern Kitchen",
+    "score": 9.1,
+    "subtitle": "Chicken and Waffles",
+    "address": "4114 N Kedzie Ave",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 41.9562325,
+    "lng": -87.7083394,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Luella's%20Southern%20Kitchen%2C%204114%20N%20Kedzie%20Ave%2C%20Chicago%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DWq1MXmk2p3/?igsh=MXZveTZiaXdvem56dw%3D%3D",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
