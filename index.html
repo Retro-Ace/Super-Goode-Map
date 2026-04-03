@@ -517,6 +517,7 @@
         width:100% !important;
         max-width:100vw !important;
         overflow:hidden !important;
+        background:#0b1529 !important;
       }
       .panel,
       .map-wrap,
@@ -535,10 +536,10 @@
         order:1 !important;
         flex:0 0 auto;
         padding:1px 8px 0 !important;
-        background:
-          linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
+        background:#ffffff !important;
         position:relative;
         z-index:10;
+        box-shadow:0 1px 0 rgba(17,24,39,.06);
       }
       .brand-card {
         display:grid;
@@ -549,6 +550,8 @@
         padding:3px 10px !important;
         border-radius:16px;
         margin:0;
+        background:#ffffff;
+        box-shadow:none;
       }
       .brand-avatar {
         width:36px !important;
@@ -582,10 +585,10 @@
       .map-wrap,
       .map-section {
         order:2 !important;
-        flex:0 0 37dvh !important;
-        height:37dvh !important;
-        min-height:212px;
-        max-height:39dvh;
+        flex:0 0 35dvh !important;
+        height:35dvh !important;
+        min-height:200px;
+        max-height:37dvh;
         position:relative;
         z-index:10;
         border-bottom:1px solid var(--line);
@@ -808,15 +811,16 @@
         height:auto !important;
         max-height:none;
         margin-top:0;
-        background:rgba(10,15,30,.98);
-        backdrop-filter:blur(12px);
-        -webkit-backdrop-filter:blur(12px);
+        background:#0b1529;
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
         border-top-left-radius:18px;
         border-top-right-radius:18px;
         z-index:1;
         display:flex !important;
         flex-direction:column !important;
         pointer-events:auto;
+        overflow:hidden;
         overflow-y:auto;
         overflow-x:hidden;
         -webkit-overflow-scrolling:touch;
