@@ -1098,6 +1098,7 @@
         id: idx + 1,
         ...data,
         reviewUrl: normalizeReviewUrl(data.reviewUrl || ''),
+        searchText: buildSearchText(data),
         lat: Number.isFinite(lat) ? lat : null,
         lng: Number.isFinite(lng) ? lng : null,
         address: data.address || '',
@@ -1133,6 +1134,26 @@
         .replace(/\s+/g, ' ')
         .replace(/[’']/g, "'")
         .trim();
+    }
+
+    function normalizeSearchText(value) {
+      return String(value || '')
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[’']/g, "'")
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9']+/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+    }
+
+    function buildSearchText(item) {
+      return normalizeSearchText([
+        item.name,
+        item.city,
+        item.subtitle,
+      ].filter(Boolean).join(' '));
     }
 
     function hasUsableCoordinates(value) {
@@ -1574,14 +1595,12 @@
     }
 
     function getFilteredItems() {
-      const q = els.searchInput.value.trim().toLowerCase();
+      const q = normalizeSearchText(els.searchInput.value);
       const scoreFilter = els.scoreFilter.value;
       const sort = els.sortFilter.value;
 
       let arr = state.items.filter(item => {
-        const nameMatch = item.name.toLowerCase().includes(q);
-        const subtitleMatch = (item.subtitle || '').toLowerCase().includes(q);
-        if (q && !nameMatch && !subtitleMatch) return false;
+        if (q && !(item.searchText || buildSearchText(item)).includes(q)) return false;
         if (scoreFilter !== 'all' && item.score < Number(scoreFilter)) return false;
         if (state.quickChip === '9plus' && item.score < 9) return false;
         if (state.quickChip === '8plus' && (item.score < 8 || item.score >= 9)) return false;
