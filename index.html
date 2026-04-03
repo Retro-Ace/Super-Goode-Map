@@ -68,6 +68,9 @@
       font-weight:900;
       letter-spacing:.01em;
     }
+    .show-full-map-btn {
+      position:absolute;
+    }
     .panel {
       order:2;
       background:
@@ -522,7 +525,7 @@
       .header-section {
         order:1 !important;
         flex:0 0 auto;
-        padding:6px 8px 0 !important;
+        padding:4px 8px 0 !important;
         background:
           linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
         position:relative;
@@ -530,10 +533,11 @@
       }
       .brand-card {
         display:grid;
-        grid-template-columns:36px minmax(0,1fr);
-        column-gap:8px;
-        row-gap:2px;
-        padding:7px 10px !important;
+        grid-template-columns:36px auto;
+        align-items:center;
+        column-gap:10px;
+        row-gap:0;
+        padding:6px 10px !important;
         border-radius:16px;
         margin:0;
       }
@@ -542,26 +546,29 @@
         height:36px !important;
         border-width:2px;
       }
-      .brand-copy {
+      .brand-copy,
+      .brand-text {
         min-width:0;
-        gap:2px;
-        align-content:center;
-        justify-items:center;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        gap:1px;
+        align-items:flex-start;
       }
       .brand-logo {
-        width:112px !important;
-        justify-self:center;
+        width:90px !important;
+        justify-self:start;
       }
       .brand-note {
-        grid-column:1 / -1;
-        width:100%;
-        max-width:none;
-        font-size:8px;
-        line-height:1.15;
-        white-space:nowrap;
+        width:auto;
+        max-width:18ch;
+        font-size:10px;
+        line-height:1.2;
+        white-space:normal;
         overflow:visible;
         text-overflow:clip;
-        text-align:center;
+        text-align:left;
+        opacity:.8;
       }
       .map-wrap,
       .map-section {
@@ -577,16 +584,34 @@
       #map {
         height:100% !important;
       }
+      .leaflet-control-container .leaflet-top {
+        top:auto !important;
+        bottom:80px !important;
+      }
+      .leaflet-control-container .leaflet-left {
+        left:12px !important;
+      }
+      .leaflet-control-container .leaflet-top .leaflet-control {
+        margin-top:0;
+        margin-bottom:0;
+      }
       .map-toggle {
-        display:inline-flex;
+        display:inline-flex !important;
         align-items:center;
-        left:12px;
-        top:12px;
-        bottom:auto;
+        left:12px !important;
+        bottom:20px !important;
+        top:auto !important;
         transform:none;
         padding:8px 11px;
         font-size:11.5px;
         box-shadow:0 10px 20px rgba(0,0,0,.16);
+        z-index:1200;
+      }
+      .show-full-map-btn {
+        position:absolute;
+        bottom:20px !important;
+        left:12px !important;
+        z-index:1200;
       }
       .map-focus .panel {
         display:none !important;
@@ -687,14 +712,15 @@
         left:0;
         right:0;
         bottom:0;
-        height:32dvh;
-        max-height:65dvh;
+        height:28dvh;
+        max-height:60dvh;
+        margin-top:12px;
         background:rgba(10,15,30,.98);
         backdrop-filter:blur(12px);
         -webkit-backdrop-filter:blur(12px);
         border-top-left-radius:18px;
         border-top-right-radius:18px;
-        z-index:999;
+        z-index:2;
         display:flex !important;
         flex-direction:column !important;
         pointer-events:auto;
@@ -707,8 +733,8 @@
         padding:0 10px calc(12px + env(safe-area-inset-bottom));
       }
       .results-section.expanded {
-        height:65dvh;
-        max-height:65dvh;
+        height:60dvh;
+        max-height:60dvh;
       }
       .results-handle {
         display:flex;
@@ -826,7 +852,7 @@
   <div class="app app-container">
     <section class="map-wrap map-section">
       <div id="map" aria-label="Map of restaurants"></div>
-      <button id="mobileMapToggle" class="map-toggle" type="button">Show full map</button>
+      <button id="mobileMapToggle" class="map-toggle show-full-map-btn" type="button">Show full map</button>
       <div class="map-legend">
         <div class="legend-title">Score tiers</div>
         <div class="legend-row"><span class="swatch" style="background:#f2c94c"></span>9.0 and up</div>
@@ -844,7 +870,7 @@
               src="./assets/images/branding/super-goode-headshot.jpg"
               alt="Philip Goode headshot"
             />
-            <div class="brand-copy">
+            <div class="brand-copy brand-text">
               <img
                 class="brand-logo"
                 src="./assets/images/branding/super-goode-map-logo.png"
@@ -937,6 +963,7 @@
       showNearbyBtn: document.getElementById('showNearbyBtn'),
       fitMappedBtn: document.getElementById('fitMappedBtn'),
       mobileMapToggle: document.getElementById('mobileMapToggle'),
+      fullMapBtn: document.querySelector('.show-full-map-btn'),
       resultsSection: document.querySelector('.results-section'),
       resultsHandle: document.querySelector('.results-handle')
     };
@@ -1522,7 +1549,19 @@
         render();
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
-      els.mobileMapToggle.addEventListener('click', () => setMobileMapFocus(!state.mobileMapFocus));
+      els.mobileMapToggle.addEventListener('click', () => {
+        if (!isMobileViewport()) {
+          setMobileMapFocus(!state.mobileMapFocus);
+          return;
+        }
+        setMobileMapFocus(true);
+        if (els.resultsSection) {
+          els.resultsSection.classList.add('expanded');
+        }
+        if (window.map) {
+          window.setTimeout(() => window.map.invalidateSize(), 300);
+        }
+      });
       if (els.resultsHandle) {
         els.resultsHandle.addEventListener('click', () => {
           if (!isMobileViewport() || !els.resultsSection) return;
