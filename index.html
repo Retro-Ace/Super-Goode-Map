@@ -392,14 +392,6 @@
       font-size:12px;
       line-height:1.45;
     }
-    .map-focus .map-wrap {
-      height:100dvh;
-      min-height:0;
-      max-height:none;
-    }
-    .map-focus .map-toggle {
-      background:linear-gradient(135deg, rgba(139,92,246,.98), rgba(192,132,252,.98));
-    }
     .leaflet-control-zoom {
       border:1px solid rgba(72,83,119,.92) !important;
       background:rgba(8,14,28,.92) !important;
@@ -613,7 +605,21 @@
         left:12px !important;
         z-index:1200;
       }
-      .map-focus .panel {
+      body.full-map-active .results-section {
+        display:none !important;
+      }
+      body.full-map-active .map-section {
+        position:fixed !important;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        height:100dvh !important;
+        max-height:none !important;
+        z-index:5;
+      }
+      body.full-map-active .header-section,
+      body.full-map-active .controls-section {
         display:none !important;
       }
       .controls-section {
@@ -946,7 +952,6 @@
       quickChip: 'all',
       userLocation: loadUserLocation(),
       nearbyOnly: false,
-      mobileMapFocus: false,
       selectedItemId: null,
       userMarker: null,
       locatingQueue: [],
@@ -1290,16 +1295,28 @@
       refreshMapLayout(160);
     }
 
-    function setMobileMapFocus(enabled) {
-      state.mobileMapFocus = enabled;
-      document.body.classList.toggle('map-focus', enabled);
+    function updateMobileMapToggleLabel(fullMapActive) {
       if (els.mobileMapToggle) {
-        els.mobileMapToggle.textContent = enabled ? 'Show list' : 'Show full map';
+        els.mobileMapToggle.textContent = fullMapActive ? 'Show list' : 'Show full map';
+        els.mobileMapToggle.classList.toggle('show-full-map-btn', !fullMapActive);
+        els.mobileMapToggle.classList.toggle('show-list-btn', fullMapActive);
       }
-      refreshMapLayout();
-      if (enabled) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+    }
+
+    function enableFullMap() {
+      document.body.classList.add('full-map-active');
+      updateMobileMapToggleLabel(true);
+      window.setTimeout(() => {
+        if (window.map) window.map.invalidateSize();
+      }, 300);
+    }
+
+    function disableFullMap() {
+      document.body.classList.remove('full-map-active');
+      updateMobileMapToggleLabel(false);
+      window.setTimeout(() => {
+        if (window.map) window.map.invalidateSize();
+      }, 300);
     }
 
     async function geocodeItem(item) {
@@ -1554,19 +1571,31 @@
         render();
       });
       els.fitMappedBtn.addEventListener('click', fitMappedPins);
-      els.mobileMapToggle.addEventListener('click', () => {
-        if (!isMobileViewport()) {
-          setMobileMapFocus(!state.mobileMapFocus);
-          return;
+      const fullMapBtn = document.querySelector('.show-full-map-btn') || els.mobileMapToggle;
+      const showListBtn = document.querySelector('.show-list-btn') || els.mobileMapToggle;
+      if (fullMapBtn && showListBtn && fullMapBtn === showListBtn) {
+        fullMapBtn.addEventListener('click', () => {
+          if (!isMobileViewport()) return;
+          if (document.body.classList.contains('full-map-active')) {
+            disableFullMap();
+          } else {
+            enableFullMap();
+          }
+        });
+      } else {
+        if (fullMapBtn) {
+          fullMapBtn.addEventListener('click', () => {
+            if (!isMobileViewport()) return;
+            enableFullMap();
+          });
         }
-        setMobileMapFocus(true);
-        if (els.resultsSection) {
-          els.resultsSection.classList.add('expanded');
+        if (showListBtn) {
+          showListBtn.addEventListener('click', () => {
+            if (!isMobileViewport()) return;
+            disableFullMap();
+          });
         }
-        if (window.map) {
-          window.setTimeout(() => window.map.invalidateSize(), 300);
-        }
-      });
+      }
       if (els.resultsHandle) {
         els.resultsHandle.addEventListener('click', () => {
           if (!isMobileViewport() || !els.resultsSection) return;
@@ -1611,6 +1640,10 @@
         if (els.resultsSection && !isMobileViewport()) {
           els.resultsSection.classList.remove('expanded');
         }
+        if (!isMobileViewport()) {
+          document.body.classList.remove('full-map-active');
+          updateMobileMapToggleLabel(false);
+        }
         refreshMapLayout(100);
       });
     }
@@ -1635,6 +1668,7 @@
       }
       if (isMobileViewport()) {
         setResultsPanelExpanded(false);
+        updateMobileMapToggleLabel(document.body.classList.contains('full-map-active'));
       }
       refreshMapLayout();
     }
