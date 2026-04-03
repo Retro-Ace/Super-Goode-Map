@@ -533,9 +533,9 @@
       }
       .brand-card {
         display:grid;
-        grid-template-columns:36px auto;
+        grid-template-columns:auto 1fr;
         align-items:center;
-        column-gap:10px;
+        gap:8px;
         row-gap:0;
         padding:6px 10px !important;
         border-radius:16px;
@@ -549,20 +549,20 @@
       .brand-copy,
       .brand-text {
         min-width:0;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        gap:1px;
-        align-items:flex-start;
+        display:grid;
+        grid-template-columns:80px 1fr;
+        align-items:center;
+        gap:8px;
+        width:100%;
       }
       .brand-logo {
-        width:90px !important;
+        width:80px !important;
         justify-self:start;
       }
       .brand-note {
         width:auto;
-        max-width:18ch;
-        font-size:10px;
+        max-width:none;
+        font-size:11px;
         line-height:1.2;
         white-space:normal;
         overflow:visible;
@@ -619,7 +619,7 @@
       .controls-section {
         order:3 !important;
         flex:0 0 auto;
-        padding:7px 8px 8px !important;
+        padding:7px 8px 6px !important;
         background:
           radial-gradient(circle at top left, rgba(139,92,246,.2), rgba(139,92,246,0) 34%),
           radial-gradient(circle at 85% 18%, rgba(125,140,255,.14), rgba(125,140,255,0) 26%),
@@ -639,37 +639,41 @@
       }
       .search, select { min-height:40px; font-size:14px; padding:0 12px; }
       .stats { display:none; }
-      .stats-mobile {
+      .stats-mobile,
+      .results-meta {
         display:flex;
         align-items:center;
         justify-content:space-between;
         gap:12px;
         margin-bottom:6px;
         min-height:auto;
-        padding:0 1px;
+        padding:4px 10px !important;
         border:none;
-        border-radius:0;
+        border-radius:12px;
         background:none;
         color:#8f99b4;
-        font-size:11.5px;
+        font-size:12px;
         line-height:1.15;
         letter-spacing:-.01em;
       }
-      .stats-mobile strong {
+      .stats-mobile strong,
+      .results-meta strong {
         color:#c7b3ff;
-        font-size:12.5px;
+        font-size:12px;
         font-weight:800;
       }
-      .stats-mobile .value-badge {
+      .stats-mobile .value-badge,
+      .results-meta .top-score-badge {
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        min-width:48px;
-        min-height:28px;
-        padding:0 11px;
-        border-radius:999px;
+        min-width:auto;
+        min-height:auto;
+        padding:2px 8px !important;
+        border-radius:10px;
         background:var(--gold);
         color:#0a0f1a;
+        font-size:12px;
         box-shadow:0 8px 16px rgba(242,201,76,.14), inset 0 1px 0 rgba(255,255,255,.2);
       }
       .stats-mobile .item {
@@ -712,8 +716,8 @@
         left:0;
         right:0;
         bottom:0;
-        height:28dvh;
-        max-height:60dvh;
+        height:24dvh !important;
+        max-height:55dvh;
         margin-top:12px;
         background:rgba(10,15,30,.98);
         backdrop-filter:blur(12px);
@@ -733,8 +737,8 @@
         padding:0 10px calc(12px + env(safe-area-inset-bottom));
       }
       .results-section.expanded {
-        height:60dvh;
-        max-height:60dvh;
+        height:55dvh;
+        max-height:55dvh;
       }
       .results-handle {
         display:flex;
@@ -744,9 +748,9 @@
         height:24px;
         margin:0 auto 8px;
         flex:0 0 auto;
-        position:sticky;
+        position:relative;
         top:0;
-        z-index:2;
+        z-index:15 !important;
       }
       .results-handle::before {
         content:'';
@@ -755,10 +759,11 @@
         border-radius:2px;
         background:rgba(255,255,255,.4);
       }
-      .results-section .list {
+      .results-section .list,
+      .results-list {
         display:block;
         margin:0;
-        padding:0 0 14px;
+        padding:4px 0 14px !important;
         background:none;
         border-top:none;
         box-shadow:none;
@@ -909,9 +914,9 @@
             <span class="item"><span>Showing</span><strong id="statShowing">0</strong></span>
             <span class="item top-score-stat"><span>Top score</span><strong class="value-badge" id="statTop">0.0</strong></span>
           </div>
-          <div class="stats-mobile" aria-label="results summary">
+          <div class="stats-mobile results-meta" aria-label="results summary">
             <span class="item"><span>Showing</span><strong id="statShowingMobile">0</strong></span>
-            <span class="item"><span>Top score</span><strong id="statTopMobile" class="value-badge">0.0</strong></span>
+            <span class="item"><span>Top score</span><strong id="statTopMobile" class="value-badge top-score-badge">0.0</strong></span>
           </div>
         </section>
       </div>
@@ -919,7 +924,7 @@
       <section class="results-section">
         <div class="results-handle" aria-hidden="true"></div>
         <div class="results-divider" aria-hidden="true"></div>
-        <div id="list" class="list"></div>
+        <div id="list" class="list results-list"></div>
       </section>
     </aside>
   </div>
