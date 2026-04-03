@@ -526,7 +526,7 @@
         background:
           linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
         position:relative;
-        z-index:4;
+        z-index:10;
       }
       .brand-card {
         display:grid;
@@ -571,7 +571,7 @@
         min-height:250px;
         max-height:45dvh;
         position:relative;
-        z-index:1;
+        z-index:10;
         border-bottom:1px solid var(--line);
       }
       #map {
@@ -601,7 +601,7 @@
           linear-gradient(180deg, rgba(13,22,42,.98), rgba(9,17,33,.98));
         box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
         position:relative;
-        z-index:3;
+        z-index:10;
       }
       .controls {
         gap:5px;
@@ -687,8 +687,8 @@
         left:0;
         right:0;
         bottom:0;
-        height:42dvh;
-        max-height:68dvh;
+        height:32dvh;
+        max-height:65dvh;
         background:rgba(10,15,30,.98);
         backdrop-filter:blur(12px);
         -webkit-backdrop-filter:blur(12px);
@@ -697,6 +697,7 @@
         z-index:999;
         display:flex !important;
         flex-direction:column !important;
+        pointer-events:auto;
         overflow-y:auto;
         overflow-x:hidden;
         -webkit-overflow-scrolling:touch;
@@ -706,20 +707,27 @@
         padding:0 10px calc(12px + env(safe-area-inset-bottom));
       }
       .results-section.expanded {
-        height:68dvh;
-        max-height:68dvh;
+        height:65dvh;
+        max-height:65dvh;
       }
       .results-handle {
-        display:block;
-        width:40px;
-        height:5px;
-        background:rgba(255,255,255,.3);
-        border-radius:3px;
-        margin:8px auto 10px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:100%;
+        height:24px;
+        margin:0 auto 8px;
         flex:0 0 auto;
         position:sticky;
-        top:8px;
+        top:0;
         z-index:2;
+      }
+      .results-handle::before {
+        content:'';
+        width:40px;
+        height:4px;
+        border-radius:2px;
+        background:rgba(255,255,255,.4);
       }
       .results-section .list {
         display:block;
@@ -1518,8 +1526,11 @@
       if (els.resultsHandle) {
         els.resultsHandle.addEventListener('click', () => {
           if (!isMobileViewport() || !els.resultsSection) return;
-          els.resultsSection.classList.toggle('expanded');
-          refreshMapLayout(160);
+          const nextExpanded = !els.resultsSection.classList.contains('expanded');
+          setResultsPanelExpanded(nextExpanded);
+          if (state.map) {
+            window.setTimeout(() => state.map.invalidateSize(), 300);
+          }
         });
       }
       if (els.quickChips) {
@@ -1565,6 +1576,7 @@
         zoomControl:true,
         preferCanvas:true
       }).setView([41.8781, -87.6298], 9);
+      window.map = state.map;
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
