@@ -1,68 +1,98 @@
 SUPER GOODE WEB MAP CURRENT BREAKDOWN
 
-Last updated: 2026-03-29
+Last updated: 2026-04-02
 
 1. PROJECT SCOPE
 
-This file is for the Super Goode WEB MAP REPOSITORY ONLY.
+This file covers the Super Goode WEB MAP REPOSITORY ONLY.
 
-It covers:
-- the static map site
-- the shared restaurant dataset
-- the manual intake helper
-- the CSV/sheet sync scripts
-- the GitHub Actions automation
-- the exported CSV and fallback artifacts
+Included:
+- static GitHub Pages map site
+- canonical restaurant dataset
+- compatibility mirror
+- CSV export and embedded fallback snapshot
+- manual intake helper
+- sheet sync automation
+- enrichment and refresh scripts
+- current web branding assets
 
-It does not cover:
-- any mobile app
-- any Expo app
-- TestFlight, preview builds, or simulator workflows
+Not included:
+- mobile app work
+- Expo or native app work
+- TestFlight or app-store distribution
 - non-web Super Goode projects
 
 2. CURRENT REPO SNAPSHOT
 
-The web map is a static GitHub Pages site built from committed files.
-
 Current state derived from data/locations.json:
-- total restaurants: 229
-- 9.0 and up: 20
-- 8.0 to 8.9: 148
-- 7.0 to 7.9: 61
+- total restaurants: 431
+- 9.0 and up: 34
+- 8.0 to 8.9: 284
+- 7.0 to 7.9: 113
 - sourceType distribution:
-- structured-data: 219
-- sheet: 10
+- structured-data: 429
+- sheet: 2
 
 Current completeness:
-- coordinates present for 229 of 229 restaurants
-- subtitles present for 229 of 229 restaurants
-- review URLs present for 229 of 229 restaurants
-- directions URLs present for 229 of 229 restaurants
-- googlePlaceUrl present for 228 of 229 restaurants
+- coordinates present for 431 of 431 restaurants
+- subtitles present for 431 of 431 restaurants
+- review URLs present for 431 of 431 restaurants
+- googlePlaceUrl present for 430 of 431 restaurants
+- directionsUrl currently stored for 255 of 431 restaurants
+- rows missing both googlePlaceUrl and directionsUrl: 0
 
-Notable current additions:
-- the latest approved sheet-synced restaurants are present in the canonical dataset, export, and embedded fallback
-- recent additions at the end of the source data include Buccan Sandwich Shop, NYC Halal Eats, Al's Beef, Brass Ring Pub, and Chicken Lit Tenders
-- the current bulk place-link pass intentionally leaves `(POP UP) Mcbrennan's Gourmet Burger Shack` blank because the row is low-confidence and lacks a trustworthy street-level place match
+Current place-link exception:
+- `Dorrie's Kitchen` intentionally leaves `googlePlaceUrl` blank
+- it still keeps a stored `directionsUrl`
+- that row falls back safely to street-address directions instead of using a weak place-style match
+
+Current artifact alignment:
+- data/locations.json and locations.json match
+- super_goode_locations.csv currently exports 431 rows
+- index.html embedded fallback DATA snapshot currently mirrors 431 rows
 
 3. WHAT THE SITE CURRENTLY DOES
 
 The public site:
 - loads shared restaurant data from static JSON
-- falls back to a compatibility mirror if the primary JSON path fails
-- falls back again to an embedded snapshot in index.html if shared JSON cannot be loaded
+- falls back to locations.json if the primary JSON path fails
+- falls back again to the embedded DATA snapshot in index.html if shared JSON cannot be loaded
 - renders mapped restaurants on a Leaflet map
 - shows a results list with score, subtitle, address, and actions
-- supports search across restaurant names and subtitles
-- supports score filtering
-- supports sorting by highest score, lowest score, A to Z, and nearest
-- supports browser geolocation and nearby-only filtering
-- supports fit-to-visible-results behavior
 - opens review videos in a new tab
-- uses a `Get directions` action that prefers `googlePlaceUrl`, then `directionsUrl`, then a generated Google Maps fallback
-- includes a mobile "Show full map" toggle
+- uses `Get directions` with the current priority:
+- googlePlaceUrl
+- directionsUrl
+- generated Google Maps fallback
 
-4. SOURCE-OF-TRUTH MODEL
+Current search/filter behavior:
+- searches across restaurant name, city, and subtitle or dish text
+- uses normalized case-insensitive matching
+- supports score filtering
+- supports sorting by highest score, lowest score, A to Z, and nearest to the user
+- preserves existing nearby/filter behavior on desktop
+
+4. CURRENT MOBILE WEB STATE
+
+Current mobile layout direction:
+- compact white header bar with current logo and headshot branding
+- shorter map section to give search and results more room
+- dark search and controls area
+- white scrolling results area with dark restaurant cards
+- smaller score tiers box on the map
+
+Current mobile map controls:
+- `Show full map` switches into true fullscreen map mode
+- `Show list` restores the normal mobile layout
+- `Fit` and `Locate` live as compact overlay controls on the map itself
+- mobile `Locate` only recenters and zooms the map
+- mobile `Locate` does not enable nearby filtering or reduce results count
+
+Desktop behavior remains separate:
+- desktop still keeps the larger inline location-action row in the controls area
+- desktop layout is not using the compact mobile map overlay controls
+
+5. SOURCE-OF-TRUTH MODEL
 
 Authoritative source:
 - data/locations.json
@@ -74,13 +104,13 @@ Derived artifacts:
 - super_goode_locations.csv
 - embedded DATA snapshot inside index.html
 
-Current rule set:
+Current rules:
 - data/locations.json is the source of truth
 - locations.json must match the source exactly
 - super_goode_locations.csv is an export, not an editing surface
 - index.html contains a fallback dataset snapshot and should stay aligned with the source data
 
-5. CURRENT DATA SHAPE
+6. CURRENT DATA SHAPE
 
 Canonical JSON fields:
 - name
@@ -98,14 +128,20 @@ Canonical JSON fields:
 - confidence
 - notes
 
-CSV export behavior:
+Current map-link behavior:
+- googlePlaceUrl is the preferred Google Maps field
+- directionsUrl remains the stored fallback field when present
+- runtime UI still generates a final Google Maps fallback if needed
+
+7. CURRENT CSV EXPORT STATE
+
+Current CSV behavior:
 - one row per restaurant
-- current row count: 229
-- current header count: 21
+- row count: 431
+- header count: 21
 - existing header order is preserved
 - export-only columns are retained for future use
-- if an export-only field has no current source value, it stays blank
-- `googlePlaceUrl` is exported even when current rows leave it blank
+- blank legacy/export-only fields are preserved instead of removed
 
 Current CSV header:
 - name
@@ -130,51 +166,50 @@ Current CSV header:
 - videoPath
 - status
 
-6. DATA FILES AND THEIR JOBS
+8. DATA FILES AND THEIR JOBS
 
 Core files:
 - data/locations.json
   - canonical dataset used for refreshes
 - locations.json
-  - root compatibility mirror used by the site loader as a fallback
+  - root compatibility mirror used by the loader as a fallback
 - super_goode_locations.csv
-  - export artifact built from the canonical data while preserving the existing CSV schema
+  - export artifact built from canonical data while preserving the existing CSV schema
 - index.html
-  - static app shell plus embedded fallback snapshot
+  - static app shell plus embedded fallback DATA snapshot
 
 Supporting data files:
 - data/new-reviews.json
-  - current state: []
-  - manual staging file for new additions before merge
+  - staging file for manual additions before merge
 - data/manual-fixes.json
-  - current state: {}
-  - last-pass override layer for known corrections
+  - last-pass correction layer for targeted overrides
 - data/geocode-cache.json
-  - stores cached geocoding lookups used by the enrichment helpers
+  - cached geocoder responses used by enrichment
 
-7. MANUAL INTAKE WORKFLOW
+9. MANUAL INTAKE WORKFLOW
 
 Current manual intake flow:
 1. Open admin/add-review.html.
 2. Enter the restaurant details.
-3. Copy the generated JSON object.
-4. Paste it into data/new-reviews.json.
-5. Run node scripts/update_locations.js.
-6. Run node scripts/refresh_static_artifacts.js.
-7. Review the diff.
-8. Commit and push.
+3. Add googlePlaceUrl when a trustworthy place/share URL is available.
+4. Keep directionsUrl as the fallback field when needed.
+5. Copy the generated JSON object.
+6. Paste it into data/new-reviews.json.
+7. Run node scripts/update_locations.js.
+8. Run node scripts/refresh_static_artifacts.js.
+9. Review the diff, then commit and push.
 
-What the admin helper does:
+Current admin helper behavior:
 - collects the standard restaurant fields
-- supports an optional Google Maps place/share URL field
-- keeps directions URL support as the fallback field
+- supports optional googlePlaceUrl
+- supports optional directionsUrl
 - defaults city to Chicago and state to IL
-- outputs JSON in pretty or one-line form
-- does not write directly to the dataset
+- outputs pretty or one-line JSON
+- does not write directly into the dataset
 
-8. SHEET SYNC / AUTOMATION WORKFLOW
+10. SHEET SYNC / AUTOMATION WORKFLOW
 
-GitHub Actions workflow:
+Workflow:
 - .github/workflows/sync-sheet.yml
 
 Current behavior:
@@ -182,97 +217,79 @@ Current behavior:
 - also runs hourly on a cron schedule
 - reads GOOGLE_SHEET_CSV_URL from GitHub secrets
 - downloads the published CSV
-- accepts optional Google Maps place/share URL columns and maps them to `googlePlaceUrl`
 - keeps only approved rows
-- blocks obvious temporary/test entries
-- sends approved rows through the same merge logic used by local intake
+- blocks obvious temporary or test data
+- accepts optional Google Maps place/share URL columns and maps them to googlePlaceUrl
+- passes approved rows through scripts/update_locations.js
 - writes data/locations.json and locations.json
-- stages data/geocode-cache.json when enrichment cache changes
-- commits and pushes data updates back to the repository
+- commits data updates back to the repository
 
-9. SCRIPT RESPONSIBILITIES
+Supported place-link header variants:
+- Google Maps URL
+- Google Place URL
+- Google Maps Place URL
+- Google Maps Place / Share URL
+- Google Maps Share URL
+- Place URL
+- Place Share URL
+- Maps URL
+
+11. SCRIPT RESPONSIBILITIES
 
 scripts/update_locations.js
-- merges incoming restaurant rows into the canonical dataset
-- reads data/new-reviews.json by default or an override file with --input
-- applies manual fixes
+- sanitizes incoming rows
+- merges them into the canonical dataset
 - preserves stronger existing values when possible
-- preserves a good existing `googlePlaceUrl` when incoming data leaves it blank
+- preserves a good existing googlePlaceUrl when incoming data leaves it blank
+- applies manual fixes
 - writes both data/locations.json and locations.json
-- clears data/new-reviews.json after merge unless --keep-new-reviews is used
+- clears data/new-reviews.json unless --keep-new-reviews is used
 
 scripts/sync_sheet.js
-- downloads the published intake CSV
-- canonicalizes supported sheet headers
-- supports `googlePlaceUrl` header variants such as Google Maps URL, Google Place URL, Google Maps Place URL, Place URL, and Maps URL
+- downloads the published sheet CSV
+- canonicalizes supported headers
 - filters to approved rows
-- blocks temporary/test data
+- blocks obvious temporary/test rows
+- maps optional place/share URL columns into googlePlaceUrl
 - hands importable rows to scripts/update_locations.js
 
 scripts/location_enrichment.js
 - builds full addresses
-- auto-builds best-effort Google Maps place-style search URLs from restaurant name plus street-level address data when `googlePlaceUrl` is missing
-- creates directions URLs only when `googlePlaceUrl` is absent and a usable `directionsUrl` is also missing
+- auto-builds best-effort Google Maps place-style search URLs from restaurant name plus street-level address data when googlePlaceUrl is missing
+- creates directionsUrl only when googlePlaceUrl is absent and a usable directionsUrl is also missing
 - geocodes missing coordinates through Nominatim when needed
 - stores lookup results in data/geocode-cache.json
 
 scripts/refresh_static_artifacts.js
 - mirrors data/locations.json to locations.json
-- rebuilds super_goode_locations.csv from the canonical dataset
-- preserves the existing CSV header structure, adds `googlePlaceUrl` to the export schema, and keeps legacy columns
-- refreshes the embedded fallback DATA array in index.html
+- rebuilds super_goode_locations.csv from canonical data
+- preserves the 21-column export schema
+- refreshes the embedded DATA array in index.html
 
-10. CURRENT HOSTING / DEPLOYMENT MODEL
+12. CURRENT BRANDING / PRESENTATION ASSETS
 
-The web map is deployed as a static GitHub Pages site.
+Current branding assets live in:
+- assets/images/branding/
 
-Current deployment characteristics:
-- no backend
-- no database
-- no separate build pipeline
-- index.html is the app shell
-- committed JSON files are the live shared dataset
-- GitHub Actions is used for data ingestion automation, not app hosting
+Current primary branding files:
+- super-goode-headshot.jpg
+- super-goode-map-logo.png
+- super-goode-info.png
 
-11. CURRENT REPO STRUCTURE
+README now points at:
+- assets/images/branding/super-goode-info.png
 
-Important top-level files:
-- index.html
-- README.md
-- SUPER_GOODE_WEB_MAP_CURRENT_BREAKDOWN.txt
-- Super_Goode.txt
-- locations.json
-- super_goode_locations.csv
-- extraction_report.md
+13. CURRENT MAINTENANCE RULES
 
-Important folders:
-- admin/
-  - add-review.html
-- data/
-  - locations.json
-  - new-reviews.json
-  - manual-fixes.json
-  - geocode-cache.json
-- scripts/
-  - update_locations.js
-  - sync_sheet.js
-  - location_enrichment.js
-  - refresh_static_artifacts.js
-- .github/workflows/
-  - sync-sheet.yml
-
-12. CURRENT MAINTENANCE RULES
-
-When updating the web map data:
-- edit through the intake flow or approved sheet sync when possible
-- treat data/locations.json as canonical
+When updating the web map:
+- trust data/locations.json over older notes
 - keep locations.json mirrored to the source
-- prefer `googlePlaceUrl` when a true Google Maps place/share link is available
 - refresh super_goode_locations.csv from the canonical data
-- do not remove CSV columns just because values are blank right now
-- keep the index.html fallback snapshot aligned with the source dataset
-- validate JSON files, CSV row count, and stale doc references before pushing
+- keep the embedded DATA snapshot aligned with the source dataset
+- do not remove CSV columns just because values are blank
+- prefer googlePlaceUrl when a true Google Maps place/share link is available
+- keep docs aligned with the real repo state before pushing
 
-13. SUMMARY
+14. SUMMARY
 
-The current Super Goode web map repo is a static GitHub Pages project backed by a 229-restaurant dataset. The repo now uses data/locations.json as the canonical source, keeps locations.json as a required mirror, supports an optional first-class `googlePlaceUrl` field, preserves a 21-column CSV export schema, and maintains an embedded fallback dataset inside index.html. The current bulk enrichment pass populated `googlePlaceUrl` for 228 restaurants and intentionally left 1 ambiguous popup row blank rather than forcing a weak match. Manual intake, approved Google Sheet sync, enrichment helpers, and static artifact refresh all work together to keep the web map current without introducing a backend.
+The current Super Goode web map repo is a static GitHub Pages project backed by a 431-restaurant canonical dataset. The repo now uses data/locations.json as the source of truth, keeps locations.json as an exact mirror, exports a refreshed 21-column CSV, and maintains an embedded fallback snapshot in index.html. Search now works across restaurant names, cities, and dish or subtitle text. Mobile uses a compact map-first layout with overlay Fit and Locate controls, a fullscreen map toggle, a white header bar, and a white scrolling results area. Intake, enrichment, sheet sync, and static artifact refresh all continue to work without introducing a backend.

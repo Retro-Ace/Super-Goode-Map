@@ -3,110 +3,145 @@
 Static restaurant map for Phil Goode's reviews, built as a GitHub Pages site with no backend.
 
 <p align="center">
-  <img src="./super-goode-info.png" alt="Super Goode Map promo graphic" width="900" />
+  <img src="./assets/images/branding/super-goode-info.png" alt="Super Goode Map promo graphic" width="900" />
 </p>
 
 ## Overview
 
-The site turns Phil Goode's review posts into a browsable map and list experience. Visitors can search restaurants, filter by score, sort results, open review videos, tap `Get directions`, and browse nearby spots on desktop or mobile.
+The site turns Phil Goode's review posts into a browsable restaurant map and list that works on desktop and mobile. Visitors can search by restaurant name, city, or dish, filter by score, sort results, watch review videos, and tap `Get directions` to open Google Maps.
 
 ## Current Project State
 
-As of 2026-03-29, the live web-map dataset contains 229 restaurants sourced from [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json).
+As of 2026-04-02, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 431 restaurants.
 
-- 20 restaurants score 9.0 or higher
-- 148 restaurants score in the 8.x range
-- 61 restaurants score in the 7.x range
-- 229 of 229 restaurants currently have coordinates, subtitles, review URLs, and directions URLs
-- 228 of 229 restaurants currently have a populated `googlePlaceUrl`
-- 1 low-confidence popup row is intentionally left without `googlePlaceUrl` until a reliable place match is available
+- 34 restaurants score 9.0 and up
+- 284 restaurants score in the 8.x range
+- 113 restaurants score in the 7.x range
+- 431 of 431 restaurants currently have coordinates, subtitles, and review URLs
+- 430 of 431 restaurants currently have a populated `googlePlaceUrl`
+- 255 of 431 restaurants currently keep a stored `directionsUrl`
+- 1 row intentionally leaves `googlePlaceUrl` blank and falls back to `directionsUrl`: `Dorrie's Kitchen`
+- Source types currently break down to 429 `structured-data` rows and 2 `sheet` rows
 
-The current data model is:
+Current source-of-truth layout:
 
-- Source of truth: [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json)
-- Compatibility mirror: [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
+- Canonical dataset: [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json)
+- Required mirror: [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
 - CSV export: [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
 - Embedded fallback snapshot: [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
-- Preferred Google Maps field: optional `googlePlaceUrl`
 
-The site first tries to load `./data/locations.json`, then falls back to `./locations.json`, and finally falls back to the embedded snapshot in `index.html` if shared JSON cannot be loaded.
+The app first tries `./data/locations.json`, then falls back to `./locations.json`, and finally uses the embedded snapshot in `index.html` if the shared JSON files cannot be loaded.
 
-## What The Site Does
+## What The Site Does Now
 
-- Renders restaurants on a Leaflet map with score-tier pin colors
-- Shows a scrollable card list with score, subtitle, address, and actions
-- Supports restaurant search across names and subtitles
+- Renders restaurant pins on a Leaflet map with score-tier colors
+- Shows a card list with score, subtitle, address, review link, and map actions
+- Searches across restaurant name, city, and dish or subtitle text
+- Supports case-insensitive normalized matching for search terms
 - Filters by score and sorts by highest score, lowest score, A to Z, or nearest to the user
-- Supports current-location lookup, nearby-only filtering, and fit-to-results map behavior
-- Uses a `Get directions` action that prefers `googlePlaceUrl`, then `directionsUrl`, then a generated Google Maps fallback
-- Includes a mobile-specific full-map toggle for small screens
+- Uses `Get directions` with the current priority: `googlePlaceUrl` -> `directionsUrl` -> generated Google Maps fallback
+- Opens review videos in a new tab
+- Includes a true mobile full-map mode with `Show full map` / `Show list`
 
-## Data Workflow
+## Mobile Experience
+
+The current mobile web layout is intentionally map-first and compact:
+
+- white top branding bar with the current headshot and logo assets
+- shorter map block for better search and results visibility
+- on-map overlay `Fit` and `Locate` buttons
+- dark controls block for search, score filter, and sort
+- white scrolling results area with dark restaurant cards
+
+Important mobile behavior details:
+
+- the on-map `Locate` button recenters and zooms to the user's location only
+- it does not turn on nearby filtering or reduce the visible result count
+- the desktop controls still keep the larger inline location buttons
+
+## Data Model
+
+The canonical JSON dataset currently uses:
+
+- `name`
+- `score`
+- `subtitle`
+- `address`
+- `city`
+- `state`
+- `lat`
+- `lng`
+- `googlePlaceUrl`
+- `directionsUrl`
+- `reviewUrl`
+- `sourceType`
+- `confidence`
+- `notes`
+
+`googlePlaceUrl` is now the preferred Google Maps field. `directionsUrl` remains the stored fallback when present, and the UI still generates a final Google Maps fallback at runtime when needed.
+
+## Intake And Sync Workflow
 
 ### Manual Intake
 
-Use [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-review.html) when adding a restaurant by hand.
+Use [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-review.html) to generate a valid JSON snippet for a new restaurant.
 
-1. Open the admin helper.
-2. Enter the review details.
-3. Copy the generated JSON object.
-4. Paste it into [`data/new-reviews.json`](/Users/anthonylarosa/CODEX/Super Goode/data/new-reviews.json).
+1. Enter the restaurant details in the helper.
+2. Include `googlePlaceUrl` when a real Google Maps place or share URL is available.
+3. Keep `directionsUrl` as the fallback field when needed.
+4. Paste the generated object into [`data/new-reviews.json`](/Users/anthonylarosa/CODEX/Super Goode/data/new-reviews.json).
 5. Run `node scripts/update_locations.js`.
 6. Run `node scripts/refresh_static_artifacts.js`.
 7. Review the diff, then commit and push.
 
-Manual intake now supports both:
-
-- `googlePlaceUrl` as the preferred Google Maps place/share link
-- `directionsUrl` as the fallback directions field
-
-### Google Sheet / Form Sync
+### Google Sheet Sync
 
 The repo also supports approved-row intake from a published Google Sheet CSV.
 
 1. Publish the sheet as CSV.
 2. Store the CSV URL in the `GOOGLE_SHEET_CSV_URL` GitHub secret.
-3. Run the workflow in [`.github/workflows/sync-sheet.yml`](/Users/anthonylarosa/CODEX/Super Goode/.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
-4. The workflow keeps only approved rows, accepts optional Google Maps place/share URL columns, blocks obvious test entries, geocodes missing coordinates when possible, writes the shared JSON files, and commits the updated data back to the repo.
+3. Run [`.github/workflows/sync-sheet.yml`](/Users/anthonylarosa/CODEX/Super Goode/.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
+4. The workflow filters to approved rows, blocks obvious temporary entries, accepts optional Google Maps place/share URL headers, geocodes missing coordinates when possible, writes the shared JSON files, and commits the updated data back to the repo.
 
-## Current Place-Link Enrichment
+Supported place-link header variants include:
 
-The current dataset has been bulk-enriched with best-effort Google Maps place-style URLs built from restaurant name plus street-level address data when a trustworthy place/share URL was not already present.
+- `Google Maps URL`
+- `Google Place URL`
+- `Google Maps Place URL`
+- `Place URL`
+- `Maps URL`
 
-- `googlePlaceUrl` is now populated for 228 current restaurants
-- 1 row remains blank because the available data is too ambiguous to assign a reliable place link
-- The unmatched row is `(POP UP) Mcbrennan's Gourmet Burger Shack`
+## Refreshing Static Artifacts
 
-## Static Artifact Refresh
+Run `node scripts/refresh_static_artifacts.js` whenever [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) changes.
 
-Run `node scripts/refresh_static_artifacts.js` whenever the source dataset changes and you want the repo artifacts to match it.
+That refresh keeps these files aligned:
 
-That command currently:
+- [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
+- [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
+- the embedded `DATA` snapshot in [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
 
-- rewrites [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json) from [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json)
-- rebuilds [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
-- preserves the existing CSV header structure, including the `googlePlaceUrl` column and export-only columns
-- keeps one row per restaurant and leaves unmatched export-only fields blank
-- refreshes the embedded fallback dataset inside [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
+The CSV export keeps its existing header order and legacy columns while still exporting current dataset fields like `googlePlaceUrl`.
 
 ## Repository Structure
 
-- [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html): the static web app UI and embedded fallback snapshot
-- [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json): canonical web-map dataset
-- [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json): required compatibility mirror
-- [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv): export of the current dataset with preserved legacy columns
+- [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html): static app shell, mobile and desktop UI, and embedded fallback data
+- [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json): canonical dataset
+- [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json): required mirror fallback
+- [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv): export-only CSV view of the current dataset
 - [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-review.html): manual intake helper
-- [`scripts/update_locations.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/update_locations.js): merge intake into the canonical dataset
-- [`scripts/sync_sheet.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/sync_sheet.js): download approved sheet rows and map optional place/share URL headers
-- [`scripts/location_enrichment.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/location_enrichment.js): geocode and directions-fallback enrichment helpers
-- [`scripts/refresh_static_artifacts.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/refresh_static_artifacts.js): mirror, CSV, and fallback refresh
+- [`scripts/update_locations.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/update_locations.js): merges new rows into the canonical dataset
+- [`scripts/sync_sheet.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/sync_sheet.js): downloads and sanitizes approved sheet rows
+- [`scripts/location_enrichment.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/location_enrichment.js): place-link, directions fallback, and geocoding helpers
+- [`scripts/refresh_static_artifacts.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/refresh_static_artifacts.js): mirror, CSV, and embedded fallback refresh
+- [`assets/images/branding/`](/Users/anthonylarosa/CODEX/Super Goode/assets/images/branding): current branding and promo assets
 
 ## Hosting And Deployment
 
-This project is hosted as a static GitHub Pages site from the repository itself.
+This project is hosted as a static GitHub Pages site directly from the repository.
 
-- No build step
-- No backend
-- No database
-- Data changes publish through committed static files
-- GitHub Actions is used for sheet ingestion, not for running a separate app server
+- no backend
+- no database
+- no build pipeline
+- committed JSON files are the live shared dataset
+- GitHub Actions handles data ingestion automation, not app hosting

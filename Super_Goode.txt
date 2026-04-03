@@ -1,34 +1,29 @@
 Super Goode Web Map - Quick Project Note
 
-The Super Goode repo is currently a static web map hosted through GitHub Pages. It turns Phil Goode's review posts into a searchable restaurant map and list with score filtering, nearby sorting, review links, a `Get directions` flow, and a mobile-friendly layout.
+The Super Goode repo is currently a static GitHub Pages web map backed by a 431-row canonical dataset in data/locations.json. The repo keeps locations.json as the required mirror, super_goode_locations.csv as an export-only artifact, and an embedded fallback DATA snapshot inside index.html.
 
-Current source-of-truth setup:
-- data/locations.json is the canonical dataset
-- locations.json is the required compatibility mirror
-- super_goode_locations.csv is an export only
-- index.html also keeps an embedded fallback snapshot for offline/shared-data failure cases
-- googlePlaceUrl is now the preferred optional Google Maps place/share field
+Current web-map behavior:
+- search works across restaurant name, city, and dish or subtitle text
+- `Get directions` now uses googlePlaceUrl first, then directionsUrl, then a generated Google Maps fallback
+- mobile uses a compact map-first layout with a white header bar, on-map Fit and Locate overlay buttons, a true Show full map mode, and a white scrolling results area with dark cards
+- mobile Locate now recenters the map only and does not reduce the visible result count
 
-Current dataset state as of 2026-03-29:
-- 229 restaurants total
-- 20 restaurants at 9.0+
-- 148 restaurants in the 8.x range
-- 61 restaurants in the 7.x range
-- all current entries have coordinates, subtitles, review URLs, and directions URLs
-- 228 current entries now have `googlePlaceUrl`
-- 1 low-confidence popup row remains blank until a reliable place match is available
+Current dataset state as of 2026-04-02:
+- 431 restaurants total
+- 34 restaurants at 9.0+
+- 284 restaurants in the 8.x range
+- 113 restaurants in the 7.x range
+- 431 rows have coordinates, subtitles, and review URLs
+- 430 rows have googlePlaceUrl
+- 255 rows currently keep a stored directionsUrl
+- Dorrie's Kitchen intentionally leaves googlePlaceUrl blank and falls back to directionsUrl
 
 Current update workflow:
-1. Add a restaurant manually through admin/add-review.html or approve it through the published sheet.
-2. Include `googlePlaceUrl` when a real Google Maps place/share link is available, otherwise keep using `directionsUrl`.
+1. Add a restaurant through admin/add-review.html or approve it through the published sheet.
+2. Include googlePlaceUrl when a real place/share URL is available.
 3. Run node scripts/update_locations.js to merge intake into the canonical dataset.
-4. Run node scripts/refresh_static_artifacts.js to sync the root mirror, CSV export, and embedded fallback snapshot.
-5. Validate the JSON files, CSV row count, and docs.
-6. Commit and push the static files.
-
-Current automation:
-- GitHub Actions can pull approved rows from GOOGLE_SHEET_CSV_URL every hour or on demand.
-- The sync flow filters approved rows, supports optional place/share URL headers, auto-builds place-style Google Maps URLs for rows that still need them when a street-level address is available, enriches missing location data when needed, and commits updated JSON files back to the repo.
+4. Run node scripts/refresh_static_artifacts.js to sync locations.json, super_goode_locations.csv, and the embedded fallback snapshot.
+5. Review the diff, update docs if needed, then commit and push.
 
 Important rule:
-The repo is web-map only. Keep docs, shared JSON, compatibility mirror, CSV export, and fallback artifacts aligned with the current web dataset, with `googlePlaceUrl -> directionsUrl -> generated Google Maps fallback` as the current directions flow.
+This repo is web-map only. Keep the docs, JSON source, mirror, CSV export, embedded fallback, and branding assets aligned with the current web-map state.
