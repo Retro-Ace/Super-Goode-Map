@@ -6848,22 +6848,6 @@
     "notes": ""
   },
   {
-    "name": "Fox's Irish Pub",
-    "score": 8.4,
-    "subtitle": "Cheese and sausage thin crust pizza",
-    "address": "9655 W 143rd St",
-    "city": "Orland Park",
-    "state": "IL",
-    "lat": 41.630377,
-    "lng": -87.8554138,
-    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Fox%E2%80%99s%20Irish%20Pub%2C%209655%20W%20143rd%20St%2C%20Orland%20Park%2C%20IL",
-    "directionsUrl": "",
-    "reviewUrl": "https://www.instagram.com/reel/DWgit5PE2bN/",
-    "sourceType": "structured-data",
-    "confidence": "medium",
-    "notes": ""
-  },
-  {
     "name": "Fox's Pizza & Irish Pub",
     "score": 8.4,
     "subtitle": "Phil ate the Cheese and Sausage Thin Crust Pizza.",
@@ -6874,7 +6858,7 @@
     "lng": -87.8554138,
     "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Fox's%20Pizza%20%26%20Irish%20Pub%2C%209655%20W%20143rd%20St%2C%20Orland%20Park%2C%20IL",
     "directionsUrl": "",
-    "reviewUrl": "https://www.instagram.com/p/DWgit5PE2bN/",
+    "reviewUrl": "https://www.instagram.com/reel/DWgit5PE2bN/",
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
