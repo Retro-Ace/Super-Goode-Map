@@ -940,6 +940,14 @@
       }
     }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HPTFLD425"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0HPTFLD425');
+  </script>
 </head>
 <body>
   <div class="app app-container">
@@ -1059,6 +1067,12 @@
       queueIndex: 0,
       locateTimer: null,
       autoStarted: false,
+      analytics: {
+        lastPopupOpenId: null,
+        lastPopupOpenAt: 0,
+        searchDebounce: null,
+        lastTrackedSearchQuery: '',
+      },
     };
 
     const els = {
@@ -1226,23 +1240,39 @@
     }
 
     function directionsHref(item) {
+      return directionsTargetInfo(item).href;
+    }
+
+    function directionsTargetInfo(item) {
       const placeUrl = googleMapsPlaceUrl(item);
-      if (placeUrl) return placeUrl;
-      if (hasUsableHttpUrl(item.directionsUrl)) return item.directionsUrl;
-      if (hasUsableHttpUrl(item.loc?.directionsUrl)) return item.loc.directionsUrl;
+      if (placeUrl) {
+        return { href: placeUrl, type: 'googlePlaceUrl' };
+      }
+      if (hasUsableHttpUrl(item.directionsUrl)) {
+        return { href: item.directionsUrl, type: 'directionsUrl' };
+      }
+      if (hasUsableHttpUrl(item.loc?.directionsUrl)) {
+        return { href: item.loc.directionsUrl, type: 'directionsUrl' };
+      }
       const destination = fullAddressForDirections(item);
       if (destination) {
-        return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+        return {
+          href: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`,
+          type: 'generated_fallback',
+        };
       }
-      return `https://www.google.com/maps/search/${encodeURIComponent(normalizeName(item.name) + ', Chicago, IL')}`;
+      return {
+        href: `https://www.google.com/maps/search/${encodeURIComponent(normalizeName(item.name) + ', Chicago, IL')}`,
+        type: 'generated_fallback',
+      };
     }
 
     function popupHtml(item) {
       const reviewUrl = normalizeReviewUrl(item.reviewUrl);
       const reviewHtml = reviewUrl
-        ? `<a href="${escapeHtml(reviewUrl)}" target="_blank" rel="noopener noreferrer">Review Video</a>`
+        ? `<a href="${escapeHtml(reviewUrl)}" target="_blank" rel="noopener noreferrer" data-popup-action="review" data-id="${item.id}">Review Video</a>`
         : `<span>Review Video</span>`;
-      const dirHtml = `<a href="${directionsHref(item)}" target="_blank" rel="noopener noreferrer">Get directions</a>`;
+      const dirHtml = `<a href="${escapeHtml(directionsHref(item))}" target="_blank" rel="noopener noreferrer" data-popup-action="directions" data-id="${item.id}">Get directions</a>`;
       const address = item.address ? escapeHtml(item.address) : 'Location not locked yet';
       const subtitleHtml = item.subtitle ? `<div class="popup-subtitle">${escapeHtml(item.subtitle)}</div>` : '';
       return `
@@ -1260,6 +1290,122 @@
         .replaceAll('>','&gt;')
         .replaceAll('"','&quot;')
         .replaceAll("'", '&#39;');
+    }
+
+    function trackAnalyticsEvent(eventName, params = {}) {
+      try {
+        if (typeof window.gtag !== 'function') return;
+        const safeParams = Object.fromEntries(
+          Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== '')
+        );
+        window.gtag('event', eventName, safeParams);
+      } catch (_) {
+        // No-op if analytics is unavailable or blocked.
+      }
+    }
+
+    function analyticsItemParams(item, extras = {}) {
+      return {
+        restaurant_name: item?.name || '',
+        score: Number(item?.score),
+        city: item?.city || '',
+        ...extras,
+      };
+    }
+
+    function trackReviewClick(item, sourceSurface) {
+      const reviewUrl = normalizeReviewUrl(item?.reviewUrl);
+      trackAnalyticsEvent('watch_review_click', analyticsItemParams(item, {
+        source_surface: sourceSurface,
+        review_url: reviewUrl,
+      }));
+    }
+
+    function trackDirectionsClick(item, sourceSurface) {
+      const directionTarget = directionsTargetInfo(item);
+      trackAnalyticsEvent('directions_click', analyticsItemParams(item, {
+        source_surface: sourceSurface,
+        directions_type: directionTarget.type,
+      }));
+    }
+
+    function trackLocateClick(surface) {
+      trackAnalyticsEvent('locate_click', { surface });
+    }
+
+    function trackFitPinsClick(surface) {
+      trackAnalyticsEvent('fit_pins_click', {
+        surface,
+        results_count: getFilteredItems().length,
+      });
+    }
+
+    function shouldTrackPopupOpen(item) {
+      const now = Date.now();
+      if (
+        state.analytics.lastPopupOpenId === item.id &&
+        now - state.analytics.lastPopupOpenAt < 800
+      ) {
+        return false;
+      }
+      state.analytics.lastPopupOpenId = item.id;
+      state.analytics.lastPopupOpenAt = now;
+      return true;
+    }
+
+    function trackRestaurantPinOpen(item) {
+      if (!shouldTrackPopupOpen(item)) return;
+      trackAnalyticsEvent('restaurant_pin_open', analyticsItemParams(item));
+    }
+
+    function trackRestaurantCardOpen(item) {
+      trackAnalyticsEvent('restaurant_card_open', analyticsItemParams(item, {
+        source_surface: 'card',
+      }));
+    }
+
+    function scheduleSearchUsedEvent() {
+      window.clearTimeout(state.analytics.searchDebounce);
+      state.analytics.searchDebounce = window.setTimeout(() => {
+        const rawQuery = els.searchInput.value.trim();
+        const normalizedQuery = normalizeSearchText(rawQuery);
+        if (!normalizedQuery) {
+          state.analytics.lastTrackedSearchQuery = '';
+          return;
+        }
+        if (state.analytics.lastTrackedSearchQuery === normalizedQuery) {
+          return;
+        }
+        state.analytics.lastTrackedSearchQuery = normalizedQuery;
+        trackAnalyticsEvent('search_used', {
+          query: rawQuery,
+          query_length: rawQuery.length,
+          results_count: getFilteredItems().length,
+        });
+      }, 450);
+    }
+
+    function trackScoreFilterChanged() {
+      trackAnalyticsEvent('score_filter_changed', {
+        score_filter_value: els.scoreFilter.value,
+        results_count: getFilteredItems().length,
+      });
+    }
+
+    function bindPopupAnalytics(marker, item) {
+      const popupEl = marker.getPopup()?.getElement();
+      if (!popupEl || popupEl.dataset.analyticsBound === 'true') return;
+      popupEl.dataset.analyticsBound = 'true';
+      popupEl.addEventListener('click', (event) => {
+        const actionTarget = event.target.closest('[data-popup-action]');
+        if (!actionTarget) return;
+        if (actionTarget.dataset.popupAction === 'review') {
+          trackReviewClick(item, 'popup');
+        }
+        if (actionTarget.dataset.popupAction === 'directions') {
+          trackDirectionsClick(item, 'popup');
+        }
+      });
     }
 
     function haversineMiles(lat1, lon1, lat2, lon2) {
@@ -1559,7 +1705,9 @@
         .bindPopup(popupHtml(item))
         .on('click', () => updateSelectedItem(item, { openPopup: true }))
         .on('popupopen', () => {
+          trackRestaurantPinOpen(item);
           state.selectedItemId = item.id;
+          bindPopupAnalytics(marker, item);
           refreshMarkerEmphasis();
           render();
         })
@@ -1680,7 +1828,7 @@
           </div>
           <div class="card-actions">
             <button class="primary" data-action="show" data-id="${item.id}" ${item.mapped ? '' : 'disabled'}>Show on map</button>
-            <a class="btn subtle" href="${directionsHref(item)}" target="_blank" rel="noopener noreferrer">Get directions</a>
+            <a class="btn subtle" data-action="directions" data-id="${item.id}" href="${escapeHtml(directionsHref(item))}" target="_blank" rel="noopener noreferrer">Get directions</a>
             <button class="subtle" data-action="video" data-id="${item.id}" ${item.reviewUrl ? '' : 'disabled'}>Review video</button>
           </div>
         </article>
@@ -1712,12 +1860,26 @@
     }
 
     function bindEvents() {
-      els.searchInput.addEventListener('input', () => { render(); refreshQueue(); });
-      els.scoreFilter.addEventListener('change', () => { render(); refreshQueue(); });
+      els.searchInput.addEventListener('input', () => {
+        render();
+        refreshQueue();
+        scheduleSearchUsedEvent();
+      });
+      els.scoreFilter.addEventListener('change', () => {
+        render();
+        refreshQueue();
+        trackScoreFilterChanged();
+      });
       els.sortFilter.addEventListener('change', render);
-      els.locateMeBtn.addEventListener('click', requestUserLocation);
+      els.locateMeBtn.addEventListener('click', () => {
+        trackLocateClick('desktop_controls');
+        requestUserLocation();
+      });
       if (els.mobileLocateBtn) {
-        els.mobileLocateBtn.addEventListener('click', requestMapOnlyLocation);
+        els.mobileLocateBtn.addEventListener('click', () => {
+          trackLocateClick('mobile_map_overlay');
+          requestMapOnlyLocation();
+        });
       }
       els.showNearbyBtn.addEventListener('click', () => {
         state.nearbyOnly = !state.nearbyOnly;
@@ -1728,9 +1890,15 @@
         }
         render();
       });
-      els.fitMappedBtn.addEventListener('click', fitMappedPins);
+      els.fitMappedBtn.addEventListener('click', () => {
+        trackFitPinsClick('desktop_controls');
+        fitMappedPins();
+      });
       if (els.mobileFitBtn) {
-        els.mobileFitBtn.addEventListener('click', fitMappedPins);
+        els.mobileFitBtn.addEventListener('click', () => {
+          trackFitPinsClick('mobile_map_overlay');
+          fitMappedPins();
+        });
       }
       const fullMapBtn = document.querySelector('.show-full-map-btn') || els.mobileMapToggle;
       const showListBtn = document.querySelector('.show-list-btn') || els.mobileMapToggle;
@@ -1784,15 +1952,20 @@
 
         const action = target.dataset.action;
         if (action === 'show' && item.mapped) {
+          trackRestaurantCardOpen(item);
           updateSelectedItem(item, { focusMap: true, openPopup: true });
         }
         if (action === 'retry') {
           await geocodeItem(item);
           render();
         }
+        if (action === 'directions') {
+          trackDirectionsClick(item, 'card');
+        }
         if (action === 'video' && item.reviewUrl) {
           const reviewUrl = normalizeReviewUrl(item.reviewUrl);
           if (!reviewUrl) return;
+          trackReviewClick(item, 'card');
           window.open(reviewUrl, '_blank', 'noopener,noreferrer');
         }
       });
