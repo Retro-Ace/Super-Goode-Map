@@ -89,5 +89,12 @@
     "lng": -87.7083394,
     "displayName": "4114, North Kedzie Avenue, Irving Park, Chicago, Jefferson Township, Cook County, Illinois, 60618, United States",
     "updatedAt": "2026-04-03T14:47:40.632Z"
+  },
+  "16 s evergreen ave, arlington heights, il, usa": {
+    "status": "ok",
+    "lat": 42.0824058,
+    "lng": -87.98181,
+    "displayName": "16, South Evergreen Avenue, Scarsdale, Arlington Heights, Wheeling Township, Cook County, Illinois, 60005, United States",
+    "updatedAt": "2026-04-07T15:02:17.987Z"
   }
 }

@@ -6894,5 +6894,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Fausto's Italian Kitchen",
+    "score": 8.2,
+    "subtitle": "Italian Sandwich",
+    "address": "16 S Evergreen Ave",
+    "city": "Arlington Heights",
+    "state": "IL",
+    "lat": 42.0824058,
+    "lng": -87.98181,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Fausto's%20Italian%20Kitchen%2C%2016%20S%20Evergreen%20Ave%2C%20Arlington%20Heights%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DWyjsZHkyEw/?igsh=YTFxYTM2Y3o5c3Z1",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
