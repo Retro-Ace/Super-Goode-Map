@@ -12,16 +12,18 @@ The site turns Phil Goode's review posts into a browsable restaurant map and lis
 
 ## Current Project State
 
-As of 2026-04-02, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 431 restaurants.
+As of 2026-04-08, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 432 restaurants.
 
-- 34 restaurants score 9.0 and up
+- 35 restaurants score 9.0 and up
 - 284 restaurants score in the 8.x range
-- 113 restaurants score in the 7.x range
-- 431 of 431 restaurants currently have coordinates, subtitles, and review URLs
-- 430 of 431 restaurants currently have a populated `googlePlaceUrl`
-- 255 of 431 restaurants currently keep a stored `directionsUrl`
+- 112 restaurants score in the 7.x range
+- 1 restaurant currently scores below 7.0
+- 432 of 432 restaurants currently have coordinates, subtitles, and review URLs
+- 431 of 432 restaurants currently have a populated `googlePlaceUrl`
+- 255 of 432 restaurants currently keep a stored `directionsUrl`
 - 1 row intentionally leaves `googlePlaceUrl` blank and falls back to `directionsUrl`: `Dorrie's Kitchen`
-- Source types currently break down to 429 `structured-data` rows and 2 `sheet` rows
+- Source types currently break down to 428 `structured-data` rows and 4 `sheet` rows
+- The latest coordinate cleanup corrected the stored map point for `Pupusería Rinconcito Hispano` and was propagated through the mirrored JSON, CSV export, and embedded fallback snapshot
 
 Current source-of-truth layout:
 
@@ -58,6 +60,32 @@ Important mobile behavior details:
 - the on-map `Locate` button recenters and zooms to the user's location only
 - it does not turn on nearby filtering or reduce the visible result count
 - the desktop controls still keep the larger inline location buttons
+
+## Analytics
+
+Google Analytics 4 is now installed directly in [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html) with a guarded helper so blocked analytics requests do not break the site.
+
+The current custom events are:
+
+- `watch_review_click`
+- `directions_click`
+- `locate_click`
+- `fit_pins_click`
+- `restaurant_pin_open`
+- `restaurant_card_open`
+- `search_used`
+- `score_filter_changed`
+
+The current wiring tracks the real UI surfaces in the live web map:
+
+- review clicks from cards and map popups
+- directions clicks from cards and map popups
+- mobile overlay `Locate` and `Fit`
+- desktop locate and fit controls
+- map popup opens
+- card `Show on map` actions
+- debounced search usage
+- score filter changes
 
 ## Data Model
 

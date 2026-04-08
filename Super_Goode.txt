@@ -1,6 +1,6 @@
 Super Goode Web Map - Quick Project Note
 
-The Super Goode repo is currently a static GitHub Pages web map backed by a 431-row canonical dataset in data/locations.json. The repo keeps locations.json as the required mirror, super_goode_locations.csv as an export-only artifact, and an embedded fallback DATA snapshot inside index.html.
+The Super Goode repo is currently a static GitHub Pages web map backed by a 432-row canonical dataset in data/locations.json. The repo keeps locations.json as the required mirror, super_goode_locations.csv as an export-only artifact, and an embedded fallback DATA snapshot inside index.html.
 
 Current web-map behavior:
 - search works across restaurant name, city, and dish or subtitle text
@@ -8,15 +8,32 @@ Current web-map behavior:
 - mobile uses a compact map-first layout with a white header bar, on-map Fit and Locate overlay buttons, a true Show full map mode, and a white scrolling results area with dark cards
 - mobile Locate now recenters the map only and does not reduce the visible result count
 
-Current dataset state as of 2026-04-02:
-- 431 restaurants total
-- 34 restaurants at 9.0+
+Current analytics state:
+- Google Analytics 4 is now installed on the web map using measurement ID `G-0HPTFLD425`
+- custom GA4 events now track:
+  - `watch_review_click`
+  - `directions_click`
+  - `locate_click`
+  - `fit_pins_click`
+  - `restaurant_pin_open`
+  - `restaurant_card_open`
+  - `search_used`
+  - `score_filter_changed`
+- analytics is wired through a guarded helper in `index.html` so the site does not break if GA is blocked or unavailable
+- search tracking is debounced so it does not fire on every keystroke
+- popup-open tracking is deduped to reduce noisy duplicate events
+
+Current dataset state as of 2026-04-08:
+- 432 restaurants total
+- 35 restaurants at 9.0+
 - 284 restaurants in the 8.x range
-- 113 restaurants in the 7.x range
-- 431 rows have coordinates, subtitles, and review URLs
-- 430 rows have googlePlaceUrl
+- 112 restaurants in the 7.x range
+- 1 restaurant currently sits below 7.0
+- 432 rows have coordinates, subtitles, and review URLs
+- 431 rows have googlePlaceUrl
 - 255 rows currently keep a stored directionsUrl
 - Dorrie's Kitchen intentionally leaves googlePlaceUrl blank and falls back to directionsUrl
+- Pupusería Rinconcito Hispano recently received a coordinate correction so its map pin now points at the business instead of a weaker road-level geocode
 
 Current update workflow:
 1. Add a restaurant through admin/add-review.html or approve it through the published sheet.
