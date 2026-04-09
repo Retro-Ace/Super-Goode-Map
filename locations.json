@@ -6910,5 +6910,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "NYC HALAL EATS",
+    "score": 8.7,
+    "subtitle": "Philly Cheesesteak Sandwich w/ Mozzarella Stick",
+    "address": "13037 LaGrange Rd",
+    "city": "Palos Park",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=NYC%20HALAL%20EATS%2C%2013037%20LaGrange%20Rd%2C%20Palos%20Park%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DW3qo5ik4j_/?igsh=N2E1ZnJxOWM1OGw0",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
