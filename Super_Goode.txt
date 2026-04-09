@@ -23,7 +23,7 @@ Current analytics state:
 - search tracking is debounced so it does not fire on every keystroke
 - popup-open tracking is deduped to reduce noisy duplicate events
 
-Current dataset state as of 2026-04-08:
+Current dataset state as of 2026-04-09:
 - 432 restaurants total
 - 35 restaurants at 9.0+
 - 284 restaurants in the 8.x range
@@ -31,16 +31,23 @@ Current dataset state as of 2026-04-08:
 - 1 restaurant currently sits below 7.0
 - 432 rows have coordinates, subtitles, and review URLs
 - 431 rows have googlePlaceUrl
-- 255 rows currently keep a stored directionsUrl
+- 254 rows currently keep a stored directionsUrl
 - Dorrie's Kitchen intentionally leaves googlePlaceUrl blank and falls back to directionsUrl
 - Pupusería Rinconcito Hispano recently received a coordinate correction so its map pin now points at the business instead of a weaker road-level geocode
+- same-name different-address locations are now kept separate during sheet sync instead of collapsing into one older row
 
 Current update workflow:
 1. Add a restaurant through admin/add-review.html or approve it through the published sheet.
-2. Include googlePlaceUrl when a real place/share URL is available.
-3. Run node scripts/update_locations.js to merge intake into the canonical dataset.
-4. Run node scripts/refresh_static_artifacts.js to sync locations.json, super_goode_locations.csv, and the embedded fallback snapshot.
-5. Review the diff, update docs if needed, then commit and push.
+2. Set `Request Type` to `Add location` for normal intake or `Remove location` for an exact-location removal.
+3. Include googlePlaceUrl when a real place/share URL is available.
+4. Run node scripts/update_locations.js to merge or remove against the canonical dataset.
+5. Run node scripts/refresh_static_artifacts.js to sync locations.json, super_goode_locations.csv, and the embedded fallback snapshot when you are updating manually.
+6. Review the diff, update docs if needed, then commit and push.
+
+Current removal safety:
+- remove requests use exact location identity, not just restaurant name
+- matching prefers review URL first, then exact name + address + city + state, then a tight coordinate match
+- removing one same-name location does not delete every row for that brand or chain
 
 Important rule:
 This repo is web-map only. Keep the docs, JSON source, mirror, CSV export, embedded fallback, and branding assets aligned with the current web-map state.

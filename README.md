@@ -12,18 +12,19 @@ The site turns Phil Goode's review posts into a browsable restaurant map and lis
 
 ## Current Project State
 
-As of 2026-04-08, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 432 restaurants.
+As of 2026-04-09, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 432 restaurants.
 
 - 35 restaurants score 9.0 and up
 - 284 restaurants score in the 8.x range
 - 112 restaurants score in the 7.x range
 - 1 restaurant currently scores below 7.0
-- 432 of 432 restaurants currently have coordinates, subtitles, and review URLs
+- 432 of 432 restaurants currently have coordinates
+- 432 of 432 restaurants currently have subtitles and review URLs
 - 431 of 432 restaurants currently have a populated `googlePlaceUrl`
-- 255 of 432 restaurants currently keep a stored `directionsUrl`
+- 254 of 432 restaurants currently keep a stored `directionsUrl`
 - 1 row intentionally leaves `googlePlaceUrl` blank and falls back to `directionsUrl`: `Dorrie's Kitchen`
-- Source types currently break down to 428 `structured-data` rows and 4 `sheet` rows
-- The latest coordinate cleanup corrected the stored map point for `Pupusería Rinconcito Hispano` and was propagated through the mirrored JSON, CSV export, and embedded fallback snapshot
+- Source types currently break down to 427 `structured-data` rows and 5 `sheet` rows
+- Recent data-pipeline fixes now keep same-name different-address locations separate during sheet sync, and the latest coordinate cleanup corrected the stored map point for `Pupusería Rinconcito Hispano`
 
 Current source-of-truth layout:
 
@@ -124,12 +125,20 @@ Use [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-r
 
 ### Google Sheet Sync
 
-The repo also supports approved-row intake from a published Google Sheet CSV.
+The repo also supports approved-row intake from a published Google Sheet CSV, including the current Google Form workflow that now sends both additions and removals through the same sheet.
 
 1. Publish the sheet as CSV.
 2. Store the CSV URL in the `GOOGLE_SHEET_CSV_URL` GitHub secret.
 3. Run [`.github/workflows/sync-sheet.yml`](/Users/anthonylarosa/CODEX/Super Goode/.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
-4. The workflow filters to approved rows, blocks obvious temporary entries, accepts optional Google Maps place/share URL headers, geocodes missing coordinates when possible, writes the shared JSON files, and commits the updated data back to the repo.
+4. Set `Request Type` to `Add location` for normal add/update intake, or `Remove location` for exact-location removals.
+5. The workflow filters to approved rows, blocks obvious temporary add entries, accepts optional Google Maps place/share URL headers, geocodes missing coordinates when possible, writes the shared JSON files, refreshes the CSV and embedded fallback snapshot, and commits the updated data back to the repo.
+
+Removal safety rules:
+
+- same-name restaurants at different addresses are treated as different locations
+- remove requests only delete an exact matched location
+- remove matching prefers review URL first, then exact name + address + city + state, then tight coordinate match
+- a remove row will not delete every location for a chain or same-brand restaurant name
 
 Supported place-link header variants include:
 
@@ -148,6 +157,8 @@ That refresh keeps these files aligned:
 - [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
 - [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
 - the embedded `DATA` snapshot in [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
+
+The sheet-sync workflow now uses that same refresh path before committing, so approved add and remove requests can keep the JSON mirror, CSV export, and embedded fallback snapshot in sync automatically.
 
 The CSV export keeps its existing header order and legacy columns while still exporting current dataset fields like `googlePlaceUrl`.
 

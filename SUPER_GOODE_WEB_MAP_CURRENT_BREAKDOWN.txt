@@ -1,6 +1,6 @@
 SUPER GOODE WEB MAP CURRENT BREAKDOWN
 
-Last updated: 2026-04-08
+Last updated: 2026-04-09
 
 1. PROJECT SCOPE
 
@@ -31,15 +31,15 @@ Current state derived from data/locations.json:
 - 7.0 to 7.9: 112
 - below 7.0: 1
 - sourceType distribution:
-- structured-data: 428
-- sheet: 4
+- structured-data: 427
+- sheet: 5
 
 Current completeness:
 - coordinates present for 432 of 432 restaurants
 - subtitles present for 432 of 432 restaurants
 - review URLs present for 432 of 432 restaurants
 - googlePlaceUrl present for 431 of 432 restaurants
-- directionsUrl currently stored for 255 of 432 restaurants
+- directionsUrl currently stored for 254 of 432 restaurants
 - rows missing both googlePlaceUrl and directionsUrl: 0
 
 Current place-link exception:
@@ -55,6 +55,7 @@ Current artifact alignment:
 - data/locations.json and locations.json match
 - super_goode_locations.csv currently exports 432 rows
 - index.html embedded fallback DATA snapshot currently mirrors 432 rows
+- the current sync workflow refreshes those derived artifacts before it commits sheet-driven data changes
 
 3. WHAT THE SITE CURRENTLY DOES
 
@@ -223,11 +224,21 @@ Current behavior:
 - reads GOOGLE_SHEET_CSV_URL from GitHub secrets
 - downloads the published CSV
 - keeps only approved rows
-- blocks obvious temporary or test data
+- supports the Google Form `Request Type` field
+- treats `Add location` rows as normal add/update intake
+- treats `Remove location` rows as exact-location removals
+- blocks obvious temporary or test add rows
 - accepts optional Google Maps place/share URL columns and maps them to googlePlaceUrl
 - passes approved rows through scripts/update_locations.js
 - writes data/locations.json and locations.json
+- refreshes super_goode_locations.csv and the embedded fallback DATA snapshot in index.html
 - commits data updates back to the repository
+
+Current remove safety rules:
+- same-name restaurants at different addresses are treated as different locations
+- remove requests only delete one exact matched location, not every location with the same name
+- remove matching prefers review URL first, then exact name + address + city + state, then a very tight coordinate match
+- ambiguous or weakly identified remove rows do not delete anything
 
 Supported place-link header variants:
 - Google Maps URL
@@ -243,9 +254,11 @@ Supported place-link header variants:
 
 scripts/update_locations.js
 - sanitizes incoming rows
-- merges them into the canonical dataset
+- merges add rows into the canonical dataset
+- removes rows only when a remove request matches one exact real location
 - preserves stronger existing values when possible
 - preserves a good existing googlePlaceUrl when incoming data leaves it blank
+- keeps same-name different-address locations separate during merge
 - applies manual fixes
 - writes both data/locations.json and locations.json
 - clears data/new-reviews.json unless --keep-new-reviews is used
@@ -254,9 +267,11 @@ scripts/sync_sheet.js
 - downloads the published sheet CSV
 - canonicalizes supported headers
 - filters to approved rows
-- blocks obvious temporary/test rows
+- normalizes Request Type into add vs remove behavior
+- blocks obvious temporary/test add rows
 - maps optional place/share URL columns into googlePlaceUrl
 - hands importable rows to scripts/update_locations.js
+- runs scripts/refresh_static_artifacts.js after successful sheet updates so CSV and embedded fallback stay aligned
 
 scripts/location_enrichment.js
 - builds full addresses
@@ -297,7 +312,7 @@ When updating the web map:
 
 14. SUMMARY
 
-The current Super Goode web map repo is a static GitHub Pages project backed by a 432-restaurant canonical dataset. The repo now uses data/locations.json as the source of truth, keeps locations.json as an exact mirror, exports a refreshed 21-column CSV, and maintains an embedded fallback snapshot in index.html. Search now works across restaurant names, cities, and dish or subtitle text. Mobile uses a compact map-first layout with overlay Fit and Locate controls, a fullscreen map toggle, a white header bar, and a white scrolling results area. Intake, enrichment, sheet sync, static artifact refresh, and GA4 event tracking all continue to work without introducing a backend.
+The current Super Goode web map repo is a static GitHub Pages project backed by a 432-restaurant canonical dataset. The repo now uses data/locations.json as the source of truth, keeps locations.json as an exact mirror, exports a refreshed 21-column CSV, and maintains an embedded fallback snapshot in index.html. Search works across restaurant names, cities, and dish or subtitle text. Mobile uses a compact map-first layout with overlay Fit and Locate controls, a fullscreen map toggle, a white header bar, and a white scrolling results area. Intake now supports both `Add location` and exact-location-safe `Remove location` sheet requests, while enrichment, static artifact refresh, and GA4 event tracking continue to work without introducing a backend.
 
 15. ANALYTICS / GA4 TRACKING
 
