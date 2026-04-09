@@ -71,6 +71,12 @@ function normalizeName(value) {
     .replace(/[^a-z0-9]+/g, '');
 }
 
+function normalizeRequestType(value) {
+  const key = normalizeText(value).toLowerCase();
+  if (['remove location', 'remove', 'delete location', 'delete'].includes(key)) return 'remove';
+  return 'add';
+}
+
 function normalizeComparableText(value) {
   return normalizeText(value)
     .normalize('NFKD')
@@ -184,6 +190,34 @@ function samePlaceByAddress(existing, incoming) {
   const existingState = normalizeComparableText(existing.state);
   const incomingState = normalizeComparableText(incoming.state);
   return !existingState || !incomingState || existingState === incomingState;
+}
+
+function samePlaceByExactLocation(existing, incoming) {
+  if (normalizeName(existing.name) !== normalizeName(incoming.name)) return false;
+  const existingAddress = normalizeAddress(existing.address);
+  const incomingAddress = normalizeAddress(incoming.address);
+  const existingCity = normalizeComparableText(existing.city);
+  const incomingCity = normalizeComparableText(incoming.city);
+  const existingState = normalizeComparableText(existing.state);
+  const incomingState = normalizeComparableText(incoming.state);
+
+  return !!existingAddress
+    && !!incomingAddress
+    && !!existingCity
+    && !!incomingCity
+    && !!existingState
+    && !!incomingState
+    && existingAddress === incomingAddress
+    && existingCity === incomingCity
+    && existingState === incomingState;
+}
+
+function hasExactLocationFields(entry) {
+  return !!(
+    normalizeAddress(entry.address)
+    && normalizeComparableText(entry.city)
+    && normalizeComparableText(entry.state)
+  );
 }
 
 function samePlaceByCoordinates(existing, incoming) {
@@ -332,6 +366,52 @@ function findExistingMatch(entry, locations, indexes) {
   return { type: 'ambiguous', reason: 'same-name-multiple-locations', candidates };
 }
 
+function hasRemovalIdentity(entry) {
+  return !!(
+    normalizeUrlIdentity(entry.reviewUrl)
+    || hasExactLocationFields(entry)
+    || hasFiniteCoordinates(entry)
+  );
+}
+
+function findRemovalMatch(entry, locations, indexes) {
+  const nameKey = normalizeName(entry.name);
+  const candidates = indexes.byName.get(nameKey) || [];
+  if (!candidates.length) {
+    return { type: 'not-found', reason: 'no-name-match' };
+  }
+
+  const reviewKey = normalizeUrlIdentity(entry.reviewUrl);
+  if (reviewKey) {
+    const reviewMatches = (indexes.byReviewUrl.get(reviewKey) || [])
+      .filter((idx) => normalizeName(locations[idx].name) === nameKey);
+    if (reviewMatches.length === 1) {
+      return { type: 'match', matchIndex: reviewMatches[0], reason: 'reviewUrl' };
+    }
+    if (reviewMatches.length > 1) {
+      return { type: 'ambiguous', reason: 'reviewUrl', candidates: reviewMatches };
+    }
+  }
+
+  const exactLocationMatches = candidates.filter((idx) => samePlaceByExactLocation(locations[idx], entry));
+  if (exactLocationMatches.length === 1) {
+    return { type: 'match', matchIndex: exactLocationMatches[0], reason: 'exact-location' };
+  }
+  if (exactLocationMatches.length > 1) {
+    return { type: 'ambiguous', reason: 'exact-location', candidates: exactLocationMatches };
+  }
+
+  const coordinateMatches = candidates.filter((idx) => samePlaceByCoordinates(locations[idx], entry));
+  if (coordinateMatches.length === 1) {
+    return { type: 'match', matchIndex: coordinateMatches[0], reason: 'coordinates' };
+  }
+  if (coordinateMatches.length > 1) {
+    return { type: 'ambiguous', reason: 'coordinates', candidates: coordinateMatches };
+  }
+
+  return { type: 'not-found', reason: 'no-exact-location-match', candidates };
+}
+
 function temporaryNameKey(value) {
   return normalizeText(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 }
@@ -362,7 +442,9 @@ function coerceNumber(value) {
 }
 
 function sanitizeEntry(raw) {
+  const requestType = normalizeRequestType(raw.requestType);
   const entry = {
+    requestType,
     name: cleanString(raw.name),
     score: coerceNumber(raw.score),
     subtitle: cleanOptionalString(raw.subtitle),
@@ -492,6 +574,7 @@ function formatList(items) {
 async function main() {
   const summary = {
     added: [],
+    removed: [],
     updated: [],
     skipped: [],
     ambiguous: [],
@@ -516,7 +599,7 @@ async function main() {
     const manualFixes = manualFixesRaw && typeof manualFixesRaw === 'object' ? manualFixesRaw : {};
     const resolvedRows = new Set();
     const enrichmentTargets = new Set();
-    const indexes = createIndexes(locations);
+    let indexes = createIndexes(locations);
     for (const [rowIndex, raw] of incoming.entries()) {
       if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
         summary.errors.push(`Invalid review row: ${JSON.stringify(raw)}`);
@@ -528,12 +611,12 @@ async function main() {
         summary.errors.push('Skipped an entry with a missing restaurant name.');
         continue;
       }
-      if (isBlockedTemporaryEntry(entry.name)) {
+      if (entry.requestType === 'add' && isBlockedTemporaryEntry(entry.name)) {
         summary.skipped.push(`${entry.name} (temporary/test entry)`);
         resolvedRows.add(rowIndex);
         continue;
       }
-      if (!Number.isFinite(entry.score)) {
+      if (entry.requestType === 'add' && !Number.isFinite(entry.score)) {
         summary.errors.push(`${entry.name}: score is required and must be a number.`);
         continue;
       }
@@ -541,6 +624,30 @@ async function main() {
       const key = normalizeName(entry.name);
       if (!key) {
         summary.errors.push(`${entry.name}: could not normalize restaurant name.`);
+        continue;
+      }
+
+      if (entry.requestType === 'remove') {
+        if (!hasRemovalIdentity(entry)) {
+          summary.errors.push(`${entry.name}: remove request is missing exact location identity (reviewUrl, address/city/state, or coordinates).`);
+          continue;
+        }
+
+        const removal = findRemovalMatch(entry, locations, indexes);
+        if (removal.type === 'ambiguous') {
+          const count = removal.candidates?.length || 0;
+          summary.ambiguous.push(`${entry.name} (${count} candidate removal matches via ${removal.reason})`);
+          continue;
+        }
+        if (removal.type !== 'match') {
+          summary.skipped.push(`${entry.name} (remove target not found)`);
+          continue;
+        }
+
+        const [removed] = locations.splice(removal.matchIndex, 1);
+        indexes = createIndexes(locations);
+        summary.removed.push(`${removed.name} (${removed.address || 'no address'}, ${removed.city || 'no city'}, ${removed.state || 'no state'})`);
+        resolvedRows.add(rowIndex);
         continue;
       }
 
@@ -646,6 +753,9 @@ async function main() {
 
     console.log('Added:');
     formatList(summary.added).forEach((line) => console.log(line));
+    console.log('');
+    console.log('Removed:');
+    formatList(summary.removed).forEach((line) => console.log(line));
     console.log('');
     console.log('Updated:');
     formatList(summary.updated).forEach((line) => console.log(line));

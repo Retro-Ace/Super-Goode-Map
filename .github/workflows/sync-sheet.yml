@@ -31,12 +31,12 @@ jobs:
 
       - name: Commit updated locations
         run: |
-          if git diff --quiet -- data/locations.json locations.json data/geocode-cache.json; then
+          if git diff --quiet -- data/locations.json locations.json data/geocode-cache.json super_goode_locations.csv index.html; then
             echo "No changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/locations.json locations.json data/geocode-cache.json
+          git add data/locations.json locations.json data/geocode-cache.json super_goode_locations.csv index.html
           git commit -m "Sync approved Super Goode sheet rows"
           git push

@@ -7,6 +7,7 @@ const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const UPDATE_SCRIPT = path.join(ROOT, 'scripts', 'update_locations.js');
+const REFRESH_SCRIPT = path.join(ROOT, 'scripts', 'refresh_static_artifacts.js');
 const APPROVED_VALUES = new Set(['yes', 'y', 'true', '1', 'approved', 'publish']);
 const BLOCKED_TEMPORARY_NAMES = new Set(['test burger', 'test pizza place']);
 
@@ -37,12 +38,21 @@ function isApproved(value) {
   return APPROVED_VALUES.has(normalizeText(value).toLowerCase());
 }
 
+function normalizeRequestType(value) {
+  const key = normalizeText(value).toLowerCase();
+  if (['remove location', 'remove', 'delete location', 'delete'].includes(key)) return 'remove';
+  return 'add';
+}
+
 function sanitizeRow(row) {
   const name = cleanOptional(row.name);
+  const requestType = normalizeRequestType(row.requestType);
   const score = coerceNumber(row.score);
-  if (!name || !Number.isFinite(score)) return null;
+  if (!name) return null;
+  if (requestType === 'add' && !Number.isFinite(score)) return null;
 
   return {
+    requestType,
     name,
     score,
     subtitle: cleanOptional(row.subtitle),
@@ -101,6 +111,7 @@ function canonicalField(header) {
   if (['address', 'street address'].includes(key)) return 'address';
   if (key === 'city') return 'city';
   if (key === 'state') return 'state';
+  if (['request type', 'request', 'action type', 'submission type'].includes(key)) return 'requestType';
   if (['notes', 'note'].includes(key)) return 'notes';
   if (['approved', 'publish', 'publish status'].includes(key)) return 'approved';
   return null;
@@ -226,8 +237,8 @@ async function main() {
     const { url, values } = await fetchCsvRows();
     const rows = rowsToObjects(values);
     const approved = rows.filter((row) => isApproved(row.approved));
-    const blocked = approved.filter((row) => isBlockedTemporaryEntry(row.name));
-    const importable = approved.filter((row) => !isBlockedTemporaryEntry(row.name));
+    const blocked = approved.filter((row) => normalizeRequestType(row.requestType) === 'add' && isBlockedTemporaryEntry(row.name));
+    const importable = approved.filter((row) => normalizeRequestType(row.requestType) === 'remove' || !isBlockedTemporaryEntry(row.name));
     const imported = importable
       .map((row) => sanitizeRow(row))
       .filter(Boolean);
@@ -253,6 +264,17 @@ async function main() {
 
     if (result.status !== 0) {
       process.exitCode = result.status || 1;
+      return;
+    }
+
+    const refreshResult = spawnSync('node', [REFRESH_SCRIPT], {
+      cwd: ROOT,
+      stdio: 'inherit',
+      env: process.env,
+    });
+
+    if (refreshResult.status !== 0) {
+      process.exitCode = refreshResult.status || 1;
     }
   } catch (err) {
     console.error('Errors:');
