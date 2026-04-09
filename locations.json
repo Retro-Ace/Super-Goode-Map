@@ -1,5 +1,6 @@
 [
   {
+    "requestType": "add",
     "name": "QP Greek Food with a kick",
     "score": 9.1,
     "subtitle": "Phil ate the Half Broasted Chicken (Greek Style)",
@@ -16,6 +17,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Falafil Hut",
     "score": 8.9,
     "subtitle": "Phil got the Double spicy gyro burger.",
@@ -32,6 +34,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Assembly Bar",
     "score": 7.8,
     "subtitle": "Phil ate the Bionic Burger.",
@@ -48,6 +51,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pizza Pushers",
     "score": 8.1,
     "subtitle": "Phil ate the Winston Wolf pizza.",
@@ -64,6 +68,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nash Bros",
     "score": 8.5,
     "subtitle": "Phil ate the Nashville Hot Chicken Sandy.",
@@ -80,6 +85,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Franks for the Memories",
     "score": 8.6,
     "subtitle": "Phil ate the suicide wings.",
@@ -96,6 +102,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "JJ Fish & Chicken",
     "score": 8.9,
     "subtitle": "Phil ate the 3Peat Philly Sandwich.",
@@ -112,6 +119,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Big Boss Spicy Fried Chicken",
     "score": 8.2,
     "subtitle": "Phil ate the Big Boss Sandwich",
@@ -128,6 +136,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cubano Bros",
     "score": 8.4,
     "subtitle": "Phil ate the orignal Cubano sandwich",
@@ -144,6 +153,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Takito Holic",
     "score": 7.9,
     "subtitle": "Phil ate the Taco Holic Birria",
@@ -160,6 +170,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rammy's Sub Contractors",
     "score": 8.2,
     "subtitle": "Phil ate the Radical Italian Beef",
@@ -176,6 +187,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago Bagel Authority",
     "score": 9.2,
     "subtitle": "Phil ate the Dank n' Eggs bagel.",
@@ -192,6 +204,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fry The Coop",
     "score": 8.1,
     "subtitle": "Phil ate the Spicy Butter Chicken Sandy.",
@@ -208,6 +221,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Ochoa's Mexican Grill",
     "score": 7.8,
     "subtitle": "Phil ate the Quesabirria Tacos.",
@@ -224,6 +238,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pizza Boy Chicago",
     "score": 8.3,
     "subtitle": "Phil ate The Don detroit style pizza.",
@@ -240,6 +255,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Paradise Pup",
     "score": 9.1,
     "subtitle": "Phil ate the Bacon Merkt's Cheddar Burger",
@@ -256,6 +272,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cafe Tola",
     "score": 8.7,
     "subtitle": "Phil ate the Spicy Green Pork empanada.",
@@ -272,6 +289,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Panes Bread Cafe",
     "score": 8,
     "subtitle": "Phil ate the The Oaxacan Pork Sandwich",
@@ -288,6 +306,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rand Red Hots",
     "score": 7.9,
     "subtitle": "Phil ate the char dog.",
@@ -304,6 +323,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Shwings",
     "score": 8.7,
     "subtitle": "Phil ate the buffalo wings.",
@@ -320,6 +340,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Smack Dab Chicago",
     "score": 9.2,
     "subtitle": "Phil ate the Bestest Seller.",
@@ -336,6 +357,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Holt's",
     "score": 8.4,
     "subtitle": "Phil ate the Pepperoni Pizza.",
@@ -352,6 +374,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Porkito",
     "score": 8.3,
     "subtitle": "Phil ate the Sauzee Sandwich.",
@@ -368,6 +391,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Village Tavern & Grill",
     "score": 7.7,
     "subtitle": "Phil ate the Chicken Tenders w/ Honey Mustard.",
@@ -384,6 +408,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dario's",
     "score": 8.2,
     "subtitle": "Phil ate the Cubano Sandwich.",
@@ -400,6 +425,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dak Dak Korean Wings",
     "score": 8,
     "subtitle": "Phil ate their Soy Garlic wings.",
@@ -416,6 +442,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Monti's",
     "score": 9.2,
     "subtitle": "Phil ate the Philly Cheesesteak Sandwich.",
@@ -432,6 +459,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dawg Park",
     "score": 8,
     "subtitle": "Phil ate the Muddy Dog hot dog.",
@@ -448,6 +476,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Sandlot",
     "score": 8.2,
     "subtitle": "Phil ate the Two-N-Two Burger.",
@@ -464,6 +493,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Evette's",
     "score": 8.4,
     "subtitle": "Phil ate the Halloumi Tacos.",
@@ -480,6 +510,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tony's Italian Deli",
     "score": 7.8,
     "subtitle": "Phil ate the Italian Sub.",
@@ -496,6 +527,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Urban Counter",
     "score": 8.2,
     "subtitle": "Phil ate the Breakfast Burrito.",
@@ -512,6 +544,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jim's Original",
     "score": 8.1,
     "subtitle": "Phil ate the Polish Sausage + Pork Chop Sandwich.",
@@ -528,6 +561,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "QuesaBirria Jalisco Tacos",
     "score": 9.1,
     "subtitle": "Phil ate the Quesabirria.",
@@ -544,6 +578,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Porky's BBQ",
     "score": 8.2,
     "subtitle": "Phil ate the Combo Brisket/ Pulled Pork Sandy.",
@@ -560,6 +595,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gators Wing Shack",
     "score": 8.4,
     "subtitle": "Phil ate the Garlic Buffalo Wings",
@@ -576,6 +612,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "El Asadero",
     "score": 8.1,
     "subtitle": "Phil ate the Steak Burrito.",
@@ -592,6 +629,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pita BBQ",
     "score": 7.8,
     "subtitle": "Phil ate the Spicy Chicken Shawarma.",
@@ -608,6 +646,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago Culinary Kitchen",
     "score": 8.5,
     "subtitle": "Phil ate the Dry Aged Smoked Tomahawk Ribeye Steak.",
@@ -624,6 +663,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cracked",
     "score": 7.6,
     "subtitle": "Phil ate the Sloppy Jose breakfast sandy.",
@@ -640,6 +680,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "B.B.Q Chicken",
     "score": 7.8,
     "subtitle": "Phil ate the Honey Garlic Korean Fried Chicken.",
@@ -656,6 +697,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Ricobene's",
     "score": 8.1,
     "subtitle": "Phil ate the Breaded Steak Sandwich.",
@@ -672,6 +714,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Thlaco Taco",
     "score": 8.1,
     "subtitle": "Phil ate the Quesabirria Tacos.",
@@ -688,6 +731,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "En Hakkore 2.0",
     "score": 8.2,
     "subtitle": "Phil ate the Crunch & Fire Sushi Burrito.",
@@ -704,6 +748,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pupuseria Cheros",
     "score": 7.6,
     "subtitle": "Phil ate the Pupusas.",
@@ -720,6 +765,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Boba Burger",
     "score": 8.6,
     "subtitle": "Phil ate the Seoul Burger.",
@@ -736,6 +782,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Big Ange's Eatery",
     "score": 8.7,
     "subtitle": "Phil ate the Prime Brisket Sandwich.",
@@ -752,6 +799,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Aloha Wagon",
     "score": 8,
     "subtitle": "Phil ate the Loco Moco plate.",
@@ -768,6 +816,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Johnnie's Beef",
     "score": 9.3,
     "subtitle": "Phil ate the Italian Beef.",
@@ -784,6 +833,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Marco Roma",
     "score": 7.8,
     "subtitle": "Phil ate the Chicken Parmesan Sandy.",
@@ -800,6 +850,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Felicia's Deli",
     "score": 8.4,
     "subtitle": "Phil ate the Beast Sub.",
@@ -816,6 +867,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taco Boom",
     "score": 7.7,
     "subtitle": "Phil ate the Quesabirria tacos.",
@@ -832,6 +884,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pizza Bella",
     "score": 8.2,
     "subtitle": "Phil ate the Pepperoni detroit style pizza.",
@@ -848,6 +901,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Student Burger",
     "score": 7.5,
     "subtitle": "Phil ate the Philly Cheesesteak Sandy.",
@@ -864,6 +918,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chi Tea",
     "score": 8.3,
     "subtitle": "Phil ate the Chi Tea Classic Burger.",
@@ -880,6 +935,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nonna's",
     "score": 8.6,
     "subtitle": "Phil ate the Chicken Parmesan Sandy.",
@@ -896,6 +952,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fry Chicken n Fries",
     "score": 8.1,
     "subtitle": "Phil ate the Chicken Tenders.",
@@ -912,6 +969,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Schmaltz Deli",
     "score": 8.2,
     "subtitle": "Phil ate The Sloppy Paul sandy.",
@@ -928,6 +986,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Byrds Hot Chicken",
     "score": 7.9,
     "subtitle": "Phil ate the Hot Chicken Sandy.",
@@ -944,6 +1003,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Savory Crust",
     "score": 8.8,
     "subtitle": "Phil ate the Empanadas. (Philly & Argentinian)",
@@ -960,6 +1020,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Scatchell's Beef",
     "score": 9.1,
     "subtitle": "Phil ate the Italian Beef.",
@@ -976,6 +1037,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "La Birria Loca",
     "score": 8.5,
     "subtitle": "Phil ate the Birria Quesadilla.",
@@ -992,6 +1054,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Culinary Gangster",
     "score": 8.3,
     "subtitle": "Phil ate the Spicy Gangster Burger.",
@@ -1008,6 +1071,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nu Crepes",
     "score": 9,
     "subtitle": "Phil ate the Inside Out Boy Crepe.",
@@ -1024,6 +1088,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "One Taco Dos Tequila's",
     "score": 8.4,
     "subtitle": "Phil ate the Lomo Burrito.",
@@ -1040,6 +1105,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Apolis Greek Street Food",
     "score": 8.6,
     "subtitle": "Phil ate the Skepasti Greek Quesadilla.",
@@ -1056,6 +1122,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pinoy Grill",
     "score": 8.2,
     "subtitle": "Phil ate the Chicken Adobo Plate & the Dinuguan.",
@@ -1072,6 +1139,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Maz Mez Grill",
     "score": 7.7,
     "subtitle": "Phil ate the Chicken Schawarma Wrap.",
@@ -1088,6 +1156,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago Pickle Eatery",
     "score": 7.9,
     "subtitle": "Phil ate the NY Chopped Cheese.",
@@ -1104,6 +1173,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Priscilla's Ultimate Soul Food",
     "score": 8.2,
     "subtitle": "Phil ate the Fried Chicken Plate.",
@@ -1120,6 +1190,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pizza Pavia",
     "score": 8.4,
     "subtitle": "Phil ate the Chicken Parm Pizza.",
@@ -1136,6 +1207,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jay's Beef",
     "score": 8.1,
     "subtitle": "Phil ate the Italian Beef.",
@@ -1152,6 +1224,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Capri Deli",
     "score": 8.5,
     "subtitle": "Phil ate the Capri Special on Focaccia Bread.",
@@ -1168,6 +1241,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Vasco's Peri Peri",
     "score": 7.7,
     "subtitle": "Phil ate a Tandoori Chicken Burger.",
@@ -1184,6 +1258,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mima's Taste of Cuba",
     "score": 8.5,
     "subtitle": "Phil ate the Cubano Jibarito.",
@@ -1200,6 +1275,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Canteen Restaurant",
     "score": 7.6,
     "subtitle": "Phil ate the Diablo Brisket Sandy.",
@@ -1216,6 +1292,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nottoli Italian Foods",
     "score": 8.2,
     "subtitle": "Phil ate the Eggplant Parmesan Sandy.",
@@ -1232,6 +1309,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Philly Special",
     "score": 8.3,
     "subtitle": "Phil ate the Philly Cheesesteak sandy.",
@@ -1248,6 +1326,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fatt Mustard",
     "score": 7.8,
     "subtitle": "Phil ate the Charlie Sheen Burger.",
@@ -1264,6 +1343,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hello Shawarma",
     "score": 9,
     "subtitle": "Phil ate the Bashka (middle eastern cheesteak sandy)",
@@ -1280,6 +1360,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hot Pockets Bar",
     "score": 7.7,
     "subtitle": "Phil ate the Buffalo Wings.",
@@ -1296,6 +1377,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Elena's Deli",
     "score": 8.7,
     "subtitle": "Phil ate the Bourdain Sub.",
@@ -1312,6 +1394,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hagen's Fish Market",
     "score": 7.8,
     "subtitle": "Phil ate the Classic Fish Sandy.",
@@ -1328,6 +1411,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Spiro's Deli",
     "score": 7.9,
     "subtitle": "Phil ate the Bomber Sandwich.",
@@ -1344,6 +1428,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago Style Taco Shop",
     "score": 8.2,
     "subtitle": "Phil ate the Tacos Dorados.",
@@ -1360,6 +1445,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Zenwich",
     "score": 8.4,
     "subtitle": "Phil ate the Spicy Garlic Shrimp Sandy.",
@@ -1376,6 +1462,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Slice Shop",
     "score": 8.1,
     "subtitle": "Phil ate the Vodka Pizza Grandma Style.",
@@ -1392,6 +1479,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Algonquin Sandwich Shop",
     "score": 7.7,
     "subtitle": "Phil ate the Al Capone Sub.",
@@ -1408,6 +1496,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tata's Pierogi",
     "score": 8,
     "subtitle": "Phil ate the Polish Plate.",
@@ -1424,6 +1513,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Une Année Brewery",
     "score": 8.4,
     "subtitle": "Phil ate the Chimichurri Steak Sandy.",
@@ -1440,6 +1530,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sake Sushi",
     "score": 7.3,
     "subtitle": "Phil ate the Sushi Lunch Special.",
@@ -1456,6 +1547,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Holy Wings",
     "score": 8.6,
     "subtitle": "Phil ate the Tikka Masala Wings.",
@@ -1472,6 +1564,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Enzo's Pizza",
     "score": 8.2,
     "subtitle": "Phil ate the Italian Beef Roll.",
@@ -1488,6 +1581,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Budacki's Drive In",
     "score": 8.6,
     "subtitle": "Phil ate the Korean Philly Cheesesteak Sandy.",
@@ -1504,6 +1598,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Local Kitchen",
     "score": 8.1,
     "subtitle": "Phil ate the Conant Culinary Burger.",
@@ -1520,6 +1615,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pie Boss",
     "score": 8.9,
     "subtitle": "Phil ate the Peppered Steak Pie.",
@@ -1536,6 +1632,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bubby's Red Hots",
     "score": 8.4,
     "subtitle": "Phil ate the Bubby's Special Sandy.",
@@ -1552,6 +1649,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bill's Place",
     "score": 8.2,
     "subtitle": "Phil ate the Broasted Chicken.",
@@ -1568,6 +1666,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Wilma's Famous BBQ",
     "score": 8.1,
     "subtitle": "Phil ate the BBQ Ribs.",
@@ -1584,6 +1683,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rosie's Sidekick Sandwich Shop",
     "score": 8.2,
     "subtitle": "Phil ate the OG Muffuletta.",
@@ -1600,6 +1700,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Primo Pizza",
     "score": 7.8,
     "subtitle": "Phil ate the Red, White & green Pizza.",
@@ -1616,6 +1717,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cocina Madre",
     "score": 7.9,
     "subtitle": "Phil ate the Quesabirria tacos.",
@@ -1632,6 +1734,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sukho Thai Cuisine",
     "score": 8.2,
     "subtitle": "Phil ate the Drunken Noodles w/ Shrimp.",
@@ -1648,6 +1751,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rep's Place",
     "score": 7.6,
     "subtitle": "Phil ate the Peanut Butter Bacon Burger.",
@@ -1664,6 +1768,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mojo's East Coast Eats",
     "score": 7.9,
     "subtitle": "Phil ate the Philly Cheesesteak Sandy.",
@@ -1680,6 +1785,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Garifuna Flava",
     "score": 8.5,
     "subtitle": "Phil ate a Jerk Chicken plate.",
@@ -1696,6 +1802,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Berliner Kebap",
     "score": 8.1,
     "subtitle": "Phil ate the Kebap Sandy.",
@@ -1712,6 +1819,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pholicious",
     "score": 7.9,
     "subtitle": "Phil ate the Banh Mi Sandy w/ short rib.",
@@ -1728,6 +1836,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "(POP UP) Mcbrennan's Gourmet Burger Shack",
     "score": 9.2,
     "subtitle": "Phil ate the House Burger w/ Bacon",
@@ -1744,6 +1853,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Doore Chicken",
     "score": 8.7,
     "subtitle": "Phil ate the Supreme Korean Fried Chicken.",
@@ -1760,6 +1870,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gringo and Blondie",
     "score": 8.1,
     "subtitle": "Phil ate the Birria Pizza.",
@@ -1776,6 +1887,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mr. Kabab",
     "score": 8.3,
     "subtitle": "Phil ate the Gyro sandy (well done)",
@@ -1792,6 +1904,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Dogfather",
     "score": 7.6,
     "subtitle": "Phil ate the Garlic Cheesy Beef.",
@@ -1808,6 +1921,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Joy Teriyaki",
     "score": 8,
     "subtitle": "Phil ate the Spicy Chicken Teriyaki plate.",
@@ -1824,6 +1938,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Veloce Pizze",
     "score": 7.7,
     "subtitle": "Phil ate the Turkey Sandwich.",
@@ -1840,6 +1955,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rep's Burgers",
     "score": 8.2,
     "subtitle": "Phil ate the Orignal Double Smash Burger (plain)",
@@ -1856,6 +1972,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "JT's Genuine Sandwich Shop",
     "score": 7.8,
     "subtitle": "Phil ate the Breaded Pork Tenderloin Sandy.",
@@ -1872,6 +1989,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bacowka",
     "score": 8.5,
     "subtitle": "Phil ate the Highlander Potato Pancakes.",
@@ -1888,6 +2006,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "County Farm Bagels",
     "score": 7.6,
     "subtitle": "Phil ate the Bacon, Pepper Egg, and Cheese on a Cheddar Oregano bagel w/ Bacon Cheddar Cream Cheese.",
@@ -1904,6 +2023,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Buffalo Joe's",
     "score": 8,
     "subtitle": "Phil ate the Buffalo Wings.",
@@ -1920,6 +2040,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "All Ways Catering & Deli",
     "score": 8.1,
     "subtitle": "Phil ate the BLT Sandy. (Fridays Only)",
@@ -1936,6 +2057,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tacos Jerez",
     "score": 7.2,
     "subtitle": "Phil ate the Quesabirria Tacos.",
@@ -1952,6 +2074,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mughal The Biryani House",
     "score": 8,
     "subtitle": "Phil ate the Tikka Masala.",
@@ -1968,6 +2091,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "GT's Fast Food",
     "score": 8.4,
     "subtitle": "Phil made and ate a custom burger, now named \"The Goode Burger\"",
@@ -1984,6 +2108,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Avanti Caffe",
     "score": 8.3,
     "subtitle": "Phil ate the Diavolo Tostino sandwich.",
@@ -2000,6 +2125,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bruno's Philly Cheesesteaks",
     "score": 8.5,
     "subtitle": "Phil ate the Southern Philly Cheesesteak.",
@@ -2016,6 +2142,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Joe Donut",
     "score": 8.7,
     "subtitle": "Phil ate the Fun Guy breakfast sandwich.",
@@ -2032,6 +2159,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Epic Deli",
     "score": 8.8,
     "subtitle": "The John Bender",
@@ -2048,6 +2176,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Punky's Pizza",
     "score": 7.7,
     "subtitle": "Chicken Caesar Wrap on pizza crust",
@@ -2064,6 +2193,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Lucky Monk",
     "score": 8.5,
     "subtitle": "Buffalo wings and Sweet Potato fries",
@@ -2080,6 +2210,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Uncle Jerry's Pizza Company",
     "score": 8.2,
     "subtitle": "Sweet Sting Pizza",
@@ -2096,6 +2227,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Budlong",
     "score": 8,
     "subtitle": "Hot Chicken Sandwich",
@@ -2112,6 +2244,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Frannie's Beef",
     "score": 8.5,
     "subtitle": "Italian Beef",
@@ -2128,6 +2261,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Marciana's Kitchen",
     "score": 8.6,
     "subtitle": "Sisig Plate",
@@ -2144,6 +2278,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Home Of The Hoagy",
     "score": 9,
     "subtitle": "Steak Sandwich",
@@ -2160,6 +2295,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Deane's Deli",
     "score": 7.8,
     "subtitle": "Roast Beef Sandwich",
@@ -2176,6 +2312,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Volo Quality Meats",
     "score": 8.8,
     "subtitle": "The Dirty Talk Sandwich",
@@ -2192,6 +2329,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jook Sing",
     "score": 9.1,
     "subtitle": "Jook Sing Burger",
@@ -2208,6 +2346,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kaufman's Deli",
     "score": 8.5,
     "subtitle": "New Jersey Bypass Sandwich",
@@ -2224,6 +2363,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sabor De MI Tierra",
     "score": 8.8,
     "subtitle": "Quesabirria Tacos",
@@ -2240,6 +2380,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tony and Tina's Deli",
     "score": 8.4,
     "subtitle": "Tony's Italian Sub",
@@ -2256,6 +2397,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "La Poblanita",
     "score": 8,
     "subtitle": "Cemita Especial",
@@ -2272,6 +2414,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sarkis Cafe",
     "score": 7.8,
     "subtitle": "The Disaster Sandwich",
@@ -2288,6 +2431,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Doner 97",
     "score": 8.3,
     "subtitle": "Doner Sandwich",
@@ -2304,6 +2448,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Time Out West Sports Pub",
     "score": 8.3,
     "subtitle": "Hot Wings",
@@ -2320,6 +2465,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Shawarma Inn",
     "score": 7.4,
     "subtitle": "Sirloin Beef Shawarma",
@@ -2336,6 +2482,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Noodle Deli",
     "score": 8.9,
     "subtitle": "Spicy Fish Casserole",
@@ -2352,6 +2499,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Coaches Corner",
     "score": 7.4,
     "subtitle": "Italian Beef",
@@ -2368,6 +2516,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Ella's Italian Pub",
     "score": 8.6,
     "subtitle": "Nonna's Sunday Pie",
@@ -2384,6 +2533,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "El Rincon De Fabio",
     "score": 9,
     "subtitle": "The Queen Arepa",
@@ -2400,6 +2550,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Charcoal Flame",
     "score": 8.2,
     "subtitle": "Greek Style Gyro",
@@ -2416,6 +2567,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hot Chi",
     "score": 7.4,
     "subtitle": "Hot Honey Butter Chicken Sandwich",
@@ -2432,6 +2584,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Top Arepa",
     "score": 8.3,
     "subtitle": "Picosa Burger",
@@ -2448,6 +2601,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Monkey King Jian Bing",
     "score": 7.7,
     "subtitle": "Fried Shrimp Jian Bing",
@@ -2464,6 +2618,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tempesta Market",
     "score": 8.4,
     "subtitle": "The Dante Italian Sub",
@@ -2480,6 +2635,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Balkan Taste",
     "score": 8.4,
     "subtitle": "Serbian Stuffed Burger",
@@ -2496,6 +2652,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fry N' Wings",
     "score": 8.6,
     "subtitle": "Salted Egg Wings",
@@ -2512,6 +2669,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Delishka Sandwiches",
     "score": 8.3,
     "subtitle": "Duck Duck Goose Sandwich",
@@ -2528,6 +2686,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taqueria Sebastian",
     "score": 7.6,
     "subtitle": "Quesabirria Tacos",
@@ -2544,6 +2703,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Armo Grill",
     "score": 8,
     "subtitle": "Combo Plate",
@@ -2560,6 +2720,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Five Square Pizza",
     "score": 8.6,
     "subtitle": "Spacca Pizza",
@@ -2576,6 +2737,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Italia Imports",
     "score": 7.9,
     "subtitle": "Breaded Steak Sandwich",
@@ -2592,6 +2754,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Phat Phat",
     "score": 8,
     "subtitle": "Pork Soup Dumplings",
@@ -2608,6 +2771,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mel's California Hoagies",
     "score": 7.9,
     "subtitle": "The Maargaret Hoagie",
@@ -2624,6 +2788,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Southern Belle's",
     "score": 8.3,
     "subtitle": "Porky Smith Breakfast Sandwich",
@@ -2640,6 +2805,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tiger Chicken",
     "score": 7.6,
     "subtitle": "Korean Fried Chicken Sandwich",
@@ -2656,6 +2822,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mother Cluckers Chicken",
     "score": 7.9,
     "subtitle": "Fried Chicken",
@@ -2672,6 +2839,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Forza Meats",
     "score": 8.4,
     "subtitle": "The Spacone Italian Sub",
@@ -2688,6 +2856,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Burger Local",
     "score": 8.1,
     "subtitle": "Short Rib Burger",
@@ -2704,6 +2873,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tasty Polish Food",
     "score": 7.8,
     "subtitle": "Zapiekanka",
@@ -2720,6 +2890,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Barnaby's of Northbrook",
     "score": 8.1,
     "subtitle": "Sausage & Bacon Pizza",
@@ -2736,6 +2907,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Miskatonic Brewery",
     "score": 8,
     "subtitle": "Tocino Pork Belly Sandwich",
@@ -2752,6 +2924,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Asti Deli",
     "score": 8.2,
     "subtitle": "Italian on Focassia Bread w/ Prosciutto",
@@ -2768,6 +2941,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Flippin Flavors",
     "score": 9,
     "subtitle": "Philly Cheesesteak Sandwich",
@@ -2784,6 +2958,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Crazy Tortas",
     "score": 8.2,
     "subtitle": "Birria Torta",
@@ -2800,6 +2975,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Ukranian Dishes",
     "score": 7.7,
     "subtitle": "Cherburek",
@@ -2816,6 +2992,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sonny's Express",
     "score": 7.9,
     "subtitle": "Italian Beef",
@@ -2832,6 +3009,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sando Street",
     "score": 8.2,
     "subtitle": "Pork Tonkatsu Sando",
@@ -2848,6 +3026,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Wild Wings and Slots",
     "score": 8,
     "subtitle": "Korean bbq Wings",
@@ -2864,6 +3043,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Original Island Shrimp House",
     "score": 8.8,
     "subtitle": "Lobster Roll & Shrimp",
@@ -2880,6 +3060,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Al and Joe's",
     "score": 8.9,
     "subtitle": "Hot Pastrami",
@@ -2896,6 +3077,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Southern Kitchen",
     "score": 7.7,
     "subtitle": "The Dirty Bird",
@@ -2912,6 +3094,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taqueria Invicto",
     "score": 8.2,
     "subtitle": "Cali Burrito w/ Steak",
@@ -2928,6 +3111,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sfera Sicilian Street Food",
     "score": 7.9,
     "subtitle": "Alla Norma Sicilian Style Pizza",
@@ -2944,6 +3128,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Atlas Chicken Shack",
     "score": 7.7,
     "subtitle": "Chicken Tenders",
@@ -2960,6 +3145,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dorrie's Kitchen",
     "score": 8.7,
     "subtitle": "Oxtail Philly Cheesesteak",
@@ -2976,6 +3162,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Steingolds",
     "score": 8,
     "subtitle": "Pastrami Spiced Lox Bagel",
@@ -2992,6 +3179,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Finuccio & Sons",
     "score": 8.4,
     "subtitle": "Proscuitto Sandwich",
@@ -3008,6 +3196,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nemec Brothers",
     "score": 8.7,
     "subtitle": "Grandma's Pie",
@@ -3024,6 +3213,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "SmashIT Burger",
     "score": 7.9,
     "subtitle": "Smash Burger",
@@ -3040,6 +3230,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Peppo's Subs",
     "score": 8.2,
     "subtitle": "Windy City Cheesesteak w/ Guts",
@@ -3056,6 +3247,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Naansense",
     "score": 8.5,
     "subtitle": "Lamb Naan Wrap",
@@ -3072,6 +3264,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "More Than Pasta",
     "score": 8,
     "subtitle": "Vodka Beef Sausage Pasta",
@@ -3088,6 +3281,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tribecca's Sandwiches",
     "score": 8.8,
     "subtitle": "Cubano Sandwich",
@@ -3104,6 +3298,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "K-Coop",
     "score": 8.1,
     "subtitle": "Korean Fried Chicken",
@@ -3120,6 +3315,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rubino Italian Imports",
     "score": 7.8,
     "subtitle": "Meatball Sub",
@@ -3136,6 +3332,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Surf's Up",
     "score": 8.2,
     "subtitle": "The Bomb Sandwich",
@@ -3152,6 +3349,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Spice Fire & Grill",
     "score": 8.4,
     "subtitle": "Beef/Lamb Kebob",
@@ -3168,6 +3366,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Novi's Beef",
     "score": 8.9,
     "subtitle": "Italian Beef",
@@ -3184,6 +3383,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "El Taurino",
     "score": 8,
     "subtitle": "Quesabirria",
@@ -3200,6 +3400,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Soulwich",
     "score": 8.3,
     "subtitle": "Indonesian Ginger BBQ Sandwich",
@@ -3216,6 +3417,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sassy Biscuits",
     "score": 7.9,
     "subtitle": "Sausage Egg & Cheese Biscuit",
@@ -3232,6 +3434,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Buns of Fire",
     "score": 8.3,
     "subtitle": "The Hot Chick",
@@ -3248,6 +3451,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Franco's Cucina",
     "score": 8.2,
     "subtitle": "Italian on Focaccia Bread",
@@ -3264,6 +3468,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Don's Dock",
     "score": 7.7,
     "subtitle": "Shrimp Po Boy",
@@ -3280,6 +3485,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Starship Subs",
     "score": 8.4,
     "subtitle": "Crazy Club Sandwhich",
@@ -3296,6 +3502,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "601 Bar and Grill",
     "score": 7.8,
     "subtitle": "Detriot Style Pizza with Sausage",
@@ -3312,6 +3519,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hong Ning",
     "score": 8.4,
     "subtitle": "Pork Adobo",
@@ -3328,6 +3536,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mother's Ruin",
     "score": 8.3,
     "subtitle": "French Onion Grilled Cheese",
@@ -3344,6 +3553,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jerky Jerk",
     "score": 7.9,
     "subtitle": "Jerk Chicken Sandwhich",
@@ -3360,6 +3570,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Burt's Deli",
     "score": 8.5,
     "subtitle": "The Yummy Sandwhich",
@@ -3376,6 +3587,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Neighborhood Inn",
     "score": 7.5,
     "subtitle": "Wings with Hood Sauce",
@@ -3392,6 +3604,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Lotus Banh Mi",
     "score": 9,
     "subtitle": "Sunny Side Up Banh Mi Sandwhich",
@@ -3408,6 +3621,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Daniel's Charcuterie",
     "score": 8.4,
     "subtitle": "New Orleans Style Muffaletta",
@@ -3424,6 +3638,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "SD Pizzaria",
     "score": 7.5,
     "subtitle": "Shawarma Pizza",
@@ -3440,6 +3655,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Arctic Wolf Ale House",
     "score": 9.1,
     "subtitle": "Bacon Smash Burger",
@@ -3456,6 +3672,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fitchy's Home of the Hoagy",
     "score": 8.3,
     "subtitle": "Sweet Steak Sandwhich",
@@ -3472,6 +3689,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Blue Box Café",
     "score": 8.5,
     "subtitle": "Turkey Reuben",
@@ -3488,6 +3706,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taco Verde",
     "score": 9.2,
     "subtitle": "Quesabirria Pizza",
@@ -3504,6 +3723,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Daruma Restaurant",
     "score": 9,
     "subtitle": "Chicken Katsu Curry",
@@ -3520,6 +3740,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bad-Ass Breakfast Burritos",
     "score": 8.8,
     "subtitle": "Phil ate the Sausage Breakfast Burrito.",
@@ -3536,6 +3757,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Baba Saj",
     "score": 8.1,
     "subtitle": "Phil ate the Crispy Chicken Shawarma.",
@@ -3552,6 +3774,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Katy's Dumplings",
     "score": 8.7,
     "subtitle": "Phil ate the Beef Noodle Soup.",
@@ -3568,6 +3791,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dear Franks",
     "score": 7.7,
     "subtitle": "Phil ate the Hot Dogs.",
@@ -3584,6 +3808,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Buccan Sandwich Shop",
     "score": 9.1,
     "subtitle": "Phil ate the Beef Carpaccio Sandwich.",
@@ -3600,22 +3825,7 @@
     "notes": ""
   },
   {
-    "name": "NYC Halal Eats",
-    "score": 8.4,
-    "subtitle": "Phil ate the Philly Cheesesteak.",
-    "address": "52 W Roosevelt Rd",
-    "city": "Lombard",
-    "state": "IL",
-    "lat": 41.8601482,
-    "lng": -88.01814,
-    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=NYC%20Halal%20Eats%2C%2052%20W%20Roosevelt%20Rd%2C%20Lombard%2C%20IL",
-    "directionsUrl": "https://www.google.com/maps/dir/?api=1&destination=52%20W%20Roosevelt%20Rd%2C%20Lombard%2C%20IL%2C%20USA",
-    "reviewUrl": "https://www.instagram.com/p/DV8feNsk4eL/",
-    "sourceType": "structured-data",
-    "confidence": "medium",
-    "notes": ""
-  },
-  {
+    "requestType": "add",
     "name": "Al's Beef",
     "score": 8.3,
     "subtitle": "Phil ate the Italian Beef Dipped Hot.",
@@ -3632,6 +3842,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Brass Ring Pub",
     "score": 8.3,
     "subtitle": "Phil ate the Hot Garlic Wings.",
@@ -3648,6 +3859,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicken Lit Tenders",
     "score": 8.5,
     "subtitle": "Phil ate the Chicken Tenders.",
@@ -3664,6 +3876,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mickey's Drive",
     "score": 7.7,
     "subtitle": "Italian Beef Egg Rolls",
@@ -3680,6 +3893,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Original Bagel & Bialy",
     "score": 8.3,
     "subtitle": "Reuben sandwich",
@@ -3696,6 +3910,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Minnie Bird",
     "score": 8.1,
     "subtitle": "Nashville Hot Chicken Sandwich",
@@ -3712,6 +3927,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bagels By The Book",
     "score": 8.2,
     "subtitle": "Bee Sting Bagel Sandwich",
@@ -3728,6 +3944,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "What A Dumpling",
     "score": 7.9,
     "subtitle": "Spicy Pork Dumpling Ramen",
@@ -3744,6 +3961,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Vito and Nicks",
     "score": 8,
     "subtitle": "Sausage Thin Crust Pizza",
@@ -3760,6 +3978,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Peanut Gallery",
     "score": 8.6,
     "subtitle": "Shaolin Burger",
@@ -3776,6 +3995,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Serino's Deli",
     "score": 7.6,
     "subtitle": "Italian Panini w/ prosciutto",
@@ -3792,6 +4012,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kai Mom's K Food Togo",
     "score": 8.6,
     "subtitle": "Fried Korean wings with Supreme sauce",
@@ -3808,6 +4029,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Oh K-Dog",
     "score": 8.1,
     "subtitle": "Bacon and Egg Toast",
@@ -3824,6 +4046,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jollibee",
     "score": 8,
     "subtitle": "Spicy fried chicken",
@@ -3840,6 +4063,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pronto Italian Sandwiches",
     "score": 7.9,
     "subtitle": "Scorsese sandwich",
@@ -3856,6 +4080,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taqueria Los Laureles",
     "score": 8.5,
     "subtitle": "Steak burrito",
@@ -3872,6 +4097,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chubby's Hot Chicken",
     "score": 8.4,
     "subtitle": "Foghorn Hot Chicken Sandwich",
@@ -3888,6 +4114,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Lefty's Pizza Kitchen",
     "score": 8.1,
     "subtitle": "Stinger Pan Pizza",
@@ -3904,6 +4131,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gene & Jude's",
     "score": 7.8,
     "subtitle": "Hot dog",
@@ -3920,6 +4148,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sonny's Italian Kitchen",
     "score": 8.4,
     "subtitle": "Breaded Steak Sandwich",
@@ -3936,6 +4165,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "D&D Finer Foods",
     "score": 9,
     "subtitle": "The Penthouse Sandwich",
@@ -3952,6 +4182,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Carnitas Don Alfredo",
     "score": 8.2,
     "subtitle": "Carnitas Tacos",
@@ -3968,6 +4199,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bubs Subs",
     "score": 8.1,
     "subtitle": "El Niño sandwich",
@@ -3984,6 +4216,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Parcero's Burger Grill",
     "score": 8.7,
     "subtitle": "Santandereana Burger",
@@ -4000,6 +4233,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Philly's Best",
     "score": 7.3,
     "subtitle": "Philly Cheesesteak sandwich",
@@ -4016,6 +4250,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tony's Italian Beef",
     "score": 8.3,
     "subtitle": "Corleone Beef",
@@ -4032,6 +4267,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Da Local Boy",
     "score": 9.1,
     "subtitle": "Brudda Paul's Plate",
@@ -4048,6 +4284,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Austin's",
     "score": 7.8,
     "subtitle": "Asada Fries",
@@ -4064,6 +4301,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pho Lover & Bubble Tea",
     "score": 7.9,
     "subtitle": "Korean beef Banh Mi sandwich",
@@ -4080,6 +4318,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Goal Line Bar",
     "score": 8.9,
     "subtitle": "On Fire Smashburger",
@@ -4096,6 +4335,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taqueria Los Sombreros",
     "score": 8,
     "subtitle": "Quesabirria tacos",
@@ -4112,6 +4352,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Wurst Behavior",
     "score": 8.2,
     "subtitle": "Kielbasa & Nashville Sausage",
@@ -4128,6 +4369,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pie Life",
     "score": 8.2,
     "subtitle": "Three Sauce pizza slice & others",
@@ -4144,6 +4386,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Augustino's Rock n Roll Deli",
     "score": 8.4,
     "subtitle": "Italian Sandwich",
@@ -4160,6 +4403,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Pit Rib House",
     "score": 8.5,
     "subtitle": "Bbq ribs",
@@ -4176,6 +4420,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Authentic Taco",
     "score": 8.6,
     "subtitle": "Quesabirria",
@@ -4192,6 +4437,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Zza Factory",
     "score": 8.4,
     "subtitle": "Chicken Philly",
@@ -4208,6 +4454,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sub KO",
     "score": 7.3,
     "subtitle": "KO Chicken Parm Sandwich",
@@ -4224,6 +4471,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "A Taste of the Philippines",
     "score": 8.8,
     "subtitle": "Breakfast Sammy",
@@ -4240,6 +4488,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Roma Cafe",
     "score": 7.8,
     "subtitle": "Chicken Parm Pizza",
@@ -4256,6 +4505,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Small Cheval",
     "score": 8,
     "subtitle": "Double Bacon Cheeseburger",
@@ -4272,6 +4522,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Polka Dot Restaurant",
     "score": 7.9,
     "subtitle": "Polish Plate",
@@ -4288,6 +4539,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Que Bola Cuban Cafe",
     "score": 8.3,
     "subtitle": "Ropa Vieja Sandwich",
@@ -4304,6 +4556,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Berwyn Chicken Co",
     "score": 7.7,
     "subtitle": "Hot Chicken Sandwich",
@@ -4320,6 +4573,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Egg Tuck",
     "score": 8.5,
     "subtitle": "Spicy Royal West sandwich",
@@ -4336,6 +4590,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "New York Bagel & Bialy",
     "score": 8.1,
     "subtitle": "Lox Bagel",
@@ -4352,6 +4607,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Burger Alley Chicago",
     "score": 8.2,
     "subtitle": "Angry cowboy burger",
@@ -4368,6 +4624,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Puff Shack BBQ",
     "score": 8.7,
     "subtitle": "Baby back ribs",
@@ -4384,6 +4641,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gnarly Knots",
     "score": 7.8,
     "subtitle": "Italian Beef Pretzel",
@@ -4400,6 +4658,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bonchon",
     "score": 7.7,
     "subtitle": "Soy Garlic and Spicy wings",
@@ -4416,6 +4675,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pierogi Papi POP UP, collabing with Milo's Market at Consignment Lounge",
     "score": 8.4,
     "subtitle": "Birria Pierogi",
@@ -4432,6 +4692,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Top Butcher Market",
     "score": 8.6,
     "subtitle": "Double Pastrami Smash Burger",
@@ -4448,6 +4709,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Thai Garden",
     "score": 8.1,
     "subtitle": "Spicy Fried Rice with Beef Level 2 spicy",
@@ -4464,6 +4726,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Zen Ramen and Grill",
     "score": 8.2,
     "subtitle": "Bulgogi Cheesesteak Sandwich",
@@ -4480,6 +4743,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Art of Chicken",
     "score": 8.4,
     "subtitle": "El Jefe Broiled Chicken",
@@ -4496,6 +4760,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taste Greek Street Food",
     "score": 8,
     "subtitle": "Pork Belly Gyro",
@@ -4512,6 +4777,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Captain Porky's",
     "score": 8.6,
     "subtitle": "Alligator Tail Po Boy sandwich",
@@ -4528,6 +4794,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Alpine Food Shop",
     "score": 7.7,
     "subtitle": "Alpine sandwich",
@@ -4544,6 +4811,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Lou Malnati's (they paid me to try this)",
     "score": 8.5,
     "subtitle": "Buﬀalou Chicken Deep Dish Pizza",
@@ -4560,6 +4828,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chef Ciccio, Beef-Balls-Beer",
     "score": 8.7,
     "subtitle": "Italian Beef",
@@ -4576,6 +4845,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Colombian's Taste",
     "score": 8.6,
     "subtitle": "Traditional Colombian dish Bandeja Paisa",
@@ -4592,6 +4862,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Texas Bebe's Quesobirria",
     "score": 7.7,
     "subtitle": "Quesabirria tacos",
@@ -4608,6 +4879,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Amici Chicago",
     "score": 9,
     "subtitle": "Arancini riceballs",
@@ -4624,6 +4896,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Schoop's Hamburgers",
     "score": 8.2,
     "subtitle": "Double cheeseburger",
@@ -4640,6 +4913,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Legends Pizza",
     "score": 8,
     "subtitle": "Breaded Steak sandwich",
@@ -4656,6 +4930,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Peggy Kinnane's Irish Pub",
     "score": 7.8,
     "subtitle": "Full Irish Breakfast",
@@ -4672,6 +4947,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Perricone's A Soup & Sandwich Joint",
     "score": 8.4,
     "subtitle": "Italian American Sub",
@@ -4688,6 +4964,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "South Sea Asian Cuisine",
     "score": 9.1,
     "subtitle": "Combo plate with Longanisa, Bicol Express & Sisig",
@@ -4704,6 +4981,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Blackwood BBQ (they paid me to try it)",
     "score": 8.4,
     "subtitle": "Brisket Smash Burger",
@@ -4720,6 +4998,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cantaritto's Taqueria",
     "score": 7.4,
     "subtitle": "Al pastor, Asada & Cecina tacos",
@@ -4736,6 +5015,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicken Inn",
     "score": 7.9,
     "subtitle": "Broasted Chicken",
@@ -4752,6 +5032,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kim's Uncle Pizza",
     "score": 8.9,
     "subtitle": "Sausage and Giardiniera thin crust pizza",
@@ -4768,6 +5049,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Stony Sub",
     "score": 8.8,
     "subtitle": "Jim Shoe Sandwich",
@@ -4784,6 +5066,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Breaking Bread",
     "score": 7.7,
     "subtitle": "Reuben sandwich",
@@ -4800,6 +5083,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fontano Subs",
     "score": 8.7,
     "subtitle": "Wise Guy sub",
@@ -4816,6 +5100,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bust Outs",
     "score": 8.1,
     "subtitle": "Loop Burger",
@@ -4832,6 +5117,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Panziz",
     "score": 8.3,
     "subtitle": "Panzerotti",
@@ -4848,6 +5134,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Curious Crow food truck",
     "score": 9,
     "subtitle": "Furious Hot Chicken Sandwich",
@@ -4864,6 +5151,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Steamboat BBQ",
     "score": 8.2,
     "subtitle": "Brisket sandwich",
@@ -4880,6 +5168,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Original Shawarma",
     "score": 8.5,
     "subtitle": "Lamb Bashka",
@@ -4896,6 +5185,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bird's Nest",
     "score": 8.3,
     "subtitle": "Hot wings",
@@ -4912,6 +5202,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Stefani's Bottega Italiana",
     "score": 8.6,
     "subtitle": "Chicago sandwich",
@@ -4928,6 +5219,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bowls of Rice (they paid me to try it)",
     "score": 8.2,
     "subtitle": "Crispy Chicken Chipotle Rice Bowl",
@@ -4944,6 +5236,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taco Las Manitas",
     "score": 8.3,
     "subtitle": "Tacos (Chicken Tinga and Pork Discada)",
@@ -4960,6 +5253,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Uncle Cam's Sandwiches",
     "score": 8.7,
     "subtitle": "The Cam sandwich",
@@ -4976,6 +5270,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Johnnie Mae's Creole Kitchen",
     "score": 9.1,
     "subtitle": "Surf N' Turf Po Boy",
@@ -4992,6 +5287,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Superdawg Drive",
     "score": 7.8,
     "subtitle": "Superdawg hot dog",
@@ -5008,6 +5304,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mortadeli",
     "score": 8.3,
     "subtitle": "Meatball sub",
@@ -5024,6 +5321,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "(POP UP) Waffadilla food truck",
     "score": 8,
     "subtitle": "Waffadilla",
@@ -5040,6 +5338,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mr D's Shish-Kabobs",
     "score": 8.5,
     "subtitle": "Steak sandwich",
@@ -5056,6 +5355,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Blu Fig Cafe",
     "score": 8.3,
     "subtitle": "Lox bagel",
@@ -5072,6 +5372,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Highlander's Grill",
     "score": 7.7,
     "subtitle": "Potato and cheese Pierogi and Highlander burger",
@@ -5088,6 +5389,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "DoughDaddy's Pizza",
     "score": 8.3,
     "subtitle": "The PA pizza",
@@ -5104,6 +5406,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Perkolator",
     "score": 9,
     "subtitle": "Breakfast burrito with Chorizo",
@@ -5120,6 +5423,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Stix and Noodles",
     "score": 8.4,
     "subtitle": "Super Combo Pancit Plate",
@@ -5136,6 +5440,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Stella's Baseball Batting Range",
     "score": 8.3,
     "subtitle": "Korean steak sandwich",
@@ -5152,6 +5457,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Manny's Deli",
     "score": 8.5,
     "subtitle": "Pastrami and Corned Beef Reuben",
@@ -5168,6 +5474,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fyve Bros",
     "score": 8.5,
     "subtitle": "OKC Smash burger",
@@ -5184,6 +5491,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mully's Grill",
     "score": 8.2,
     "subtitle": "Gyro sandwich",
@@ -5200,6 +5508,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Eva's Mexican Restaurant",
     "score": 7.7,
     "subtitle": "Quesabirria tacos",
@@ -5216,6 +5525,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Street Food Kingz",
     "score": 9,
     "subtitle": "Mofongo Relleno De Carne Frita",
@@ -5232,6 +5542,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "The Roost",
     "score": 8.6,
     "subtitle": "Carolina Style Hot Chicken sandwich",
@@ -5248,6 +5559,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chick n Fizz",
     "score": 7.7,
     "subtitle": "Chicken wings",
@@ -5264,6 +5576,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Corned Beef Hideout",
     "score": 8.8,
     "subtitle": "Corned beef and Pastrami Jerk sandwich two faced style",
@@ -5280,6 +5593,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Ruby's Fast Food",
     "score": 8.1,
     "subtitle": "Mixsilog plate",
@@ -5296,6 +5610,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tastee Rolls",
     "score": 8.7,
     "subtitle": "Jerk Chicken Eggroll and Philly Cheesesteak eggroll",
@@ -5312,6 +5627,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Snappy Dog Inc",
     "score": 7.8,
     "subtitle": "The Snappy Dog & Snappy Stix",
@@ -5328,6 +5644,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Massa Cafe",
     "score": 8.1,
     "subtitle": "Chicken Vodka Burrata sandwich",
@@ -5344,6 +5661,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Niwaala Street Food",
     "score": 8.5,
     "subtitle": "Mango Malai Boti Naan tacos",
@@ -5360,6 +5678,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Station 34",
     "score": 8,
     "subtitle": "Italian Beef Detroit style Pizza",
@@ -5376,6 +5695,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Josef's Meat and Deli",
     "score": 8.1,
     "subtitle": "Italian sub",
@@ -5392,6 +5712,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fabulous Freddie's Italian Eatery",
     "score": 8.8,
     "subtitle": "Italian beef",
@@ -5408,6 +5729,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pilot Pete's",
     "score": 7.7,
     "subtitle": "Chicken tenders",
@@ -5424,6 +5746,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Uma Japanese Eatery/Ramen USA",
     "score": 7.7,
     "subtitle": "Pork Katsu Sando with demi glace",
@@ -5440,6 +5763,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nonna Soluri's Italian Deli",
     "score": 8.5,
     "subtitle": "Spicy Italian Sandwich",
@@ -5456,6 +5780,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Asian Noodle House",
     "score": 8.1,
     "subtitle": "Braised Noodles with BBQ Pork",
@@ -5472,6 +5797,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mole Village Restaurant",
     "score": 8.6,
     "subtitle": "Steak poblano sandwich",
@@ -5488,6 +5814,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Berger Bros",
     "score": 7.7,
     "subtitle": "Wagyu double smashburger",
@@ -5504,6 +5831,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Duke's Blues and BBQ",
     "score": 9.3,
     "subtitle": "Bbq brisket, ribs, and pulled pork",
@@ -5520,6 +5848,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jerk Sou'lay",
     "score": 8.1,
     "subtitle": "Jerk chicken mix plate",
@@ -5536,6 +5865,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Slaw Burger Palatine",
     "score": 8.2,
     "subtitle": "Double smashburger",
@@ -5552,6 +5882,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Joong Boo Market",
     "score": 8.2,
     "subtitle": "King dumplings",
@@ -5568,6 +5899,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nottoli and Son",
     "score": 8.1,
     "subtitle": "Pot Roast Sandwich",
@@ -5584,6 +5916,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Limoni Belli",
     "score": 7.7,
     "subtitle": "Pepperoni Ricotta Hot Honey Pizza",
@@ -5600,6 +5933,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Berto's Deli & Pasta Shoppe",
     "score": 8.3,
     "subtitle": "Berto's Sub with mayo and hot giardiniera",
@@ -5616,6 +5950,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pupusería Rinconcito Hispano",
     "score": 7.9,
     "subtitle": "Pupusas",
@@ -5632,6 +5967,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Zabaadi Kebabs",
     "score": 8.2,
     "subtitle": "Kebab Combo Platter",
@@ -5648,6 +5984,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Garibaldi's Italian Eatery",
     "score": 8.4,
     "subtitle": "Steak Supreme with hot giardiniera",
@@ -5664,6 +6001,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jimmy's Red Hots",
     "score": 7.9,
     "subtitle": "Hot dogs",
@@ -5680,6 +6018,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Reds Rolls",
     "score": 8.2,
     "subtitle": "Sausage rolls",
@@ -5696,6 +6035,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Burger City",
     "score": 7.9,
     "subtitle": "The golden glaze burger",
@@ -5712,6 +6052,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Cured and Crafted",
     "score": 8.4,
     "subtitle": "Diavolo Italiano sandwich",
@@ -5728,6 +6069,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Pequod's Pizza",
     "score": 8.2,
     "subtitle": "Sausage and Garlic Pan pizza",
@@ -5744,6 +6086,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bari Foods",
     "score": 9.3,
     "subtitle": "Italian beef with hot peppers",
@@ -5760,6 +6103,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Balcanico",
     "score": 8.2,
     "subtitle": "Burek and calzone",
@@ -5776,6 +6120,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Falafull",
     "score": 8.4,
     "subtitle": "Falafel and Kebab plate",
@@ -5792,6 +6137,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "CM Chicken",
     "score": 7.9,
     "subtitle": "Snow onion wings",
@@ -5808,6 +6154,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dave's Hot Chicken",
     "score": 8.1,
     "subtitle": "Hot Chicken sandwich with hot",
@@ -5824,6 +6171,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Plum Garden",
     "score": 8.2,
     "subtitle": "Hong Kong Chicken",
@@ -5840,6 +6188,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Slims",
     "score": 8,
     "subtitle": "Slim burger with hot peppers",
@@ -5856,6 +6205,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Taco Lamas",
     "score": 8.6,
     "subtitle": "Tacos",
@@ -5872,6 +6222,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Novel Pizza Cafe",
     "score": 8.3,
     "subtitle": "Longanisa and Hot Giardiniera thin crust pizza",
@@ -5888,6 +6239,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Alice's Corner",
     "score": 8.7,
     "subtitle": "Steak sandwich",
@@ -5904,6 +6256,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Great Sea Restaurant",
     "score": 7.6,
     "subtitle": "Spicy lollipop wings",
@@ -5920,6 +6273,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Shane's Deli",
     "score": 8.7,
     "subtitle": "Italian sandwich",
@@ -5936,6 +6290,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Red Hot Ranch",
     "score": 8.3,
     "subtitle": "Smash burger",
@@ -5952,6 +6307,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Scratchboard Kitchen",
     "score": 9,
     "subtitle": "Fried Chicken sandwich",
@@ -5968,6 +6324,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Lazic Deli",
     "score": 7.4,
     "subtitle": "Polish sausage and Burek",
@@ -5984,6 +6341,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Mensch's Deli",
     "score": 8.4,
     "subtitle": "Big Macher sandwich",
@@ -6000,6 +6358,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Meetch's Wings and Things",
     "score": 8.2,
     "subtitle": "Smash burger",
@@ -6016,6 +6375,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bella Napoli",
     "score": 8.1,
     "subtitle": "Charred Pepperoni Pizza",
@@ -6032,6 +6392,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Frankie's Deli",
     "score": 7.8,
     "subtitle": "Meatball sub",
@@ -6048,6 +6409,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dell Rhea's Chicken Basket",
     "score": 6,
     "subtitle": "Fried Chicken",
@@ -6064,6 +6426,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rosita's Tacos",
     "score": 8.2,
     "subtitle": "Quesabirria Tacos",
@@ -6080,6 +6443,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Spring Forest Deli",
     "score": 8.4,
     "subtitle": "Original Gourmet sandwich",
@@ -6096,6 +6460,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kapwa Bakery",
     "score": 8.8,
     "subtitle": "Tocino silog plate",
@@ -6112,6 +6477,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Little Joes",
     "score": 8.2,
     "subtitle": "Italian beef sandwich with hot peppers",
@@ -6128,6 +6494,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fix Sandwich Shop",
     "score": 8.7,
     "subtitle": "Inferno sandwich",
@@ -6144,6 +6511,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "MilkStop",
     "score": 7.2,
     "subtitle": "Flat burger",
@@ -6160,6 +6528,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kneads and Wants",
     "score": 8.4,
     "subtitle": "The Madison Breakfast Sandwich",
@@ -6176,6 +6545,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Phodega",
     "score": 9.1,
     "subtitle": "The Viet Dip",
@@ -6192,6 +6562,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Positano's Slice and Ice",
     "score": 8.1,
     "subtitle": "Fried Mortadella panuozzo",
@@ -6208,6 +6579,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Allez Cafe",
     "score": 8.9,
     "subtitle": "Breakfast sandwhich",
@@ -6224,6 +6596,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Roaring Table Brewery",
     "score": 8.7,
     "subtitle": "Nonna's meatball Detroit style pizza",
@@ -6240,6 +6613,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Smash Jibarito",
     "score": 8.6,
     "subtitle": "O'gilla jibarito smashburger",
@@ -6256,6 +6630,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Las Gorditas De Don Angel",
     "score": 8.3,
     "subtitle": "Gorditas",
@@ -6272,6 +6647,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Blufish Schaumburg",
     "score": 8.1,
     "subtitle": "Dirty Old Man Roll and Crispy Rice Spicy Tuna",
@@ -6288,6 +6664,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "JP Graziano's",
     "score": 8.5,
     "subtitle": "Mr. G's sub",
@@ -6304,6 +6681,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Earl's BBQ",
     "score": 7.7,
     "subtitle": "Brisket sandwich special",
@@ -6320,6 +6698,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Out Cold",
     "score": 8.6,
     "subtitle": "Double smashburger",
@@ -6336,6 +6715,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Aztec Dave's Cantina",
     "score": 8.7,
     "subtitle": "Steak Burrito",
@@ -6352,6 +6732,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Portillo's",
     "score": 7.9,
     "subtitle": "Italian beef wet and hot peppers",
@@ -6368,6 +6749,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Zaza's Pizza",
     "score": 8.3,
     "subtitle": "Pesto and Sausage pizza",
@@ -6384,6 +6766,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Phoenix Flame",
     "score": 8.5,
     "subtitle": "Ultimate Steak Sandwich",
@@ -6400,6 +6783,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Corey's NYC Bagel Deli",
     "score": 8.2,
     "subtitle": "Nova Lox Bagel",
@@ -6416,6 +6800,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Smakosz Restaurant",
     "score": 7.8,
     "subtitle": "Lublin Pork",
@@ -6432,6 +6817,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Annerino's Fast Casual Italian Restaurant",
     "score": 8.5,
     "subtitle": "Breaded steak sandwich",
@@ -6448,6 +6834,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chomp Pizza",
     "score": 7.8,
     "subtitle": "Cheese pizza slice",
@@ -6464,6 +6851,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "the Deli at 700",
     "score": 7.9,
     "subtitle": "Hot Pastrami Sandwich",
@@ -6480,6 +6868,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hart's Garage",
     "score": 9.1,
     "subtitle": "The Lou Smash Burger",
@@ -6496,6 +6885,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Riceby Handheld Asian Food",
     "score": 7.8,
     "subtitle": "Asian fusion snacks",
@@ -6512,6 +6902,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dulce De Leche Cafe",
     "score": 8.1,
     "subtitle": "The My Favorite Sandwich",
@@ -6528,6 +6919,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Everdine's Grilled Cheese Co",
     "score": 7.9,
     "subtitle": "Al Pacheeso",
@@ -6544,6 +6936,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Borinken Cakes",
     "score": 8.6,
     "subtitle": "Tripleta sandwich",
@@ -6560,6 +6953,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chibogan",
     "score": 8.4,
     "subtitle": "Lechon Combo Plate",
@@ -6576,6 +6970,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Squares Pizza Pub",
     "score": 7.6,
     "subtitle": "Pepperoni Detroit style",
@@ -6592,6 +6987,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Aracely's Bakery",
     "score": 8.1,
     "subtitle": "Tamales",
@@ -6608,6 +7004,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "NADC burger",
     "score": 8.1,
     "subtitle": "NADC burger",
@@ -6624,6 +7021,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Frantonio's",
     "score": 7.6,
     "subtitle": "Magnifico sandwich",
@@ -6640,6 +7038,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago's Home of Chicken and Waffles",
     "score": 8.7,
     "subtitle": "Catfish and Fried chicken combo platter",
@@ -6656,6 +7055,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dorfler's Meat Market",
     "score": 8.3,
     "subtitle": "The Soprano sandwich",
@@ -6672,6 +7072,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Americanos",
     "score": 7.9,
     "subtitle": "Fried Chicken torta with ancho bbq",
@@ -6688,6 +7089,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Dirty Tiff's Cafe",
     "score": 8.6,
     "subtitle": "Jerk chicken plate",
@@ -6704,6 +7106,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "(POP UP) A Biker Dude",
     "score": 9.1,
     "subtitle": "Double smash burger",
@@ -6720,6 +7123,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Original Steaks and Hoagies",
     "score": 8.1,
     "subtitle": "Original Philly cheesesteak",
@@ -6736,6 +7140,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tievoli Pizza Bar",
     "score": 8.5,
     "subtitle": "The Original Cheese pizza with half pep",
@@ -6752,6 +7157,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Tamales Norma",
     "score": 7.7,
     "subtitle": "Tamales",
@@ -6768,6 +7174,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nicky V's",
     "score": 7.9,
     "subtitle": "Crunchy Italian beef",
@@ -6784,6 +7191,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Carato's Venezuelan Restaurant",
     "score": 8.4,
     "subtitle": "Arepas and more",
@@ -6800,6 +7208,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Beef Shack",
     "score": 8.2,
     "subtitle": "Cheesy beef on garlic bread",
@@ -6816,6 +7225,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Big Sammy's Hot Dogs",
     "score": 7.5,
     "subtitle": "Hot dog and burger",
@@ -6832,6 +7242,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bucks Coal Fired Pizza",
     "score": 8,
     "subtitle": "Half cheese half pepperoni pizza",
@@ -6848,6 +7259,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fox's Pizza & Irish Pub",
     "score": 8.4,
     "subtitle": "Phil ate the Cheese and Sausage Thin Crust Pizza.",
@@ -6864,6 +7276,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Smitty's on the Corner",
     "score": 7.7,
     "subtitle": "Phil ate the Groucho sandwich",
@@ -6880,6 +7293,7 @@
     "notes": "https://maps.app.goo.gl/AZkVtjYz7pMh6WH28"
   },
   {
+    "requestType": "add",
     "name": "Luella's Southern Kitchen",
     "score": 9.1,
     "subtitle": "Chicken and Waffles",
@@ -6896,6 +7310,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Fausto's Italian Kitchen",
     "score": 8.2,
     "subtitle": "Italian Sandwich",
@@ -6912,6 +7327,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "NYC HALAL EATS",
     "score": 8.7,
     "subtitle": "Philly Cheesesteak Sandwich w/ Mozzarella Stick",
