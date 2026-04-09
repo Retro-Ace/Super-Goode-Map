@@ -71,6 +71,267 @@ function normalizeName(value) {
     .replace(/[^a-z0-9]+/g, '');
 }
 
+function normalizeComparableText(value) {
+  return normalizeText(value)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/['"`]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const addressTokenMap = new Map([
+  ['n', 'north'],
+  ['s', 'south'],
+  ['e', 'east'],
+  ['w', 'west'],
+  ['ne', 'northeast'],
+  ['nw', 'northwest'],
+  ['se', 'southeast'],
+  ['sw', 'southwest'],
+  ['st', 'street'],
+  ['street', 'street'],
+  ['rd', 'road'],
+  ['road', 'road'],
+  ['ave', 'avenue'],
+  ['avenue', 'avenue'],
+  ['blvd', 'boulevard'],
+  ['boulevard', 'boulevard'],
+  ['dr', 'drive'],
+  ['drive', 'drive'],
+  ['ln', 'lane'],
+  ['lane', 'lane'],
+  ['ct', 'court'],
+  ['court', 'court'],
+  ['cir', 'circle'],
+  ['circle', 'circle'],
+  ['pl', 'place'],
+  ['place', 'place'],
+  ['pkwy', 'parkway'],
+  ['parkway', 'parkway'],
+  ['ter', 'terrace'],
+  ['terrace', 'terrace'],
+  ['trl', 'trail'],
+  ['trail', 'trail'],
+  ['hwy', 'highway'],
+  ['highway', 'highway'],
+  ['ste', 'suite'],
+  ['suite', 'suite'],
+  ['apt', 'apartment'],
+  ['apartment', 'apartment'],
+  ['fl', 'floor'],
+  ['floor', 'floor'],
+]);
+
+function normalizeAddress(value) {
+  const text = normalizeComparableText(value);
+  if (!text) return '';
+  return text
+    .split(' ')
+    .filter(Boolean)
+    .map((token) => addressTokenMap.get(token) || token)
+    .join(' ');
+}
+
+function normalizeUrlIdentity(value) {
+  const text = cleanOptionalString(value);
+  if (!text) return '';
+  try {
+    const url = new URL(text);
+    const path = url.pathname.replace(/\/+$/, '') || '/';
+    return `${url.origin.toLowerCase()}${path}`;
+  } catch (err) {
+    return normalizeComparableText(text);
+  }
+}
+
+function hasFiniteCoordinates(entry) {
+  return Number.isFinite(entry?.lat) && Number.isFinite(entry?.lng);
+}
+
+function distanceMeters(a, b) {
+  const lat1 = Number(a.lat);
+  const lng1 = Number(a.lng);
+  const lat2 = Number(b.lat);
+  const lng2 = Number(b.lng);
+  if (![lat1, lng1, lat2, lng2].every(Number.isFinite)) return Number.POSITIVE_INFINITY;
+  const toRad = (value) => (value * Math.PI) / 180;
+  const earthRadiusMeters = 6371000;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const lat1Rad = toRad(lat1);
+  const lat2Rad = toRad(lat2);
+  const aValue = (Math.sin(dLat / 2) ** 2)
+    + Math.cos(lat1Rad) * Math.cos(lat2Rad) * (Math.sin(dLng / 2) ** 2);
+  const c = 2 * Math.atan2(Math.sqrt(aValue), Math.sqrt(1 - aValue));
+  return earthRadiusMeters * c;
+}
+
+function samePlaceByReviewUrl(existing, incoming) {
+  const existingKey = normalizeUrlIdentity(existing.reviewUrl);
+  const incomingKey = normalizeUrlIdentity(incoming.reviewUrl);
+  return !!existingKey && existingKey === incomingKey;
+}
+
+function samePlaceByAddress(existing, incoming) {
+  if (normalizeName(existing.name) !== normalizeName(incoming.name)) return false;
+  const existingAddress = normalizeAddress(existing.address);
+  const incomingAddress = normalizeAddress(incoming.address);
+  if (!existingAddress || !incomingAddress || existingAddress !== incomingAddress) return false;
+  const existingState = normalizeComparableText(existing.state);
+  const incomingState = normalizeComparableText(incoming.state);
+  return !existingState || !incomingState || existingState === incomingState;
+}
+
+function samePlaceByCoordinates(existing, incoming) {
+  if (normalizeName(existing.name) !== normalizeName(incoming.name)) return false;
+  if (!hasFiniteCoordinates(existing) || !hasFiniteCoordinates(incoming)) return false;
+  return distanceMeters(existing, incoming) <= 50;
+}
+
+function hasMaterialLocationConflict(existing, incoming) {
+  if (normalizeName(existing.name) !== normalizeName(incoming.name)) return false;
+  if (samePlaceByReviewUrl(existing, incoming) || samePlaceByAddress(existing, incoming) || samePlaceByCoordinates(existing, incoming)) {
+    return false;
+  }
+
+  const existingAddress = normalizeAddress(existing.address);
+  const incomingAddress = normalizeAddress(incoming.address);
+  if (existingAddress && incomingAddress && existingAddress !== incomingAddress) {
+    return true;
+  }
+
+  const existingState = normalizeComparableText(existing.state);
+  const incomingState = normalizeComparableText(incoming.state);
+  if (existingState && incomingState && existingState !== incomingState) {
+    return true;
+  }
+
+  const existingCity = normalizeComparableText(existing.city);
+  const incomingCity = normalizeComparableText(incoming.city);
+  if (existingCity && incomingCity && existingCity !== incomingCity && (existingAddress || incomingAddress)) {
+    return true;
+  }
+
+  if (hasFiniteCoordinates(existing) && hasFiniteCoordinates(incoming) && !samePlaceByCoordinates(existing, incoming)) {
+    return true;
+  }
+
+  return false;
+}
+
+function createIndexes(locations) {
+  const byName = new Map();
+  const byReviewUrl = new Map();
+
+  for (let i = 0; i < locations.length; i += 1) {
+    const nameKey = normalizeName(locations[i].name);
+    if (nameKey) {
+      const bucket = byName.get(nameKey) || [];
+      bucket.push(i);
+      byName.set(nameKey, bucket);
+    }
+
+    const reviewKey = normalizeUrlIdentity(locations[i].reviewUrl);
+    if (reviewKey) {
+      const bucket = byReviewUrl.get(reviewKey) || [];
+      bucket.push(i);
+      byReviewUrl.set(reviewKey, bucket);
+    }
+  }
+
+  return { byName, byReviewUrl };
+}
+
+function addIndexEntry(indexes, entry, rowIndex) {
+  const nameKey = normalizeName(entry.name);
+  if (nameKey) {
+    const bucket = indexes.byName.get(nameKey) || [];
+    bucket.push(rowIndex);
+    indexes.byName.set(nameKey, bucket);
+  }
+
+  const reviewKey = normalizeUrlIdentity(entry.reviewUrl);
+  if (reviewKey) {
+    const bucket = indexes.byReviewUrl.get(reviewKey) || [];
+    if (!bucket.includes(rowIndex)) {
+      bucket.push(rowIndex);
+      indexes.byReviewUrl.set(reviewKey, bucket);
+    }
+  }
+}
+
+function updateIndexEntry(indexes, beforeEntry, afterEntry, rowIndex) {
+  const beforeReviewKey = normalizeUrlIdentity(beforeEntry.reviewUrl);
+  if (beforeReviewKey) {
+    const bucket = (indexes.byReviewUrl.get(beforeReviewKey) || []).filter((idx) => idx !== rowIndex);
+    if (bucket.length) indexes.byReviewUrl.set(beforeReviewKey, bucket);
+    else indexes.byReviewUrl.delete(beforeReviewKey);
+  }
+
+  const afterReviewKey = normalizeUrlIdentity(afterEntry.reviewUrl);
+  if (afterReviewKey) {
+    const bucket = indexes.byReviewUrl.get(afterReviewKey) || [];
+    if (!bucket.includes(rowIndex)) {
+      bucket.push(rowIndex);
+      indexes.byReviewUrl.set(afterReviewKey, bucket);
+    }
+  }
+}
+
+function findExistingMatch(entry, locations, indexes) {
+  const reviewKey = normalizeUrlIdentity(entry.reviewUrl);
+  if (reviewKey) {
+    const reviewMatches = indexes.byReviewUrl.get(reviewKey) || [];
+    if (reviewMatches.length === 1) {
+      return { type: 'match', matchIndex: reviewMatches[0], reason: 'reviewUrl' };
+    }
+    if (reviewMatches.length > 1) {
+      return { type: 'ambiguous', reason: 'reviewUrl', candidates: reviewMatches };
+    }
+  }
+
+  const nameKey = normalizeName(entry.name);
+  const candidates = indexes.byName.get(nameKey) || [];
+  if (!candidates.length) {
+    return { type: 'new', reason: 'no-name-match' };
+  }
+
+  const addressMatches = candidates.filter((idx) => samePlaceByAddress(locations[idx], entry));
+  if (addressMatches.length === 1) {
+    return { type: 'match', matchIndex: addressMatches[0], reason: 'address' };
+  }
+  if (addressMatches.length > 1) {
+    return { type: 'ambiguous', reason: 'address', candidates: addressMatches };
+  }
+
+  const coordinateMatches = candidates.filter((idx) => samePlaceByCoordinates(locations[idx], entry));
+  if (coordinateMatches.length === 1) {
+    return { type: 'match', matchIndex: coordinateMatches[0], reason: 'coordinates' };
+  }
+  if (coordinateMatches.length > 1) {
+    return { type: 'ambiguous', reason: 'coordinates', candidates: coordinateMatches };
+  }
+
+  if (candidates.length === 1) {
+    const existing = locations[candidates[0]];
+    if (hasMaterialLocationConflict(existing, entry)) {
+      return { type: 'new', reason: 'different-location' };
+    }
+    return { type: 'match', matchIndex: candidates[0], reason: 'legacy-name-fallback' };
+  }
+
+  const conflictingCandidates = candidates.filter((idx) => hasMaterialLocationConflict(locations[idx], entry));
+  if (conflictingCandidates.length === candidates.length) {
+    return { type: 'new', reason: 'different-location' };
+  }
+
+  return { type: 'ambiguous', reason: 'same-name-multiple-locations', candidates };
+}
+
 function temporaryNameKey(value) {
   return normalizeText(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 }
@@ -255,17 +516,7 @@ async function main() {
     const manualFixes = manualFixesRaw && typeof manualFixesRaw === 'object' ? manualFixesRaw : {};
     const resolvedRows = new Set();
     const enrichmentTargets = new Set();
-
-    const index = new Map();
-    for (let i = 0; i < locations.length; i += 1) {
-      const key = normalizeName(locations[i].name);
-      if (!key) continue;
-      const bucket = index.get(key) || [];
-      bucket.push(i);
-      index.set(key, bucket);
-    }
-
-    const seenIncoming = new Set();
+    const indexes = createIndexes(locations);
     for (const [rowIndex, raw] of incoming.entries()) {
       if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
         summary.errors.push(`Invalid review row: ${JSON.stringify(raw)}`);
@@ -293,23 +544,19 @@ async function main() {
         continue;
       }
 
-      if (seenIncoming.has(key)) {
-        summary.skipped.push(`${entry.name} (duplicate in ${intakeLabel})`);
-        resolvedRows.add(rowIndex);
-        continue;
-      }
-      seenIncoming.add(key);
-
-      const matches = index.get(key) || [];
-      if (matches.length > 1) {
-        summary.ambiguous.push(`${entry.name} (${matches.length} matches in locations.json)`);
+      const matchResult = findExistingMatch(entry, locations, indexes);
+      if (matchResult.type === 'ambiguous') {
+        const count = matchResult.candidates?.length || 0;
+        summary.ambiguous.push(`${entry.name} (${count} candidate matches in locations.json via ${matchResult.reason})`);
         continue;
       }
 
-      if (matches.length === 1) {
-        const matchIndex = matches[0];
+      if (matchResult.type === 'match') {
+        const matchIndex = matchResult.matchIndex;
+        const before = clone(locations[matchIndex]);
         const merged = mergeEntry(locations[matchIndex], entry);
         locations[matchIndex] = merged.entry;
+        updateIndexEntry(indexes, before, merged.entry, matchIndex);
         enrichmentTargets.add(matchIndex);
         if (merged.changed) {
           summary.updated.push(entry.name);
@@ -339,7 +586,7 @@ async function main() {
 
       locations.push(next);
       const newIndex = locations.length - 1;
-      index.set(key, [newIndex]);
+      addIndexEntry(indexes, next, newIndex);
       enrichmentTargets.add(newIndex);
       summary.added.push(entry.name);
       resolvedRows.add(rowIndex);
@@ -348,7 +595,7 @@ async function main() {
     const manualResult = applyManualFixes(locations, manualFixes);
     summary.updated.push(...manualResult.touched.filter((name) => !summary.updated.includes(name)));
     for (const name of manualResult.touched) {
-      const matches = index.get(normalizeName(name)) || [];
+      const matches = indexes.byName.get(normalizeName(name)) || [];
       for (const matchIndex of matches) {
         enrichmentTargets.add(matchIndex);
       }
