@@ -7342,5 +7342,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Windy City Burger Social Club",
+    "score": 8.3,
+    "subtitle": "Smash Burger",
+    "address": "2340 n California",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 41.9239469,
+    "lng": -87.697652,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Windy%20City%20Burger%20Social%20Club%2C%202340%20n%20California%2C%20Chicago%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DW82piEk4Ba/?igsh=d3gzbTdtcWFmZnd6",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

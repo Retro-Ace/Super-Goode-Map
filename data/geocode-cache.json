@@ -100,5 +100,12 @@
   "13037 lagrange rd, palos park, il, usa": {
     "status": "not-found",
     "updatedAt": "2026-04-09T17:11:42.906Z"
+  },
+  "2340 n california, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9239469,
+    "lng": -87.697652,
+    "displayName": "Noca Blu, 2340, North California Avenue, Maplewood, Logan Square, Chicago, West Chicago Township, Cook County, Illinois, 60647, United States",
+    "updatedAt": "2026-04-11T04:15:38.910Z"
   }
 }
