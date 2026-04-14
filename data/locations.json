@@ -7359,5 +7359,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Gianelli's Drive Thru",
+    "score": 8.1,
+    "subtitle": "Ba-Da-Bing Sandwich",
+    "address": "3111 Il-176",
+    "city": "Crystal Lake",
+    "state": "IL",
+    "lat": 42.2492099,
+    "lng": -88.286249,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Gianelli's%20Drive%20Thru%2C%203111%20Il-176%2C%20Crystal%20Lake%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXEkA4hk6-8/?igsh=dDh1NXhndGh1OXI5",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

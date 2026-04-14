@@ -107,5 +107,12 @@
     "lng": -87.697652,
     "displayName": "Noca Blu, 2340, North California Avenue, Maplewood, Logan Square, Chicago, West Chicago Township, Cook County, Illinois, 60647, United States",
     "updatedAt": "2026-04-11T04:15:38.910Z"
+  },
+  "3111 il-176, crystal lake, il, usa": {
+    "status": "ok",
+    "lat": 42.2492099,
+    "lng": -88.286249,
+    "displayName": "West State Road, Crystal Lake, McHenry County, Illinois, 60012, United States",
+    "updatedAt": "2026-04-14T01:57:54.389Z"
   }
 }
