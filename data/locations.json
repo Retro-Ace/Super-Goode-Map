@@ -7376,5 +7376,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Spice Restaurants",
+    "score": 8.2,
+    "subtitle": "Oxtail Plate",
+    "address": "1905 Church St",
+    "city": "Evanston",
+    "state": "IL",
+    "lat": 42.0485155,
+    "lng": -87.6993716,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Spice%20Restaurants%2C%201905%20Church%20St%2C%20Evanston%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXJvWWlk5CC/?igsh=dmM5dmgxaXVnMm9m",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

@@ -114,5 +114,12 @@
     "lng": -88.286249,
     "displayName": "West State Road, Crystal Lake, McHenry County, Illinois, 60012, United States",
     "updatedAt": "2026-04-14T01:57:54.389Z"
+  },
+  "1905 church st, evanston, il, usa": {
+    "status": "ok",
+    "lat": 42.0485155,
+    "lng": -87.6993716,
+    "displayName": "1905, Church Street, Church and Dodge, Evanston, Evanston Township, Cook County, Illinois, 60201, United States",
+    "updatedAt": "2026-04-16T05:24:37.375Z"
   }
 }
