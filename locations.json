@@ -7393,5 +7393,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Pizza Di Farfalla",
+    "score": 7.8,
+    "subtitle": "Cheese and Pepperoni Pizza",
+    "address": "1333 S Schoolhouse Rd",
+    "city": "New Lennox",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Pizza%20Di%20Farfalla%2C%201333%20S%20Schoolhouse%20Rd%2C%20New%20Lennox%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXO54WGk2LM/?igsh=NWhnN3c2bHJxNTQy",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
