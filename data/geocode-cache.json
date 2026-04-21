@@ -125,5 +125,12 @@
   "1333 s schoolhouse rd, new lennox, il, usa": {
     "status": "not-found",
     "updatedAt": "2026-04-18T01:49:33.638Z"
+  },
+  "800 w randolph st, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.8846406,
+    "lng": -87.6476069,
+    "displayName": "Au Cheval, 800, West Randolph Street, Restaurant Row, West Loop, Near West Side, Chicago, West Chicago Township, Cook County, Illinois, 60607, United States",
+    "updatedAt": "2026-04-21T04:51:20.030Z"
   }
 }

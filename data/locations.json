@@ -7410,5 +7410,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Au Cheval",
+    "score": 8.4,
+    "subtitle": "Double Bacon Burger with egg",
+    "address": "800 W Randolph St",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 41.8846406,
+    "lng": -87.6476069,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Au%20Cheval%2C%20800%20W%20Randolph%20St%2C%20Chicago%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXWlwFdEyDe/?igsh=MXU2cnpqMTA2dXhpNQ==",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
