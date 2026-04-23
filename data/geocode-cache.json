@@ -132,5 +132,12 @@
     "lng": -87.6476069,
     "displayName": "Au Cheval, 800, West Randolph Street, Restaurant Row, West Loop, Near West Side, Chicago, West Chicago Township, Cook County, Illinois, 60607, United States",
     "updatedAt": "2026-04-21T04:51:20.030Z"
+  },
+  "5520 lincoln ave, lisle, il, usa": {
+    "status": "ok",
+    "lat": 41.7845828,
+    "lng": -88.0744425,
+    "displayName": "Boss Dawgz, 5520, Lincoln Avenue, Lisle, DuPage County, Illinois, 60532, United States",
+    "updatedAt": "2026-04-23T05:23:49.989Z"
   }
 }

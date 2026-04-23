@@ -7427,5 +7427,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Boss Dawgz",
+    "score": 8,
+    "subtitle": "OG Hot Dog",
+    "address": "5520 Lincoln Ave",
+    "city": "Lisle",
+    "state": "IL",
+    "lat": 41.7845828,
+    "lng": -88.0744425,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Boss%20Dawgz%2C%205520%20Lincoln%20Ave%2C%20Lisle%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXbu-p6E-1k/?igsh=NmFjdjJ6NjJsYnIz",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
