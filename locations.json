@@ -7444,5 +7444,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Ugly Noodle",
+    "score": 8.3,
+    "subtitle": "Kluski Dumplings in Vodka Sauce",
+    "address": "303 Franklin St",
+    "city": "Geneva",
+    "state": "IL",
+    "lat": 41.8849009,
+    "lng": -88.3087615,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Ugly%20Noodle%2C%20303%20Franklin%20St%2C%20Geneva%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXg63OZk71W/?igsh=MXY2bjRkajlncXZ2aQ==",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

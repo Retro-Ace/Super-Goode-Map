@@ -139,5 +139,12 @@
     "lng": -88.0744425,
     "displayName": "Boss Dawgz, 5520, Lincoln Avenue, Lisle, DuPage County, Illinois, 60532, United States",
     "updatedAt": "2026-04-23T05:23:49.989Z"
+  },
+  "303 franklin st, geneva, il, usa": {
+    "status": "ok",
+    "lat": 41.8849009,
+    "lng": -88.3087615,
+    "displayName": "303, Franklin Street, Geneva, Geneva Township, Kane County, Illinois, 60134, United States",
+    "updatedAt": "2026-04-25T14:00:04.569Z"
   }
 }
