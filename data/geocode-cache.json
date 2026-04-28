@@ -146,5 +146,12 @@
     "lng": -88.3087615,
     "displayName": "303, Franklin Street, Geneva, Geneva Township, Kane County, Illinois, 60134, United States",
     "updatedAt": "2026-04-25T14:00:04.569Z"
+  },
+  "4312 w fullerton, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9246439,
+    "lng": -87.7346972,
+    "displayName": "4312, West Fullerton Avenue, Kelvyn Park, Beat 2522, Hermosa, Chicago, Jefferson Township, Cook County, Illinois, 60639, United States",
+    "updatedAt": "2026-04-28T15:23:18.998Z"
   }
 }

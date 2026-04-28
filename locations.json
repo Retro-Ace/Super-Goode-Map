@@ -7461,5 +7461,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Tacotlan",
+    "score": 9.1,
+    "subtitle": "Quesabirria",
+    "address": "4312 W Fullerton",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 41.9246439,
+    "lng": -87.7346972,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Tacotlan%2C%204312%20W%20Fullerton%2C%20Chicago%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXom3Swk6s0/?igsh=MW4yODg2Y3ZibjZ2Ng==",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
