@@ -153,5 +153,12 @@
     "lng": -87.7346972,
     "displayName": "4312, West Fullerton Avenue, Kelvyn Park, Beat 2522, Hermosa, Chicago, Jefferson Township, Cook County, Illinois, 60639, United States",
     "updatedAt": "2026-04-28T15:23:18.998Z"
+  },
+  "1111 e golf rd, schaumburg, il, usa": {
+    "status": "ok",
+    "lat": 42.0493345,
+    "lng": -88.0515561,
+    "displayName": "Joong Boo Market, 1111, East Golf Road, Schaumburg, Schaumburg Township, Cook County, Illinois, 60173, United States",
+    "updatedAt": "2026-05-01T16:49:33.780Z"
   }
 }
