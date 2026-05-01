@@ -7480,6 +7480,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "K Grill Korean BBQ",
     "score": 7.8,
     "subtitle": "Beef Bulgogi Cheesesteak",
@@ -7491,6 +7492,22 @@
     "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=K%20Grill%20Korean%20BBQ%2C%201111%20E%20Golf%20Rd%2C%20Schaumburg%2C%20IL",
     "directionsUrl": "",
     "reviewUrl": "https://www.instagram.com/reel/DXtxiT4Dmk7/?igsh=dmpyeHFlY3dpeHpv",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
+  },
+  {
+    "name": "Yeero Revolution",
+    "score": 8.5,
+    "subtitle": "Pork Gyro",
+    "address": "700 E Lake Cook Rd",
+    "city": "Buffalo Grove",
+    "state": "IL",
+    "lat": 42.1535651,
+    "lng": -87.9426712,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Yeero%20Revolution%2C%20700%20E%20Lake%20Cook%20Rd%2C%20Buffalo%20Grove%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DXy9GJ0Ts0h/?igsh=Nmc3aW9udnAzbTY5",
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""

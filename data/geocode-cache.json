@@ -160,5 +160,12 @@
     "lng": -88.0515561,
     "displayName": "Joong Boo Market, 1111, East Golf Road, Schaumburg, Schaumburg Township, Cook County, Illinois, 60173, United States",
     "updatedAt": "2026-05-01T16:49:33.780Z"
+  },
+  "700 e lake cook rd, buffalo grove, il, usa": {
+    "status": "ok",
+    "lat": 42.1535651,
+    "lng": -87.9426712,
+    "displayName": "Shell, 700, East Lake Cook Road, Buffalo Grove, Wheeling Township, Cook County, Illinois, 60089, United States",
+    "updatedAt": "2026-05-01T17:53:13.884Z"
   }
 }
