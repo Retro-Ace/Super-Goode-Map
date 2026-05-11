@@ -188,5 +188,12 @@
     "lng": -87.6556331,
     "displayName": "1124, West Grand Avenue, River West, West Town, Chicago, West Chicago Township, Cook County, Illinois, 60642, United States",
     "updatedAt": "2026-05-10T20:40:40.656Z"
+  },
+  "1916 n rand rd, palatine, il, usa": {
+    "status": "ok",
+    "lat": 42.1437193,
+    "lng": -88.0272702,
+    "displayName": "Kolatek Baking Company, 1916, North Rand Road, Capri Village, Palatine, Palatine Township, Cook County, Illinois, 60074, United States",
+    "updatedAt": "2026-05-11T23:51:49.223Z"
   }
 }

@@ -7563,5 +7563,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Kolatek Baking Company",
+    "score": 8.4,
+    "subtitle": "Grilled Shrimp Po Boy",
+    "address": "1916 N Rand Rd",
+    "city": "Palatine",
+    "state": "IL",
+    "lat": 42.1437193,
+    "lng": -88.0272702,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Kolatek%20Baking%20Company%2C%201916%20N%20Rand%20Rd%2C%20Palatine%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DYMtb2MTDac/?igsh=MWkxMWpuOG92eTJpaA==",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
