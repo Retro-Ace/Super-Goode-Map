@@ -167,5 +167,33 @@
     "lng": -87.9426712,
     "displayName": "Shell, 700, East Lake Cook Road, Buffalo Grove, Wheeling Township, Cook County, Illinois, 60089, United States",
     "updatedAt": "2026-05-01T17:53:13.884Z"
+  },
+  "1465 w lake st, addison, il, usa": {
+    "status": "ok",
+    "lat": 41.9466524,
+    "lng": -88.0238825,
+    "displayName": "Taco 'bout it, 1465, West Lake Street, Addison, Addison Township, DuPage County, Illinois, 60101, United States",
+    "updatedAt": "2026-05-10T20:40:38.337Z"
+  },
+  "542 spring rd, elmhurst, il, usa": {
+    "status": "ok",
+    "lat": 41.8834538,
+    "lng": -87.9497303,
+    "displayName": "542, Spring Road, Elmhurst, DuPage County, Illinois, 60126, United States",
+    "updatedAt": "2026-05-10T20:40:39.824Z"
+  },
+  "1124 w grand ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.8913044,
+    "lng": -87.6556331,
+    "displayName": "1124, West Grand Avenue, River West, West Town, Chicago, West Chicago Township, Cook County, Illinois, 60642, United States",
+    "updatedAt": "2026-05-10T20:40:40.656Z"
+  },
+  "1916 n rand rd, palatine, il, usa": {
+    "status": "ok",
+    "lat": 42.1437193,
+    "lng": -88.0272702,
+    "displayName": "Kolatek Baking Company, 1916, North Rand Road, Capri Village, Palatine, Palatine Township, Cook County, Illinois, 60074, United States",
+    "updatedAt": "2026-05-11T23:51:49.223Z"
   }
 }
