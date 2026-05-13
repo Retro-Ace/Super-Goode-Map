@@ -1,13 +1,5 @@
 # Super Goode Web Map
 
-> Start here if you are new to this repo.
->
-> - Read this file first for the web-map overview and current data/pipeline model.
-> - Read `AGENTS.md` for repo working rules.
-> - This repo is the web map and data-pipeline repo only, not `/Users/anthonylarosa/CODEX/Super Goode App`.
-> - Read `SUPER_GOODE_WEB_MAP_CURRENT_BREAKDOWN.txt` if you need the longer repo-only current-state snapshot.
-> - Read `extraction_report.md` only if you need historical source-extraction context.
-
 Static restaurant map for Phil Goode's reviews, built as a GitHub Pages site with no backend.
 
 <p align="center">
@@ -20,7 +12,7 @@ The site turns Phil Goode's review posts into a browsable restaurant map and lis
 
 ## Current Project State
 
-As of 2026-04-09, the canonical web-map dataset in [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) contains 432 restaurants.
+As of 2026-04-09, the canonical web-map dataset in [`data/locations.json`](data/locations.json) contains 432 restaurants.
 
 - 35 restaurants score 9.0 and up
 - 284 restaurants score in the 8.x range
@@ -36,10 +28,10 @@ As of 2026-04-09, the canonical web-map dataset in [`data/locations.json`](/User
 
 Current source-of-truth layout:
 
-- Canonical dataset: [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json)
-- Required mirror: [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
-- CSV export: [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
-- Embedded fallback snapshot: [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
+- Canonical dataset: [`data/locations.json`](data/locations.json)
+- Required mirror: [`locations.json`](locations.json)
+- CSV export: [`super_goode_locations.csv`](super_goode_locations.csv)
+- Embedded fallback snapshot: [`index.html`](index.html)
 
 The app first tries `./data/locations.json`, then falls back to `./locations.json`, and finally uses the embedded snapshot in `index.html` if the shared JSON files cannot be loaded.
 
@@ -72,7 +64,7 @@ Important mobile behavior details:
 
 ## Analytics
 
-Google Analytics 4 is now installed directly in [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html) with a guarded helper so blocked analytics requests do not break the site.
+Google Analytics 4 is installed directly in [`index.html`](index.html) with a guarded helper so blocked analytics requests do not break the site.
 
 The current custom events are:
 
@@ -121,12 +113,12 @@ The canonical JSON dataset currently uses:
 
 ### Manual Intake
 
-Use [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-review.html) to generate a valid JSON snippet for a new restaurant.
+Use [`admin/add-review.html`](admin/add-review.html) to generate a valid JSON snippet for a new restaurant.
 
 1. Enter the restaurant details in the helper.
 2. Include `googlePlaceUrl` when a real Google Maps place or share URL is available.
 3. Keep `directionsUrl` as the fallback field when needed.
-4. Paste the generated object into [`data/new-reviews.json`](/Users/anthonylarosa/CODEX/Super Goode/data/new-reviews.json).
+4. Paste the generated object into [`data/new-reviews.json`](data/new-reviews.json).
 5. Run `node scripts/update_locations.js`.
 6. Run `node scripts/refresh_static_artifacts.js`.
 7. Review the diff, then commit and push.
@@ -137,7 +129,7 @@ The repo also supports approved-row intake from a published Google Sheet CSV, in
 
 1. Publish the sheet as CSV.
 2. Store the CSV URL in the `GOOGLE_SHEET_CSV_URL` GitHub secret.
-3. Run [`.github/workflows/sync-sheet.yml`](/Users/anthonylarosa/CODEX/Super Goode/.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
+3. Run [`.github/workflows/sync-sheet.yml`](.github/workflows/sync-sheet.yml) manually or let the hourly schedule run.
 4. Set `Request Type` to `Add location` for normal add/update intake, or `Remove location` for exact-location removals.
 5. The workflow filters to approved rows, blocks obvious temporary add entries, accepts optional Google Maps place/share URL headers, geocodes missing coordinates when possible, writes the shared JSON files, refreshes the CSV and embedded fallback snapshot, and commits the updated data back to the repo.
 
@@ -158,17 +150,17 @@ Supported place-link header variants include:
 
 ### Sponsor Ads Publishing
 
-Sponsor ads use a separate static feed and image folder from the restaurant dataset. Use [`SPONSOR_ADS_PUBLISHING_WORKFLOW.md`](/Users/anthonylarosa/CODEX/Super Goode/SPONSOR_ADS_PUBLISHING_WORKFLOW.md) for the Google Form -> Sheet -> GitHub Action workflow that publishes `sponsor-ads/sponsor-ads.json` and `sponsor-ads/images/`.
+Sponsor ads use a separate static feed and image folder from the restaurant dataset. Use [`SPONSOR_ADS_PUBLISHING_WORKFLOW.md`](SPONSOR_ADS_PUBLISHING_WORKFLOW.md) for the Google Form -> Sheet -> GitHub Action workflow that publishes `sponsor-ads/sponsor-ads.json` and `sponsor-ads/images/`.
 
 ## Refreshing Static Artifacts
 
-Run `node scripts/refresh_static_artifacts.js` whenever [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) changes.
+Run `node scripts/refresh_static_artifacts.js` whenever [`data/locations.json`](data/locations.json) changes.
 
 That refresh keeps these files aligned:
 
-- [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json)
-- [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv)
-- the embedded `DATA` snapshot in [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html)
+- [`locations.json`](locations.json)
+- [`super_goode_locations.csv`](super_goode_locations.csv)
+- the embedded `DATA` snapshot in [`index.html`](index.html)
 
 The sheet-sync workflow now uses that same refresh path before committing, so approved add and remove requests can keep the JSON mirror, CSV export, and embedded fallback snapshot in sync automatically.
 
@@ -178,16 +170,16 @@ The CSV export keeps its existing header order and legacy columns while still ex
 
 In this repo, `data/locations.json` is the canonical dataset, `locations.json` is the mirror fallback, and `super_goode_locations.csv` is an export artifact.
 
-- [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html): static app shell, mobile and desktop UI, and embedded fallback data
-- [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json): canonical dataset
-- [`locations.json`](/Users/anthonylarosa/CODEX/Super Goode/locations.json): required mirror fallback
-- [`super_goode_locations.csv`](/Users/anthonylarosa/CODEX/Super Goode/super_goode_locations.csv): export-only CSV view of the current dataset
-- [`admin/add-review.html`](/Users/anthonylarosa/CODEX/Super Goode/admin/add-review.html): manual intake helper
-- [`scripts/update_locations.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/update_locations.js): merges new rows into the canonical dataset
-- [`scripts/sync_sheet.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/sync_sheet.js): downloads and sanitizes approved sheet rows
-- [`scripts/location_enrichment.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/location_enrichment.js): place-link, directions fallback, and geocoding helpers
-- [`scripts/refresh_static_artifacts.js`](/Users/anthonylarosa/CODEX/Super Goode/scripts/refresh_static_artifacts.js): mirror, CSV, and embedded fallback refresh
-- [`assets/images/branding/`](/Users/anthonylarosa/CODEX/Super Goode/assets/images/branding): current branding and promo assets
+- [`index.html`](index.html): static app shell, mobile and desktop UI, and embedded fallback data
+- [`data/locations.json`](data/locations.json): canonical dataset
+- [`locations.json`](locations.json): required mirror fallback
+- [`super_goode_locations.csv`](super_goode_locations.csv): export-only CSV view of the current dataset
+- [`admin/add-review.html`](admin/add-review.html): manual intake helper
+- [`scripts/update_locations.js`](scripts/update_locations.js): merges new rows into the canonical dataset
+- [`scripts/sync_sheet.js`](scripts/sync_sheet.js): downloads and sanitizes approved sheet rows
+- [`scripts/location_enrichment.js`](scripts/location_enrichment.js): place-link, directions fallback, and geocoding helpers
+- [`scripts/refresh_static_artifacts.js`](scripts/refresh_static_artifacts.js): mirror, CSV, and embedded fallback refresh
+- [`assets/images/branding/`](assets/images/branding): current branding and promo assets
 
 ## Hosting And Deployment
 

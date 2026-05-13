@@ -1,1 +1,17 @@
 .DS_Store
+node_modules/
+tools/
+
+# local env and secrets
+.env
+.env.*
+!.env.example
+
+# local Codex / repo-audit docs
+AGENTS.md
+SUPER_GOODE_WEB_*.md
+SUPER_GOODE_WEB_*.txt
+Super_Goode.txt
+extraction_report.md
+scripts/apply_needs_help_fixes.js
+scripts/rebuild_from_google_place_url.js
