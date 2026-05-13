@@ -1,5 +1,13 @@
 # Super Goode Web Map
 
+> Start here if you are new to this repo.
+>
+> - Read this file first for the web-map overview and current data/pipeline model.
+> - Read `AGENTS.md` for repo working rules.
+> - This repo is the web map and data-pipeline repo only, not `/Users/anthonylarosa/CODEX/Super Goode App`.
+> - Read `SUPER_GOODE_WEB_MAP_CURRENT_BREAKDOWN.txt` if you need the longer repo-only current-state snapshot.
+> - Read `extraction_report.md` only if you need historical source-extraction context.
+
 Static restaurant map for Phil Goode's reviews, built as a GitHub Pages site with no backend.
 
 <p align="center">
@@ -148,6 +156,10 @@ Supported place-link header variants include:
 - `Place URL`
 - `Maps URL`
 
+### Sponsor Ads Publishing
+
+Sponsor ads use a separate static feed and image folder from the restaurant dataset. Use [`SPONSOR_ADS_PUBLISHING_WORKFLOW.md`](/Users/anthonylarosa/CODEX/Super Goode/SPONSOR_ADS_PUBLISHING_WORKFLOW.md) for the Google Form -> Sheet -> GitHub Action workflow that publishes `sponsor-ads/sponsor-ads.json` and `sponsor-ads/images/`.
+
 ## Refreshing Static Artifacts
 
 Run `node scripts/refresh_static_artifacts.js` whenever [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json) changes.
@@ -163,6 +175,8 @@ The sheet-sync workflow now uses that same refresh path before committing, so ap
 The CSV export keeps its existing header order and legacy columns while still exporting current dataset fields like `googlePlaceUrl`.
 
 ## Repository Structure
+
+In this repo, `data/locations.json` is the canonical dataset, `locations.json` is the mirror fallback, and `super_goode_locations.csv` is an export artifact.
 
 - [`index.html`](/Users/anthonylarosa/CODEX/Super Goode/index.html): static app shell, mobile and desktop UI, and embedded fallback data
 - [`data/locations.json`](/Users/anthonylarosa/CODEX/Super Goode/data/locations.json): canonical dataset

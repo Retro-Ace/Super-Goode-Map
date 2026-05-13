@@ -18,29 +18,26 @@ The mobile app should point `EXPO_PUBLIC_SPONSOR_ADS_FEED_URL` at the feed URL o
 Create a Google Form named `Super Goode Sponsor Ad Intake` with these respondent-facing fields:
 
 - Sponsor name: required short answer.
-- Sponsor label: required multiple choice with:
-  - `Featured Local Partner`
-  - `Sponsored Local Listing`
-  - `Local Sponsor`
-  - `Featured Realtor`
-  - `Featured Business`
 - Sponsor link URL: optional short answer. Must be HTTPS when provided.
 - Campaign start date: required date.
 - Campaign end date: required date. This is the last local calendar day the ad should run.
-- Creative image URL: required short answer. Must be a public direct HTTPS `.jpg`, `.jpeg`, or `.png` URL for a `1200 x 360 px` creative.
-- Weight: optional short answer, integer `1` through `10`. Blank defaults to `1`.
+- Creative image link (Dropbox or Google Drive): required short answer. Use a public Dropbox share link, public Google Drive file share link, or public direct HTTPS `.jpg`, `.jpeg`, or `.png` URL for a `1200 x 360 px` creative.
+- Approved: required multiple choice with `Yes` and `No`.
 - Notes: optional paragraph.
 
-Do not use Google Form file uploads for v1. GitHub Actions cannot download private Google Drive uploads without extra Google API credentials. If a sponsor sends a file, upload/export the final creative to a public direct image URL before approval.
+Do not expose sponsor label, active state, campaign ID, placement, weight, or amount charged on the public form. The feed still contains required `label` metadata, but the sync script defaults it to `Featured Local Partner` when the Sheet does not provide a label.
+
+Do not use Google Form private file uploads for v1 unless a future Google Drive API credential flow is added. The current GitHub Action expects a public Dropbox link, public Google Drive file link, or direct HTTPS image URL that it can fetch without signing in.
 
 ## Google Sheet approval columns
 
-Link the form to a response Sheet, then add these editor-only columns to the right side of the response columns:
+Link the form to a response Sheet. The form should create the `Approved` response column. Then add these editor-only columns to the right side of the response columns:
 
-- `Approved`: set to `Yes` only when the row is ready to publish.
 - `Active`: optional. Blank means active. Use `No` to publish the row as inactive.
 - `Campaign ID`: optional slug override. Blank generates an ID from sponsor name and campaign month.
 - `Placement`: optional. Blank defaults to `app_launch_banner`.
+- `Weight`: optional integer `1` through `10`. Blank defaults to `1`; higher values make the ad more likely to be selected when multiple eligible ads are active.
+- `Amount charged`: optional manual bookkeeping field for internal records only. It is ignored by the app feed.
 
 Only rows with `Approved` set to `Yes` are considered for the static feed. Inactive rows can remain in the feed with `active: false`; the app filters them out.
 
@@ -68,7 +65,7 @@ It:
 - fetches the published Sheet CSV,
 - reads approved sponsor rows,
 - validates sponsor fields,
-- downloads approved public sponsor creatives into `sponsor-ads/images/`,
+- downloads approved public sponsor creatives from direct HTTPS image URLs, Dropbox share links, or Google Drive file share links into `sponsor-ads/images/`,
 - writes `sponsor-ads/sponsor-ads.json`,
 - removes stale managed JPG/PNG files from `sponsor-ads/images/`,
 - commits only sponsor feed/image changes when output changes.
@@ -112,20 +109,23 @@ Date-only Sheet values are interpreted as America/Chicago local calendar dates. 
 
 - `Approved` must be affirmative (`Yes`, `Y`, `True`, `Approved`, `Publish`, or `1`) before a row is considered.
 - `Sponsor name` is required.
-- `Sponsor label` must match one allowed label exactly.
+- `Sponsor label` is not needed on the form or Sheet. If no label column exists, the feed label defaults to `Featured Local Partner`.
 - `Placement` must be blank or `app_launch_banner`.
-- `Creative image URL` must be HTTPS and end in `.jpg`, `.jpeg`, or `.png`.
+- `Creative image link` must be HTTPS and must be either a direct `.jpg`, `.jpeg`, or `.png` URL, a public Dropbox share link, or a public Google Drive file share link.
+- Downloaded creative bytes must resolve to JPG or PNG before the row is accepted.
 - `Sponsor link URL` is optional. Invalid or non-HTTPS links are stripped.
 - `Campaign start date` and `Campaign end date` are required.
 - The generated `endsAt` timestamp must be after `startsAt`.
 - `Weight` defaults to `1` and must be an integer from `1` to `10`.
+- `Amount charged` is ignored by the feed and can contain any internal bookkeeping value.
 - IDs must be unique after slug generation. Duplicate IDs are skipped.
 
 ## Operating checklist
 
 - Keep sponsor ads separate from `data/locations.json`.
 - Keep sponsor creatives at `1200 x 360 px`.
-- Use direct public image URLs before approval.
-- Set `Approved` to `Yes` only after the creative, label, link, and dates are correct.
+- Use public Dropbox links, public Google Drive file links, or direct HTTPS image URLs before approval.
+- Set `Approved` to `Yes` only after the creative, link, and dates are correct.
+- Keep `Weight` and `Amount charged` as editor-only Sheet fields; do not add them to the public form.
 - Run the GitHub Action manually after urgent sponsor changes.
 - Confirm the feed URL loads JSON before enabling or changing the app env var.

@@ -23,6 +23,7 @@ const ALLOWED_LABELS = new Set([
   "Featured Realtor",
   "Featured Business",
 ]);
+const DEFAULT_LABEL = "Featured Local Partner";
 
 const HEADER_ALIASES = new Map([
   ["active", "active"],
@@ -135,7 +136,16 @@ function rowsToObjects(rows) {
         return;
       }
 
-      record[header] = cleanString(row[index]);
+      const value = cleanString(row[index]);
+
+      if (Object.prototype.hasOwnProperty.call(record, header)) {
+        if (!record[header] && value) {
+          record[header] = value;
+        }
+        return;
+      }
+
+      record[header] = value;
     });
 
     return record;
@@ -381,7 +391,7 @@ function sanitizeSponsorRow(row, seenIds) {
   }
 
   const sponsorName = cleanString(row.sponsorName);
-  const label = cleanString(row.label);
+  const label = cleanString(row.label) || DEFAULT_LABEL;
   const placement = cleanString(row.placement) || PLACEMENT;
   const startsAt = parseCampaignTimestamp(row.startsAt, "start");
   const endsAt = parseCampaignTimestamp(row.endsAt, "end");
