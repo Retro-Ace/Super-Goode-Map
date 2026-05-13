@@ -41,6 +41,7 @@ const HEADER_ALIASES = new Map([
   ["linkurl", "linkUrl"],
   ["placement", "placement"],
   ["sponsorbusinessname", "sponsorName"],
+  ["sponsorlabel", "label"],
   ["sponsorlinkurl", "linkUrl"],
   ["sponsorname", "sponsorName"],
   ["startdate", "startsAt"],
@@ -194,6 +195,37 @@ function imageExtensionFromUrl(imageUrl) {
   }
 
   return match[1] === "jpeg" ? "jpg" : match[1];
+}
+
+function normalizeImageDownloadUrl(imageUrl) {
+  const parsed = new URL(imageUrl);
+
+  if (parsed.hostname === "www.dropbox.com" || parsed.hostname === "dropbox.com") {
+    parsed.searchParams.delete("raw");
+    parsed.searchParams.set("dl", "1");
+  }
+
+  return parsed.toString();
+}
+
+function hasImageMagicBytes(buffer) {
+  const isPng =
+    buffer.length >= 8 &&
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a;
+  const isJpeg =
+    buffer.length >= 3 &&
+    buffer[0] === 0xff &&
+    buffer[1] === 0xd8 &&
+    buffer[2] === 0xff;
+
+  return isPng || isJpeg;
 }
 
 function parseDateOnly(value) {
@@ -376,7 +408,7 @@ function sanitizeSponsorRow(row, seenIds) {
 
   return {
     skipped: false,
-    imageSourceUrl,
+    imageSourceUrl: normalizeImageDownloadUrl(imageSourceUrl),
     staticImageFilename,
     ad: {
       id,
@@ -401,7 +433,13 @@ async function downloadImage(imageUrl, outputPath) {
   }
 
   const arrayBuffer = await response.arrayBuffer();
-  await fs.writeFile(outputPath, Buffer.from(arrayBuffer));
+  const buffer = Buffer.from(arrayBuffer);
+
+  if (!hasImageMagicBytes(buffer)) {
+    throw new Error("image fetch did not return JPG or PNG bytes");
+  }
+
+  await fs.writeFile(outputPath, buffer);
 }
 
 async function cleanStaleImages(keepFilenames) {
