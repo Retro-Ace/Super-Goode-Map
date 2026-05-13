@@ -7,11 +7,11 @@
       "sponsorName": "Aerial Vision Chicago",
       "label": "Featured Local Partner",
       "placement": "app_launch_banner",
-      "imageUrl": "https://retro-ace.github.io/Super-Goode-Map/sponsor-ads/images/aerial-vision-chicago-2026-05.png",
       "linkUrl": "https://www.aerialvisionchicago.com/",
       "startsAt": "2026-05-13T05:00:00.000Z",
       "endsAt": "2026-05-16T05:00:00.000Z",
-      "weight": 1
+      "weight": 1,
+      "imageUrl": "https://retro-ace.github.io/Super-Goode-Map/sponsor-ads/images/aerial-vision-chicago-2026-05.png"
     }
   ]
 }

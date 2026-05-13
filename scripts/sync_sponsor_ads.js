@@ -33,6 +33,8 @@ const HEADER_ALIASES = new Map([
   ["campaignenddate", "endsAt"],
   ["campaignid", "id"],
   ["campaignstartdate", "startsAt"],
+  ["creativeimagelink", "imageSourceUrl"],
+  ["creativeimagelinkdropboxorgoogledrive", "imageSourceUrl"],
   ["creativeimageurl", "imageSourceUrl"],
   ["enddate", "endsAt"],
   ["endsat", "endsAt"],
@@ -175,7 +177,7 @@ function toHttpsUrl(value, { requireImage = false } = {}) {
 
     if (requireImage) {
       const pathname = parsed.pathname.toLowerCase();
-      if (!/\.(jpe?g|png)$/.test(pathname)) {
+      if (!/\.(jpe?g|png)$/.test(pathname) && !isGoogleDriveUrl(parsed)) {
         return null;
       }
     }
@@ -186,15 +188,26 @@ function toHttpsUrl(value, { requireImage = false } = {}) {
   }
 }
 
-function imageExtensionFromUrl(imageUrl) {
-  const pathname = new URL(imageUrl).pathname.toLowerCase();
-  const match = pathname.match(/\.(jpe?g|png)$/);
+function isGoogleDriveUrl(parsedUrl) {
+  return (
+    parsedUrl.hostname === "drive.google.com" ||
+    parsedUrl.hostname === "docs.google.com" ||
+    parsedUrl.hostname === "drive.usercontent.google.com"
+  );
+}
 
-  if (!match) {
+function googleDriveFileIdFromUrl(parsedUrl) {
+  if (!isGoogleDriveUrl(parsedUrl)) {
     return null;
   }
 
-  return match[1] === "jpeg" ? "jpg" : match[1];
+  const filePathMatch = parsedUrl.pathname.match(/\/file\/d\/([^/]+)/);
+
+  if (filePathMatch) {
+    return filePathMatch[1];
+  }
+
+  return parsedUrl.searchParams.get("id");
 }
 
 function normalizeImageDownloadUrl(imageUrl) {
@@ -205,11 +218,17 @@ function normalizeImageDownloadUrl(imageUrl) {
     parsed.searchParams.set("dl", "1");
   }
 
+  const googleDriveFileId = googleDriveFileIdFromUrl(parsed);
+
+  if (googleDriveFileId && parsed.hostname !== "drive.usercontent.google.com") {
+    return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(googleDriveFileId)}`;
+  }
+
   return parsed.toString();
 }
 
-function hasImageMagicBytes(buffer) {
-  const isPng =
+function imageExtensionFromBuffer(buffer) {
+  if (
     buffer.length >= 8 &&
     buffer[0] === 0x89 &&
     buffer[1] === 0x50 &&
@@ -218,14 +237,21 @@ function hasImageMagicBytes(buffer) {
     buffer[4] === 0x0d &&
     buffer[5] === 0x0a &&
     buffer[6] === 0x1a &&
-    buffer[7] === 0x0a;
-  const isJpeg =
+    buffer[7] === 0x0a
+  ) {
+    return "png";
+  }
+
+  if (
     buffer.length >= 3 &&
     buffer[0] === 0xff &&
     buffer[1] === 0xd8 &&
-    buffer[2] === 0xff;
+    buffer[2] === 0xff
+  ) {
+    return "jpg";
+  }
 
-  return isPng || isJpeg;
+  return null;
 }
 
 function parseDateOnly(value) {
@@ -401,22 +427,19 @@ function sanitizeSponsorRow(row, seenIds) {
 
   seenIds.add(id);
 
-  const extension = imageExtensionFromUrl(imageSourceUrl);
-  const staticImageFilename = `${id}.${extension}`;
   const linkUrl = toHttpsUrl(row.linkUrl);
   const active = cleanString(row.active) ? !isNegative(row.active) : true;
 
   return {
     skipped: false,
     imageSourceUrl: normalizeImageDownloadUrl(imageSourceUrl),
-    staticImageFilename,
+    imageId: id,
     ad: {
       id,
       active,
       sponsorName,
       label,
       placement: PLACEMENT,
-      imageUrl: publicImageUrl(staticImageFilename),
       ...(linkUrl ? { linkUrl } : {}),
       startsAt,
       endsAt,
@@ -425,7 +448,7 @@ function sanitizeSponsorRow(row, seenIds) {
   };
 }
 
-async function downloadImage(imageUrl, outputPath) {
+async function fetchImage(imageUrl) {
   const response = await fetch(imageUrl);
 
   if (!response.ok) {
@@ -434,12 +457,13 @@ async function downloadImage(imageUrl, outputPath) {
 
   const arrayBuffer = await response.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
+  const extension = imageExtensionFromBuffer(buffer);
 
-  if (!hasImageMagicBytes(buffer)) {
+  if (!extension) {
     throw new Error("image fetch did not return JPG or PNG bytes");
   }
 
-  await fs.writeFile(outputPath, buffer);
+  return { buffer, extension };
 }
 
 async function cleanStaleImages(keepFilenames) {
@@ -495,11 +519,17 @@ async function main() {
 
     try {
       await fs.mkdir(IMAGES_DIR, { recursive: true });
-      await downloadImage(
-        result.imageSourceUrl,
-        path.join(IMAGES_DIR, result.staticImageFilename)
-      );
-      accepted.push(result);
+      const image = await fetchImage(result.imageSourceUrl);
+      const staticImageFilename = `${result.imageId}.${image.extension}`;
+
+      await fs.writeFile(path.join(IMAGES_DIR, staticImageFilename), image.buffer);
+      accepted.push({
+        staticImageFilename,
+        ad: {
+          ...result.ad,
+          imageUrl: publicImageUrl(staticImageFilename),
+        },
+      });
     } catch (error) {
       skipped.push(`${result.ad.id}: ${error.message}`);
     }
