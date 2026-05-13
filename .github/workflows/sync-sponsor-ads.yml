@@ -1,0 +1,43 @@
+name: Sync Sponsor Ads
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: super-goode-sponsor-ads-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync approved sponsor ads
+        run: node scripts/sync_sponsor_ads.js
+        env:
+          SPONSOR_ADS_SHEET_CSV_URL: ${{ secrets.SPONSOR_ADS_SHEET_CSV_URL }}
+          SPONSOR_ADS_PUBLIC_BASE_URL: ${{ vars.SPONSOR_ADS_PUBLIC_BASE_URL }}
+
+      - name: Commit updated sponsor feed
+        run: |
+          if git diff --quiet -- sponsor-ads/sponsor-ads.json sponsor-ads/images; then
+            echo "No sponsor ad changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sponsor-ads/sponsor-ads.json sponsor-ads/images
+          git commit -m "Sync approved Super Goode sponsor ads"
+          git push
