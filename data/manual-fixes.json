@@ -4,5 +4,9 @@
     "_controls": {
       "disableAutoGooglePlaceUrl": true
     }
+  },
+  "NYC HALAL EATS": {
+    "lat": 41.6532508,
+    "lng": -87.853182
   }
 }
