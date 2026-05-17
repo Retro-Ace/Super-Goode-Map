@@ -12,19 +12,19 @@ The site turns Phil Goode's review posts into a browsable restaurant map and lis
 
 ## Current Project State
 
-As of 2026-04-09, the canonical web-map dataset in [`data/locations.json`](data/locations.json) contains 432 restaurants.
+As of 2026-05-17, the canonical web-map dataset in [`data/locations.json`](data/locations.json) contains 446 restaurants.
 
-- 35 restaurants score 9.0 and up
-- 284 restaurants score in the 8.x range
-- 112 restaurants score in the 7.x range
+- 36 restaurants score 9.0 and up
+- 295 restaurants score in the 8.x range
+- 114 restaurants score in the 7.x range
 - 1 restaurant currently scores below 7.0
-- 432 of 432 restaurants currently have coordinates
-- 432 of 432 restaurants currently have subtitles and review URLs
-- 431 of 432 restaurants currently have a populated `googlePlaceUrl`
-- 254 of 432 restaurants currently keep a stored `directionsUrl`
+- 446 of 446 restaurants currently have coordinates
+- 445 of 446 restaurants currently have subtitles, and 446 of 446 have review URLs
+- 445 of 446 restaurants currently have a populated `googlePlaceUrl`
+- 254 of 446 restaurants currently keep a stored `directionsUrl`
 - 1 row intentionally leaves `googlePlaceUrl` blank and falls back to `directionsUrl`: `Dorrie's Kitchen`
-- Source types currently break down to 427 `structured-data` rows and 5 `sheet` rows
-- Recent data-pipeline fixes now keep same-name different-address locations separate during sheet sync, and the latest coordinate cleanup corrected the stored map point for `Pupusería Rinconcito Hispano`
+- Source types currently break down to 427 `structured-data` rows and 19 `sheet` rows
+- Recent data-pipeline fixes now keep same-name different-address locations separate during sheet sync, and the latest coordinate cleanup added the stored map point for `NYC HALAL EATS`
 
 Current source-of-truth layout:
 
