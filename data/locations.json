@@ -7582,6 +7582,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Minnelli Meat and Deli",
     "score": 7.8,
     "subtitle": "Meatball sub",
@@ -7598,6 +7599,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Frank's Chicago Shrimp",
     "score": 7.9,
     "subtitle": "Fried Shrimp and Frog Legs",
@@ -7614,6 +7616,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Kanin",
     "score": 9,
     "subtitle": "Adobo Loco Moco and Longanisa Musubi",
@@ -7630,6 +7633,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Barrel House",
     "score": 7.8,
     "subtitle": "Hot Chicken Sandwich",
