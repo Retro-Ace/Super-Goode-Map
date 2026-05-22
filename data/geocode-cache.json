@@ -195,5 +195,33 @@
     "lng": -88.0272702,
     "displayName": "Kolatek Baking Company, 1916, North Rand Road, Capri Village, Palatine, Palatine Township, Cook County, Illinois, 60074, United States",
     "updatedAt": "2026-05-11T23:51:49.223Z"
+  },
+  "7900 n milwaukee, niles, il, usa": {
+    "status": "ok",
+    "lat": 42.0249963,
+    "lng": -87.8157147,
+    "displayName": "Oak Mill Mall, 7900, North Milwaukee Avenue, Niles, Maine Township, Cook County, Illinois, 60714, United States",
+    "updatedAt": "2026-05-22T02:49:29.917Z"
+  },
+  "3071 barrington rd, hoffman estates, il, usa": {
+    "status": "ok",
+    "lat": 42.0787093,
+    "lng": -88.1401349,
+    "displayName": "Frank's Chicago Shrimp, 3071, North Barrington Road, Hoffman Estates, Barrington Township, Cook County, Illinois, 60192, United States",
+    "updatedAt": "2026-05-22T02:49:31.316Z"
+  },
+  "5131 n damen, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9758238,
+    "lng": -87.6789867,
+    "displayName": "Sweet Virginia’s Kitchen, 5131, North Damen Avenue, Bowmanville, Ravenswood, Lincoln Square, Chicago, Lake View Township, Cook County, Illinois, 60625, United States",
+    "updatedAt": "2026-05-22T02:49:32.675Z"
+  },
+  "5100 n harlem ave, harwood heights, il, usa": {
+    "status": "ok",
+    "lat": 41.9730611,
+    "lng": -87.8073887,
+    "displayName": "5100-5116, North Harlem Avenue, Harwood Heights, Norwood Park Township, Cook County, Illinois, 60706, United States",
+    "updatedAt": "2026-05-22T02:49:33.614Z"
   }
 }
