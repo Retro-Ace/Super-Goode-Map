@@ -7648,5 +7648,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Brennan's Gourmet Burger Shack",
+    "score": 9.3,
+    "subtitle": "House burger with bacon",
+    "address": "6686 N Northwest highway",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 42.0023562,
+    "lng": -87.8157881,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Brennan's%20Gourmet%20Burger%20Shack%2C%206686%20N%20Northwest%20highway%2C%20Chicago%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DYo-_osTGAc/?igsh=MWNyaDBvcW02bXdxaQ==",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

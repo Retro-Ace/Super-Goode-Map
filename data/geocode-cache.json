@@ -223,5 +223,12 @@
     "lng": -87.8073887,
     "displayName": "5100-5116, North Harlem Avenue, Harwood Heights, Norwood Park Township, Cook County, Illinois, 60706, United States",
     "updatedAt": "2026-05-22T02:49:33.614Z"
+  },
+  "6686 n northwest highway, chicago, il, usa": {
+    "status": "ok",
+    "lat": 42.0023562,
+    "lng": -87.8157881,
+    "displayName": "Emerald Isle, 6686, North Northwest Highway, Edison Park, Chicago, Jefferson Township, Cook County, Illinois, 60631, United States",
+    "updatedAt": "2026-05-23T06:29:57.623Z"
   }
 }
