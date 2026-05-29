@@ -230,5 +230,12 @@
     "lng": -87.8157881,
     "displayName": "Emerald Isle, 6686, North Northwest Highway, Edison Park, Chicago, Jefferson Township, Cook County, Illinois, 60631, United States",
     "updatedAt": "2026-05-23T06:29:57.623Z"
+  },
+  "1071 rohlwing rd, elk grove village, il, usa": {
+    "status": "ok",
+    "lat": 41.9944008,
+    "lng": -88.0307901,
+    "displayName": "Pies of London, 1071, Rohlwing Road, Elk Grove Village, Elk Grove Township, Cook County, Illinois, 60007, United States",
+    "updatedAt": "2026-05-29T16:38:42.056Z"
   }
 }
