@@ -3248,23 +3248,6 @@
   },
   {
     "requestType": "add",
-    "name": "Naansense",
-    "score": 8.5,
-    "subtitle": "Lamb Naan Wrap",
-    "address": "1715 W 22nd St",
-    "city": "Oak Brook",
-    "state": "IL",
-    "lat": 41.8461148,
-    "lng": -87.960402,
-    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Naansense%2C%201715%20W%2022nd%20St%2C%20Oak%20Brook%2C%20IL",
-    "directionsUrl": "https://www.google.com/maps/dir/?api=1&destination=1715%20W%2022nd%20St%2C%20Oak%20Brook%2C%20IL%2060523%2C%20USA",
-    "reviewUrl": "https://www.instagram.com/reel/DAa3o7JPESL/",
-    "sourceType": "structured-data",
-    "confidence": "medium",
-    "notes": ""
-  },
-  {
-    "requestType": "add",
     "name": "More Than Pasta",
     "score": 8,
     "subtitle": "Vodka Beef Sausage Pasta",
