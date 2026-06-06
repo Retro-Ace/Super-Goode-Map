@@ -237,5 +237,30 @@
     "lng": -88.0307901,
     "displayName": "Pies of London, 1071, Rohlwing Road, Elk Grove Village, Elk Grove Township, Cook County, Illinois, 60007, United States",
     "updatedAt": "2026-05-29T16:38:42.056Z"
+  },
+  "7448 s vincenness, chicago, il, usa": {
+    "status": "not-found",
+    "updatedAt": "2026-06-06T02:33:33.750Z"
+  },
+  "448 w army trail rd, bloomingdale, il, usa": {
+    "status": "ok",
+    "lat": 41.9392891,
+    "lng": -88.1190406,
+    "displayName": "448, West Army Trail Road, Cloverdale, Bloomingdale, Bloomingdale Township, DuPage County, Illinois, 60185, United States",
+    "updatedAt": "2026-06-06T02:33:34.511Z"
+  },
+  "3130 n harlem, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9371546,
+    "lng": -87.8070452,
+    "displayName": "Luke's on Harlem, 3130, North Harlem Avenue, Beat 2511, Dunning, Chicago, Jefferson Township, Cook County, Illinois, 60634, United States",
+    "updatedAt": "2026-06-06T02:33:35.801Z"
+  },
+  "551 lincoln ave, winnetka, il, usa": {
+    "status": "ok",
+    "lat": 42.1067875,
+    "lng": -87.7324824,
+    "displayName": "551, Lincoln Avenue, East Elm Business District, Winnetka, New Trier Township, Cook County, Illinois, 60093, United States",
+    "updatedAt": "2026-06-06T02:33:36.752Z"
   }
 }
