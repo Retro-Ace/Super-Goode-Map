@@ -7667,6 +7667,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Haire's Gulf Shrimp",
     "score": 7.7,
     "subtitle": "Shrimp and spaghetti",
@@ -7683,6 +7684,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Sporty's Restaurant",
     "score": 8,
     "subtitle": "Chicken tenders",
@@ -7699,6 +7701,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Luke's on Harlem",
     "score": 8.4,
     "subtitle": "Breaded Steak Sandwich",
@@ -7715,6 +7718,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Stacked and Folded",
     "score": 7.8,
     "subtitle": "Short Rib Banh Mi",
