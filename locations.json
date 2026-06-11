@@ -7733,5 +7733,21 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Bellalukes",
+    "score": 8.1,
+    "subtitle": "Italian beef",
+    "address": "193 S Rand Rd",
+    "city": "Lake Zurich",
+    "state": "IL",
+    "lat": 42.1960091,
+    "lng": -88.1112733,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Bellalukes%2C%20193%20S%20Rand%20Rd%2C%20Lake%20Zurich%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DZNEQXUzFa2/?igsh=YXhuMTg3aTZucmIw",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]

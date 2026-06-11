@@ -262,5 +262,12 @@
     "lng": -87.7324824,
     "displayName": "551, Lincoln Avenue, East Elm Business District, Winnetka, New Trier Township, Cook County, Illinois, 60093, United States",
     "updatedAt": "2026-06-06T02:33:36.752Z"
+  },
+  "193 s rand rd, lake zurich, il, usa": {
+    "status": "ok",
+    "lat": 42.1960091,
+    "lng": -88.1112733,
+    "displayName": "Bellalukes, 193, Rand Road, Knollwood, Lake Zurich, Ela Township, Lake County, Illinois, 60047, United States",
+    "updatedAt": "2026-06-11T16:46:47.260Z"
   }
 }
