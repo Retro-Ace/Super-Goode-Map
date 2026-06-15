@@ -269,5 +269,16 @@
     "lng": -88.1112733,
     "displayName": "Bellalukes, 193, Rand Road, Knollwood, Lake Zurich, Ela Township, Lake County, Illinois, 60047, United States",
     "updatedAt": "2026-06-11T16:46:47.260Z"
+  },
+  "494 spring road, elmhurst, il, usa": {
+    "status": "ok",
+    "lat": 41.885378,
+    "lng": -87.9497705,
+    "displayName": "494, Spring Road, Elmhurst, DuPage County, Illinois, 60126, United States",
+    "updatedAt": "2026-06-15T03:30:04.238Z"
+  },
+  "2770 highland rd, lombard, il, usa": {
+    "status": "not-found",
+    "updatedAt": "2026-06-15T03:30:05.195Z"
   }
 }

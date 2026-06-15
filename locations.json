@@ -7750,5 +7750,37 @@
     "sourceType": "sheet",
     "confidence": "medium",
     "notes": ""
+  },
+  {
+    "name": "Phase Three Brewing Company",
+    "score": 8.8,
+    "subtitle": "Double Dipped Fried Chicken Sandwich",
+    "address": "494 Spring Road",
+    "city": "Elmhurst",
+    "state": "IL",
+    "lat": 41.885378,
+    "lng": -87.9497705,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Phase%20Three%20Brewing%20Company%2C%20494%20Spring%20Road%2C%20Elmhurst%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DZU0UOaTPeh/?igsh=ZTlwcDZ0bzc1aTU4",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
+  },
+  {
+    "name": "Billy Bricks Pizza",
+    "score": 8.1,
+    "subtitle": "New Haven Cheese and Sausage Pizza",
+    "address": "2770 Highland Rd",
+    "city": "Lombard",
+    "state": "IL",
+    "lat": null,
+    "lng": null,
+    "googlePlaceUrl": "https://www.google.com/maps/search/?api=1&query=Billy%20Bricks%20Pizza%2C%202770%20Highland%20Rd%2C%20Lombard%2C%20IL",
+    "directionsUrl": "",
+    "reviewUrl": "https://www.instagram.com/reel/DZfD3_KTlap/?igsh=YXo4enF0cXVhM3c5",
+    "sourceType": "sheet",
+    "confidence": "medium",
+    "notes": ""
   }
 ]
