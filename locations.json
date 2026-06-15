@@ -7752,6 +7752,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Phase Three Brewing Company",
     "score": 8.8,
     "subtitle": "Double Dipped Fried Chicken Sandwich",
@@ -7768,6 +7769,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Billy Bricks Pizza",
     "score": 8.1,
     "subtitle": "New Haven Cheese and Sausage Pizza",
