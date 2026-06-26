@@ -280,5 +280,40 @@
   "2770 highland rd, lombard, il, usa": {
     "status": "not-found",
     "updatedAt": "2026-06-15T03:30:05.195Z"
+  },
+  "1541 w bryn mawr ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9833736,
+    "lng": -87.6690501,
+    "displayName": "Little Bad Wolf, 1541, West Bryn Mawr Avenue, Andersonville, Edgewater, Chicago, Lake View Township, Cook County, Illinois, 60660, United States",
+    "updatedAt": "2026-06-26T18:25:30.916Z"
+  },
+  "304 n river st, east dundee, il, usa": {
+    "status": "ok",
+    "lat": 42.1010957,
+    "lng": -88.2747042,
+    "displayName": "304, North River Street, East Dundee, Dundee Township, Kane County, Illinois, 60118, United States",
+    "updatedAt": "2026-06-26T18:25:32.004Z"
+  },
+  "2721 w division st, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9026006,
+    "lng": -87.6953041,
+    "displayName": "2721, West Division Street, East Humboldt Park, West Town, Chicago, West Chicago Township, Cook County, Illinois, 60647, United States",
+    "updatedAt": "2026-06-26T18:25:33.155Z"
+  },
+  "1615 milwaukee ave, glenview, il, usa": {
+    "status": "ok",
+    "lat": 42.0851704,
+    "lng": -87.8675081,
+    "displayName": "1615, Milwaukee Avenue, Northfield Woods, Glenview, Northfield Township, Cook County, Illinois, 60025, United States",
+    "updatedAt": "2026-06-26T18:25:34.314Z"
+  },
+  "17th n 4th st, geneva, il, usa": {
+    "status": "ok",
+    "lat": 41.8906992,
+    "lng": -88.308626,
+    "displayName": "North 4th Street, Geneva, Geneva Township, Kane County, Illinois, 60134, United States",
+    "updatedAt": "2026-06-26T18:25:35.769Z"
   }
 }
