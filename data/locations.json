@@ -7786,6 +7786,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Little Bad Wolf",
     "score": 8.5,
     "subtitle": "Wolf Burger",
@@ -7802,6 +7803,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Rossi's Deli",
     "score": 7.9,
     "subtitle": "Spicy Rossi Sandwich",
@@ -7818,6 +7820,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "La Sandwichera Cafe",
     "score": 8.2,
     "subtitle": "Chancleta Sandwich",
@@ -7834,6 +7837,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Paik's Noodles",
     "score": 8.2,
     "subtitle": "Blackbean Noodles and Deep Fried Pork",
@@ -7850,6 +7854,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Nino's Italian Deli",
     "score": 8.4,
     "subtitle": "The Judge Sandwich",
