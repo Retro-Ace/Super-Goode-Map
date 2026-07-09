@@ -12,6 +12,18 @@
       "endsAt": "2026-05-16T05:00:00.000Z",
       "weight": 1,
       "imageUrl": "https://retro-ace.github.io/Super-Goode-Map/sponsor-ads/images/aerial-vision-chicago-2026-05.png"
+    },
+    {
+      "id": "super-goode-2026-07",
+      "active": true,
+      "sponsorName": "Super Goode",
+      "label": "Featured Local Partner",
+      "placement": "app_launch_banner",
+      "linkUrl": "https://www.supergoode.com/shop",
+      "startsAt": "2026-07-09T05:00:00.000Z",
+      "endsAt": "2026-08-01T05:00:00.000Z",
+      "weight": 1,
+      "imageUrl": "https://retro-ace.github.io/Super-Goode-Map/sponsor-ads/images/super-goode-2026-07.png"
     }
   ]
 }
