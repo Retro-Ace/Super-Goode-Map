@@ -315,5 +315,19 @@
     "lng": -88.308626,
     "displayName": "North 4th Street, Geneva, Geneva Township, Kane County, Illinois, 60134, United States",
     "updatedAt": "2026-06-26T18:25:35.769Z"
+  },
+  "7448 s vincennes ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.7586203,
+    "lng": -87.6314203,
+    "displayName": "Haire's Gulf Shrimp, 7448, South Vincennes Avenue, Auburn Park, Greater Grand Crossing, Chicago, Lake Township, Cook County, Illinois, 60621, United States",
+    "updatedAt": "2026-07-17T03:40:59.000Z"
+  },
+  "2770 s highland ave, lombard, il, usa": {
+    "status": "ok",
+    "lat": 41.8372473,
+    "lng": -88.0124808,
+    "displayName": "Bricks Wood Fired Pizza, 2770, South Highland Avenue, Lombard, DuPage County, Illinois, 60148, United States",
+    "updatedAt": "2026-07-17T03:40:59.000Z"
   }
 }
