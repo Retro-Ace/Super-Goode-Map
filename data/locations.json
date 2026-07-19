@@ -7871,6 +7871,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "SUBO Filipino Kitchen",
     "score": 8.5,
     "subtitle": "Tocino Silog Plate",
@@ -7887,6 +7888,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Yankee Doodle Inn",
     "score": 8.9,
     "subtitle": "Smashburger",
