@@ -329,5 +329,19 @@
     "lng": -88.0124808,
     "displayName": "Bricks Wood Fired Pizza, 2770, South Highland Avenue, Lombard, DuPage County, Illinois, 60148, United States",
     "updatedAt": "2026-07-17T03:40:59.000Z"
+  },
+  "4712 n kimball ave, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9670433,
+    "lng": -87.7138068,
+    "displayName": "SUBO Filipino Kitchen, 4712, North Kimball Avenue, Albany Park, Chicago, Jefferson Township, Cook County, Illinois, 60625, United States",
+    "updatedAt": "2026-07-19T20:04:40.511Z"
+  },
+  "311 east main st, barrington, il, usa": {
+    "status": "ok",
+    "lat": 42.1537784,
+    "lng": -88.1326274,
+    "displayName": "Yankee Doodle, 311, East Main Street, Barrington, Barrington Township, Cook County, Illinois, 60010, United States",
+    "updatedAt": "2026-07-19T20:04:41.577Z"
   }
 }
