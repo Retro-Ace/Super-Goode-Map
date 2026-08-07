@@ -343,5 +343,30 @@
     "lng": -88.1326274,
     "displayName": "Yankee Doodle, 311, East Main Street, Barrington, Barrington Township, Cook County, Illinois, 60010, United States",
     "updatedAt": "2026-07-19T20:04:41.577Z"
+  },
+  "112 barrington rd, streamwood, il, usa": {
+    "status": "ok",
+    "lat": 42.0344571,
+    "lng": -88.1447678,
+    "displayName": "112, Barrington Road, Streamwood, Hanover Township, Cook County, Illinois, 60107, United States",
+    "updatedAt": "2026-08-07T03:44:06.738Z"
+  },
+  "754 elm st, winnetka, il, usa": {
+    "status": "ok",
+    "lat": 42.1051464,
+    "lng": -87.7328733,
+    "displayName": "Winnetka Metra Station, 754, Elm Street, Winnetka, New Trier Township, Cook County, Illinois, 60093, United States",
+    "updatedAt": "2026-08-07T03:44:07.836Z"
+  },
+  "2461 n lincoln, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9269379,
+    "lng": -87.6504355,
+    "displayName": "2461, North Lincoln Avenue, Wrightwood Neighbors, Lincoln Park, Chicago, Lake View Township, Cook County, Illinois, 60614, United States",
+    "updatedAt": "2026-08-07T03:44:09.147Z"
+  },
+  "11906 s harlem ave, palos park, il, usa": {
+    "status": "not-found",
+    "updatedAt": "2026-08-07T03:44:10.101Z"
   }
 }
