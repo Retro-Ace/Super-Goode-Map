@@ -7905,6 +7905,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gugu Chicken",
     "score": 8.6,
     "subtitle": "Spicy Fried Chicken",
@@ -7921,6 +7922,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Hofherr Meats Co Depot",
     "score": 8.4,
     "subtitle": "Italian Beef",
@@ -7937,6 +7939,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Bagelers Coffeehouse",
     "score": 8.3,
     "subtitle": "Hashy B Bagel",
@@ -7953,6 +7956,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Wing Works",
     "score": 8.5,
     "subtitle": "Buffalo Wings",
