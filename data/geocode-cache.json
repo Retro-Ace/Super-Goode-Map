@@ -368,5 +368,40 @@
   "11906 s harlem ave, palos park, il, usa": {
     "status": "not-found",
     "updatedAt": "2026-08-07T03:44:10.101Z"
+  },
+  "9437 w higgins, rosemont, il, usa": {
+    "status": "ok",
+    "lat": 41.9916909,
+    "lng": -87.862396,
+    "displayName": "Big Chicken, 9437, West Higgins Road, Rosemont, Leyden Township, Cook County, Illinois, 60018, United States",
+    "updatedAt": "2026-08-18T02:11:15.190Z"
+  },
+  "2200 n california, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.921848,
+    "lng": -87.6974778,
+    "displayName": "Lardon, 2200, North California Avenue, Palmer Square, Logan Square, Chicago, West Chicago Township, Cook County, Illinois, 60647, United States",
+    "updatedAt": "2026-08-18T02:11:16.524Z"
+  },
+  "404 n milwaukee, libertyville, il, usa": {
+    "status": "ok",
+    "lat": 42.2942634,
+    "lng": -87.9557348,
+    "displayName": "North Milwaukee Avenue, Libertyville, Lake County, Illinois, 60048, United States",
+    "updatedAt": "2026-08-18T02:11:17.386Z"
+  },
+  "505 village center dr, burr ridge, il, usa": {
+    "status": "ok",
+    "lat": 41.7522285,
+    "lng": -87.9127225,
+    "displayName": "505, Village Center Drive, Burr Ridge, Lyons Township, Cook County, Illinois, 60527, United States",
+    "updatedAt": "2026-08-18T02:11:18.431Z"
+  },
+  "2049 w division st, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9028897,
+    "lng": -87.6791725,
+    "displayName": "2049, West Division Street, Wicker Park, West Town, Chicago, West Chicago Township, Cook County, Illinois, 60622, United States",
+    "updatedAt": "2026-08-18T02:11:19.576Z"
   }
 }
