@@ -403,5 +403,72 @@
     "lng": -87.6791725,
     "displayName": "2049, West Division Street, Wicker Park, West Town, Chicago, West Chicago Township, Cook County, Illinois, 60622, United States",
     "updatedAt": "2026-08-18T02:11:19.576Z"
+  },
+  "154 w northwest highway, palatine, il, usa": {
+    "status": "ok",
+    "lat": 42.1235892,
+    "lng": -88.0481172,
+    "displayName": "Annie's Restaurant & Pancake House, 154, West Northwest Highway, Palatine, Palatine Township, Cook County, Illinois, 60067, United States",
+    "updatedAt": "2026-08-18T03:37:50.075Z"
+  },
+  "437 addison rd, addison, il, usa": {
+    "status": "ok",
+    "lat": 41.9352577,
+    "lng": -87.9885566,
+    "displayName": "437, North Addison Road, Addison, Addison Township, DuPage County, Illinois, 60101, United States",
+    "updatedAt": "2026-08-18T03:37:51.374Z"
+  },
+  "7322 calumet ave, hammond, in, usa": {
+    "status": "ok",
+    "lat": 41.6204165,
+    "lng": -87.5088805,
+    "displayName": "Calumet Avenue, Central Hammond, Hammond, North Township, Lake County, Indiana, 46320, United States",
+    "updatedAt": "2026-08-18T03:37:52.418Z"
+  },
+  "482 forest ave, glen ellyn, il, usa": {
+    "status": "ok",
+    "lat": 41.8771882,
+    "lng": -88.0650684,
+    "displayName": "482, Forest Avenue, Glen Ellyn, DuPage County, Illinois, 60137, United States",
+    "updatedAt": "2026-08-18T03:37:53.511Z"
+  },
+  "108 e 47th st, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.8093754,
+    "lng": -87.6224027,
+    "displayName": "108, East 47th Street, Grand Boulevard, Chicago, Hyde Park Township, Cook County, Illinois, 60653, United States",
+    "updatedAt": "2026-08-18T03:37:54.495Z"
+  },
+  "873 sanders rd, northbrook, il, usa": {
+    "status": "ok",
+    "lat": 42.1366998,
+    "lng": -87.8808121,
+    "displayName": "873, Sanders Road, North Northfield, Northbrook, Northfield Township, Cook County, Illinois, 60062, United States",
+    "updatedAt": "2026-08-18T03:37:55.666Z"
+  },
+  "651 lakehurst rd, waukegan, il, usa": {
+    "status": "ok",
+    "lat": 42.3385754,
+    "lng": -87.8989606,
+    "displayName": "Big Ed's BBQ, 651, Lakehurst Road, Wilson, Waukegan, Lake County, Illinois, 60085, United States",
+    "updatedAt": "2026-08-18T03:37:56.783Z"
+  },
+  "1961 n western, chicago, il, usa": {
+    "status": "ok",
+    "lat": 41.9171741,
+    "lng": -87.6872886,
+    "displayName": "1961, North Western Avenue, West Bucktown, Wicker Park, Logan Square, Chicago, West Chicago Township, Cook County, Illinois, 60647, United States",
+    "updatedAt": "2026-08-18T03:37:58.478Z"
+  },
+  "7144 183rd st, tinley park, il, usa": {
+    "status": "ok",
+    "lat": 41.5586473,
+    "lng": -87.7916029,
+    "displayName": "7144, 183rd Street, Tinley Park, Bremen Township, Cook County, Illinois, 60477, United States",
+    "updatedAt": "2026-08-18T03:37:59.162Z"
+  },
+  "0s100 winfield rd, winfield, il, usa": {
+    "status": "not-found",
+    "updatedAt": "2026-08-18T03:38:00.477Z"
   }
 }
