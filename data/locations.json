@@ -8058,6 +8058,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Annie's Restaurant",
     "score": 8.2,
     "subtitle": "Sisig Silog Combo",
@@ -8074,6 +8075,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Muggs n Manor",
     "score": 7.7,
     "subtitle": "Fried Chicken",
@@ -8090,6 +8092,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Jodi's Italian Ice",
     "score": 9.3,
     "subtitle": "Philly Cheesesteak with White American",
@@ -8106,6 +8109,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "A&G Subs",
     "score": 8.2,
     "subtitle": "La Tempesta",
@@ -8122,6 +8126,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Chicago Wingz Around The World",
     "score": 8.6,
     "subtitle": "Honey BBQ Jerk and Bangin Ranch",
@@ -8138,6 +8143,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Josh's Hot Dogs",
     "score": 7.5,
     "subtitle": "Chopped Cheese",
@@ -8154,6 +8160,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Big Ed's BBQ",
     "score": 8.8,
     "subtitle": "Brisket and Ribs",
@@ -8170,6 +8177,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "El Bagelero",
     "score": 8.8,
     "subtitle": "Carnitas Bagel Sandwich",
@@ -8186,6 +8194,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Flipside Brewing",
     "score": 8.2,
     "subtitle": "Smashburger",
@@ -8202,6 +8211,7 @@
     "notes": ""
   },
   {
+    "requestType": "add",
     "name": "Gianorio's Deli",
     "score": 8.4,
     "subtitle": "Italian Sub",
